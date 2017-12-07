@@ -1,4 +1,5 @@
 # Develog
+[![Build Status](https://travis-ci.org/T3r1jj/Develog.svg?branch=master)](https://travis-ci.org/T3r1jj/Develog) [![Coverage Status](https://coveralls.io/repos/github/T3r1jj/Develog/badge.svg?branch=master)](https://coveralls.io/github/T3r1jj/Develog?branch=master)
 
 Develog is a web application inspired by James Routley's idea of [using a logbook to improve your programming](https://routley.io/tech/2017/11/23/logbook.html). The app allows users to create one private and tagged note per day. Simple Markdown together with PlantUML speeds up and facilitates the process of describing a solution to a problem. 
 
@@ -57,7 +58,7 @@ c) BANNED:
 - Code Analysis tool
 - Code Coverage tool (OpenClover)
 - Travis CI
-- Coveralls
+- Codecov
 
 ### License
 
