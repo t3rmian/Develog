@@ -4,8 +4,8 @@
     </target>
     <target name="current">
         <clover-report>
-            <current outfile="${output}" title="${title}">
-                <format type="html"/>
+            <current outfile="${output}/coverage.xml" title="${title}">
+                <format type="xml"/>
                 <testsources dir="src/test">
                     <include name="**/IT*.java"/>
                     <include name="**/*IT.java"/>

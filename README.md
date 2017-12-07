@@ -1,10 +1,17 @@
 # Develog
-[![Build Status](https://travis-ci.org/T3r1jj/Develog.svg?branch=master)](https://travis-ci.org/T3r1jj/Develog) [![Coverage Status](https://coveralls.io/repos/github/T3r1jj/Develog/badge.svg?branch=master)](https://coveralls.io/github/T3r1jj/Develog?branch=master)
+[![Build status](https://travis-ci.org/T3r1jj/Develog.svg?branch=master)](https://travis-ci.org/T3r1jj/Develog) [![codecov](https://codecov.io/gh/T3r1jj/Develog/branch/master/graph/badge.svg)](https://codecov.io/gh/T3r1jj/Develog) [![Lines of code](https://tokei.rs/b1/github/T3r1jj/Develog)](https://github.com/Aaronepower/tokei).
 
-Develog is a web application inspired by James Routley's idea of [using a logbook to improve your programming](https://routley.io/tech/2017/11/23/logbook.html). The app allows users to create one private and tagged note per day. Simple Markdown together with PlantUML speeds up and facilitates the process of describing a solution to a problem. 
 
-### Requirements
-The app is currently being developed in educational purposes with a few requirements. Basic requirements:
+Develog is a web application inspired by James Routley's idea of [using a logbook to improve your programming](https://routley.io/tech/2017/11/23/logbook.html). The app allows users to create one private and tagged note per day. Simple Markdown together with PlantUML speeds up and facilitates the process of describing a solution to a problem.
+ 
+---
+
+### Development
+The app is currently being developed in educational purposes with a few requirements.
+
+![Code coverage by commits](https://codecov.io/gh/T3r1jj/Develog/branch/master/graphs/commits.svg)
+ 
+Basic requirements:
 1. Project management tool (i.e. Maven/Gradle)
 2. Dependency injection framework (i.e. Spring with Inversion of Control)
 3. Object Relational Mapping (i.e. JPA) - min. 3 relational tables
@@ -59,6 +66,8 @@ c) BANNED:
 - Code Coverage tool (OpenClover)
 - Travis CI
 - Codecov
+
+---
 
 ### License
 
