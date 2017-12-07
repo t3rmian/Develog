@@ -1,0 +1,21 @@
+<project name="Clover Report" default="current">
+    <clover-setup initString="${cloverdb}"/>
+    <target name="historical">
+    </target>
+    <target name="current">
+        <clover-report>
+            <current outfile="${output}" title="${title}">
+                <format type="html"/>
+                <testsources dir="src/test">
+                    <include name="**/IT*.java"/>
+                    <include name="**/*IT.java"/>
+                    <include name="**/*ITCase.java"/>
+                    <include name="**/Test*.java"/>
+                    <include name="**/*Test.java"/>
+                    <include name="**/*TestCase.java"/>
+                </testsources>
+                <testresults dir="target/test-report" includes="TEST-*.xml"/>
+            </current>
+        </clover-report>
+    </target>
+</project>

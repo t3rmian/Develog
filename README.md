@@ -55,7 +55,7 @@ c) BANNED:
 - JUnit5
 - Mockito
 - Code Analysis tool
-- Code Coverage tool
+- Code Coverage tool (OpenClover)
 - Travis CI
 - Coveralls
 

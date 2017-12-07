@@ -1,6 +1,6 @@
 package io.github.t3r1jj.develog.domain;
 
-import lombok.Data;
+import lombok.Builder;
 import lombok.Value;
 
 import javax.persistence.Entity;
@@ -9,16 +9,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.util.List;
 
-@Data
 @Value
+@Builder
 @Entity(name = "USERS")
 public class User {
     @Id
-    private String id;
-    private String name;
-    private String email;
+    String id;
+    String name;
+    String email;
     @OneToOne
-    private Note globalNote;
+    Note globalNote;
     @OneToMany
-    private List<Note> notes;
+    List<Note> notes;
 }

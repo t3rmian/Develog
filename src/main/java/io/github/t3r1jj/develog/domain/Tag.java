@@ -1,11 +1,11 @@
 package io.github.t3r1jj.develog.domain;
 
-import lombok.Data;
+import lombok.Value;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Data
+@Value
 @Entity
 public class Tag {
     @Id
