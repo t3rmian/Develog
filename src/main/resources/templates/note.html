@@ -25,24 +25,26 @@
 </nav>
 
 <main>
-    <h4 class="center orange-text" th:text="${note.creationTime}">DATE</h4>
-    <div id="tags" class="chips chips-autocomplete"></div>
-    <div class="row">
-        <div class="col s6">
-            <h5 class="header center">Editor</h5>
-            <div class="input-field col s12">
-                <textarea id="textarea" class="materialize-textarea" th:field="${note.body}"></textarea>
-                <label for="textarea">Textarea</label>
+    <form id="form" th:object="${editor}">
+        <h4 class="center orange-text" th:text="${note.creationTime}">DATE</h4>
+        <div id="tags" class="chips chips-autocomplete"></div>
+        <div class="row">
+            <div class="col s6">
+                <h5 class="header center">Editor</h5>
+                <div class="input-field col s12">
+                    <textarea id="input" class="materialize-textarea" th:field="*{input}"></textarea>
+                    <label for="input">Textarea</label>
+                </div>
             </div>
-        </div>
-        <div class="col s6 center">
-            <h5 class="header center">View</h5>
-            <div class="card white">
-                <div class="card-content">
+            <div class="col s6 center">
+                <h5 class="header center">View</h5>
+                <div class="card white">
+                    <div id="output" class="card-content" th:text="*{output}">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </main>
 
 <footer class="page-footer orange">
@@ -75,6 +77,34 @@
             },
             limit: Infinity,
             minLength: 1
+        }
+    });
+
+    function updateNote() {
+        console.log("update");
+        $.ajax({
+            url: '/note/update',
+            type: 'post',
+            data: $('#form').serialize(),
+            success: function (response) {
+                if ($(response).find('.has-error').length) {
+                    $("#output").html(response);
+                } else {
+                    $("#output").html(response);
+                }
+            }
+        });
+    }
+
+    var pendingTimeout = false;
+    $('#input').on('input propertychange change', function () {
+        console.log('Textarea Change');
+        if (!pendingTimeout) {
+            pendingTimeout = true;
+            setTimeout(function () {
+                updateNote();
+                pendingTimeout = false;
+            }, 1000);
         }
     });
 
