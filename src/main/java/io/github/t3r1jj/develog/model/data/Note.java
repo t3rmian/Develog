@@ -24,6 +24,7 @@ public class Note {
     @Builder.Default
     private LocalDate date = LocalDate.now();
     @Builder.Default
+    @Column(length = 65536)
     private String body = "";
     private boolean isGlobal;
     @ManyToMany

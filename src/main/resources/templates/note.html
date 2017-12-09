@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="materialize/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
 <nav class="light-blue lighten-1" role="navigation">
@@ -39,7 +40,8 @@
             <div class="col s6 center">
                 <h5 class="header center">View</h5>
                 <div class="card white">
-                    <div id="output" class="card-content" th:text="*{output}">
+                    <div class="card-content">
+                        <iframe id="output" th:text="*{output}"></iframe>
                     </div>
                 </div>
             </div>
@@ -100,9 +102,9 @@
             data: $('#form').serialize(),
             success: function (response) {
                 if ($(response).find('.has-error').length) {
-                    $("#output").html(response);
+                    $("#output").contents().find('html').html(response);
                 } else {
-                    $("#output").html(response);
+                    $("#output").contents().find('html').html(response);
                 }
             }
         });
@@ -118,7 +120,23 @@
             }, 1000);
         }
     });
+    $('#input').on('paste', function (event) {
+        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+        console.log(JSON.stringify(items)); // will give you the mime types
+        for (index in items) {
+            var item = items[index];
+            if (item.kind === 'file') {
+                var blob = item.getAsFile();
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    console.log(event.target.result)
+                }; // data url!
+                reader.readAsDataURL(blob);
+            }
+        }
+    });
 
+    updateNote();
     /*]]>*/
 </script>
 </body>

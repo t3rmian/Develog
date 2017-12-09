@@ -7,7 +7,7 @@ Develog is a web application inspired by James Routley's idea of [using a logboo
 ---
 
 ### Development
-The app is currently being developed in educational purposes with a few requirements.
+The app is currently under development in educational purposes, with a few requirements.
 
 ![Code coverage by commits](https://codecov.io/gh/T3r1jj/Develog/branch/master/graphs/commits.svg)
  
@@ -25,7 +25,7 @@ Basic requirements:
 a) USER:
 1. note creation and edition (single note, for present day)
     1. tags
-    2. _image insertion by pasting_
+    2. ~~image insertion by pasting~~ (db size)
     3. Markdown support
     4. PlantUML (diagrams) support
     5. two panels side by side - editor and view
