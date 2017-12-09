@@ -14,6 +14,7 @@ class DataTest {
     void userEqualsContract() {
         EqualsVerifier.forClass(User.class);
     }
+
     @Test
     void tagEqualsContract() {
         EqualsVerifier.forClass(Tag.class);
