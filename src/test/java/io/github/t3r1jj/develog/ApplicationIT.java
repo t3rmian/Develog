@@ -7,8 +7,11 @@ class ApplicationIT {
 
     @Test
     void start() throws InterruptedException {
-        Application.main(new String[]{});
-        Thread.sleep(100);
+        Thread runner = new Thread(() -> {  // Workaround for SilentExitException caused by spring-boot-devtools restart
+            Application.main(new String[]{});
+        });
+        runner.start();
+        runner.join();
     }
 
 }
