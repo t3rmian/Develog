@@ -1,13 +1,14 @@
 package io.github.t3r1jj.develog.service;
 
+import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
-    private static final User loggedUserStub = User.builder().id("abc").build();
     private final UserRepository userRepository;
 
     @Autowired
@@ -16,7 +17,25 @@ public class UserService {
     }
 
     public User getLoggedUser() {
-        return loggedUserStub;
+        return getUser("abc");
+    }
+
+    @Transactional(readOnly = true)
+    public User getUser(String id) {
+        return userRepository.getOne(id);
+    }
+
+    @Transactional
+    public User registerUser(User user) {
+        User userToRegister = User.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .name(user.getEmail())
+                .globalNote(Note.builder()
+                        .isGlobal(true)
+                        .build()
+                ).build();
+        return userRepository.save(userToRegister);
     }
 
 }

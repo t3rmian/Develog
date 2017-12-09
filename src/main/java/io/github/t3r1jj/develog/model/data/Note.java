@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Entity(name = "notes")
@@ -17,19 +19,39 @@ import java.util.List;
 @AllArgsConstructor
 public class Note {
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
     @Builder.Default
-    private Instant creationTime = Instant.now();
+    private LocalDate date = LocalDate.now();
     @Builder.Default
-    private Instant modifyTime = Instant.now();
-    private String body;
+    private String body = "";
     private boolean isGlobal;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToMany
     @JoinTable(name = "notes_tags", joinColumns = {
             @JoinColumn(name = "notes", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
-            @JoinColumn(name = "tags", referencedColumnName = "id", nullable = false)})
+            @JoinColumn(name = "tags", referencedColumnName = "value", nullable = false)})
     @Builder.Default
-    private List<Tag> tags = new ArrayList<>();
+    private Set<Tag> tags = new HashSet<>();
 
+    public boolean addTag(Tag tag) {
+        return tags.add(tag);
+    }
+
+    public boolean removeTag(Tag tag) {
+        return tags.remove(tag);
+    }
+
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Note note = (Note) o;
+        return Objects.equals(id, note.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }
