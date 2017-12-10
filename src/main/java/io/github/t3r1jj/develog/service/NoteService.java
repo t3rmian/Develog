@@ -3,10 +3,11 @@ package io.github.t3r1jj.develog.service;
 import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.Tag;
 import io.github.t3r1jj.develog.model.data.User;
-import io.github.t3r1jj.develog.repository.NoteRepository;
-import io.github.t3r1jj.develog.repository.TagRepository;
+import io.github.t3r1jj.develog.repository.data.NoteRepository;
+import io.github.t3r1jj.develog.repository.data.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,11 +27,13 @@ public class NoteService {
         this.tagRepository = tagRepository;
     }
 
+    @Transactional(readOnly = true)
     public Optional<Note> getNote(LocalDate date) {
         User loggedUser = userService.getLoggedUser();
         return loggedUser.getNote(date);
     }
 
+    @Transactional
     public void updateNoteBody(LocalDate date, String body) {
         User loggedUser = userService.getLoggedUser();
         Note note = loggedUser.getNote(date).get();
@@ -38,6 +41,7 @@ public class NoteService {
         updateNote(note);
     }
 
+    @Transactional
     public boolean addNoteTag(LocalDate date, String tag) {
         User loggedUser = userService.getLoggedUser();
         Note note = loggedUser.getNote(date).get();
@@ -48,6 +52,7 @@ public class NoteService {
         return false;
     }
 
+    @Transactional
     public boolean removeNoteTag(LocalDate date, String tag) {
         User loggedUser = userService.getLoggedUser();
         Note note = loggedUser.getNote(date).get();
@@ -58,11 +63,13 @@ public class NoteService {
         return false;
     }
 
+    @Transactional
     private void updateNote(Note note) {
         persistNewTags(note);
         noteRepository.saveAndFlush(note);
     }
 
+    @Transactional
     private void persistNewTags(Note note) {
         List<Tag> presentTags = tagRepository.findAllById(note.getTags().stream()
                 .map(Tag::getId)

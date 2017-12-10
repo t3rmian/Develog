@@ -2,10 +2,12 @@ package io.github.t3r1jj.develog.service;
 
 import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.User;
-import io.github.t3r1jj.develog.repository.UserRepository;
+import io.github.t3r1jj.develog.repository.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,17 +20,12 @@ public class UserService {
 
     @Transactional
     public User getLoggedUser() {
-        User abc = getUser(123L);
-        if (abc == null) {
-            registerUser(User.builder().id(123L).build());
-            return getUser(123L);
-        }
-        return abc;
+        return getUser(123L).orElseGet(() -> registerUser(User.builder().id(123L).build()));
     }
 
     @Transactional(readOnly = true)
-    public User getUser(long id) {
-        return userRepository.getOne(id);
+    public Optional<User> getUser(long id) {
+        return userRepository.findById(id);
     }
 
     @Transactional(readOnly = true)

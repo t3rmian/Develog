@@ -1,8 +1,8 @@
 package io.github.t3r1jj.develog.service;
 
 import io.github.t3r1jj.develog.model.data.User;
-import io.github.t3r1jj.develog.repository.TagRepository;
-import io.github.t3r1jj.develog.repository.UserRepository;
+import io.github.t3r1jj.develog.repository.data.TagRepository;
+import io.github.t3r1jj.develog.repository.data.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

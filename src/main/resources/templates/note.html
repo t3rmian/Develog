@@ -70,7 +70,7 @@
     var chips = [];
     var tags = [[${note.tags}]]
     for (i = 0; i < tags.length; i++) {
-        chips.push({tag: tags[i].value});
+        chips.push({tag: tags[i].id.value});
     }
     $('#tags').chips({
         data: chips,

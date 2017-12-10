@@ -22,6 +22,8 @@ public class NoteController {
     }
 
     @RequestMapping({"/note", "/note/{date}"})
+    // TODO: Change to readonly when registering user is implemented
+    @Transactional
     public String openNote(Model model, @PathVariable(required = false) LocalDate date) {
         Note note = noteService.getNote(date).get();
         Editor noteEditor = new Editor(note.getBody());
