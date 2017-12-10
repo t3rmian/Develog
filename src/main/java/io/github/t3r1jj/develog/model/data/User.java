@@ -6,10 +6,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 @Getter
@@ -20,14 +17,14 @@ import java.util.function.Supplier;
 @Entity(name = "users")
 public class User {
     @Id
-    private String id;
+    private Long id;
     private String name;
     private String email;
     @OneToOne(cascade = CascadeType.ALL)
     private Note globalNote;
     @OneToMany(cascade = CascadeType.ALL)
     @Builder.Default
-    private Set<Note> notes = Collections.emptySet();
+    private List<Note> notes = Collections.emptyList();
 
     public Optional<Note> getNote(@Nullable LocalDate date) {
         if (date == null) {
@@ -38,7 +35,7 @@ public class User {
 
     public Note getOrCreate(@Nullable LocalDate date) {
         return getNote(date).orElseGet(() -> {
-            Note note = Note.builder().date(LocalDate.now()).build();
+            Note note = Note.builder().date(date).build();
             notes.add(note);
             return note;
         });

@@ -16,13 +16,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public User getLoggedUser() {
-        return getUser("abc");
+        User abc = getUser(123L);
+        if (abc == null) {
+            registerUser(User.builder().id(123L).build());
+            return getUser(123L);
+        }
+        return abc;
     }
 
     @Transactional(readOnly = true)
-    public User getUser(String id) {
+    public User getUser(long id) {
         return userRepository.getOne(id);
+    }
+
+    @Transactional(readOnly = true)
+    public User updateUser(User user) {
+        return userRepository.save(user);
     }
 
     @Transactional
@@ -30,7 +41,7 @@ public class UserService {
         User userToRegister = User.builder()
                 .id(user.getId())
                 .email(user.getEmail())
-                .name(user.getEmail())
+                .name(user.getName())
                 .globalNote(Note.builder()
                         .isGlobal(true)
                         .build()

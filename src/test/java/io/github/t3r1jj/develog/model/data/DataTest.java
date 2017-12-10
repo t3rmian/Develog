@@ -20,4 +20,9 @@ class DataTest {
         EqualsVerifier.forClass(Tag.class);
     }
 
+    @Test
+    void tagIdEqualsContract() {
+        EqualsVerifier.forClass(Tag.TagId.class);
+    }
+
 }

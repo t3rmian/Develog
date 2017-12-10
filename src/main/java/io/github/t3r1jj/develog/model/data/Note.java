@@ -29,8 +29,9 @@ public class Note {
     private boolean isGlobal;
     @ManyToMany
     @JoinTable(name = "notes_tags", joinColumns = {
-            @JoinColumn(name = "notes", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
-            @JoinColumn(name = "tags", referencedColumnName = "value", nullable = false)})
+            @JoinColumn(name = "notes_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
+            @JoinColumn(name = "tags_value", referencedColumnName = "value", nullable = false),
+            @JoinColumn(name = "tags_id", referencedColumnName = "userId", nullable = false)})
     @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 

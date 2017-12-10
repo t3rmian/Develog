@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +33,7 @@ class UserTest {
                         .id((long) 0)
                         .build()
                 )
-                .notes(new HashSet<Note>() {{
+                .notes(new ArrayList<Note>() {{
                     this.add(todayNote);
                     this.add(yesterdayNote);
                 }})

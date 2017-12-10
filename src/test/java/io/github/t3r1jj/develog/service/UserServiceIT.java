@@ -1,7 +1,9 @@
 package io.github.t3r1jj.develog.service;
 
+import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +22,18 @@ class UserServiceIT {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    private User user;
+
+    @BeforeEach
+    void setUp() {
+        user = User.builder()
+                .id(123L).build();
+        userService.registerUser(user);
+    }
 
     @Test
     @Transactional
     void registerUser() {
-        User user = User.builder()
-                .id("abc").build();
-        userService.registerUser(user);
-
         User dbUser = userRepository.getOne(user.getId());
         assertEquals(user, dbUser, "User registered in db");
         assertFalse(dbUser.getGlobalNote().getId() == null, "Initialized global note");
