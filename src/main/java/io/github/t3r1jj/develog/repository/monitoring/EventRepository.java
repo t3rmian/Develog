@@ -1,8 +1,8 @@
 package io.github.t3r1jj.develog.repository.monitoring;
 
-import io.github.t3r1jj.develog.model.monitoring.EventInfo;
+import io.github.t3r1jj.develog.model.monitoring.Event;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface EventInfoRepository extends MongoRepository<EventInfo, ObjectId> {
+public interface EventRepository extends MongoRepository<Event, ObjectId> {
 }

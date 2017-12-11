@@ -7,13 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document
 @NoArgsConstructor
-public class MethodInfo {
+public class Call {
     private String name;
     private int callCount = 0;
     private long accumulatedCallTime = 0;
     private long logTime;
 
-    public MethodInfo(String name) {
+    public Call(String name) {
         this.name = name;
     }
 
@@ -23,6 +23,6 @@ public class MethodInfo {
     }
 
     public long getCallTime() {
-        return (this.callCount > 0 ? this.accumulatedCallTime / this.callCount : 0);
+        return (this.accumulatedCallTime / this.callCount);
     }
 }

@@ -7,11 +7,11 @@ import java.time.Instant;
 
 @Data
 @Document
-public class EventInfo {
+public class Event {
     private long time = Instant.now().toEpochMilli();
     private String description;
 
-    public EventInfo(String description) {
+    public Event(String description) {
         this.description = description;
     }
 }

@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "io.github.t3r1jj.develog.monitoring.call.enabled",
+      "type": "java.lang.String",
+      "description": "Enable call monitoring."
+    },
+    {
+      "name": "io.github.t3r1jj.develog.monitoring.call.rate",
+      "type": "java.lang.String",
+      "description": "FixedRate (ms) for scheduled task of dumping logs to db."
+    }
+  ]
+}

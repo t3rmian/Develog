@@ -1,11 +1,12 @@
 package io.github.t3r1jj.develog.aspect;
 
-import io.github.t3r1jj.develog.model.monitoring.MethodInfo;
+import io.github.t3r1jj.develog.model.monitoring.Call;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
@@ -21,12 +22,12 @@ public class CallMonitoringAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(CallMonitoringAspect.class);
 
-    private HashMap<String, MethodInfo> logs = new HashMap<>();
+    private HashMap<String, Call> logs = new HashMap<>();
 
-    private boolean isEnabled = true;
+    private boolean isEnabled;
 
-    public void setEnabled(boolean enabled) {
-        isEnabled = enabled;
+    public CallMonitoringAspect(@Value("${io.github.t3r1jj.develog.monitoring.call.enabled}") boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
     public boolean isEnabled() {
@@ -60,11 +61,16 @@ public class CallMonitoringAspect {
     }
 
     private synchronized void log(String name, long callTime) {
-        MethodInfo methodInfo = logs.get(name);
-        if (methodInfo == null) {
-            methodInfo = new MethodInfo(name);
+        Call call = logs.get(name);
+        if (call == null) {
+            call = new Call(name);
         }
-        methodInfo.accumulateCall(callTime);
+        call.accumulateCall(callTime);
+        logs.put(name, call);
+    }
+
+    public HashMap<String, Call> getLogs() {
+        return logs;
     }
 
 }

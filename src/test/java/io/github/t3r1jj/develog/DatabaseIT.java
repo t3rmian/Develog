@@ -3,9 +3,9 @@ package io.github.t3r1jj.develog;
 import io.github.t3r1jj.develog.repository.data.NoteRepository;
 import io.github.t3r1jj.develog.repository.data.TagRepository;
 import io.github.t3r1jj.develog.repository.data.UserRepository;
-import io.github.t3r1jj.develog.repository.monitoring.ErrorInfoRepository;
-import io.github.t3r1jj.develog.repository.monitoring.EventInfoRepository;
-import io.github.t3r1jj.develog.repository.monitoring.MethodInfoRepository;
+import io.github.t3r1jj.develog.repository.monitoring.ErrorRepository;
+import io.github.t3r1jj.develog.repository.monitoring.EventRepository;
+import io.github.t3r1jj.develog.repository.monitoring.CallRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +23,11 @@ class DatabaseIT {
     @Autowired
     private TagRepository tagRepository;
     @Autowired
-    private ErrorInfoRepository errorInfoRepository;
+    private ErrorRepository errorRepository;
     @Autowired
-    private MethodInfoRepository methodInfoRepository;
+    private CallRepository callRepository;
     @Autowired
-    private EventInfoRepository eventInfoRepository;
+    private EventRepository eventRepository;
 
     @Test
     @Transactional(readOnly = true)
@@ -39,8 +39,8 @@ class DatabaseIT {
 
     @Test
     void monitoringDbConnection() {
-        System.out.println(errorInfoRepository.findAll());
-        System.out.println(methodInfoRepository.findAll());
-        System.out.println(eventInfoRepository.findAll());
+        System.out.println(errorRepository.findAll());
+        System.out.println(callRepository.findAll());
+        System.out.println(eventRepository.findAll());
     }
 }
