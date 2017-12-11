@@ -2,7 +2,7 @@ package io.github.t3r1jj.develog.aspect;
 
 import io.github.t3r1jj.develog.Application;
 import io.github.t3r1jj.develog.model.data.User;
-import io.github.t3r1jj.develog.model.monitoring.Error;
+import io.github.t3r1jj.develog.model.monitor.Error;
 import io.github.t3r1jj.develog.repository.monitoring.ErrorRepository;
 import io.github.t3r1jj.develog.service.UserService;
 import org.junit.jupiter.api.AfterEach;

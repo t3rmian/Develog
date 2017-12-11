@@ -1,6 +1,6 @@
 package io.github.t3r1jj.develog.aspect;
 
-import io.github.t3r1jj.develog.model.monitoring.Call;
+import io.github.t3r1jj.develog.model.monitor.Call;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

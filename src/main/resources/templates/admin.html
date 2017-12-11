@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Develog - Note</title>
+    <meta th:replace="fragments/head"/>
+</head>
+<body>
+
+<ul id="nav-mobile" class="sidenav sidenav-fixed">
+    <li class="center" style="height: 65px; display: table; width: 100%">
+        <h4 style="margin: auto;vertical-align: middle; display: table-cell;">Admin panel</h4>
+    </li>
+    <li>
+        <div class="divider" style="margin: 0;"></div>
+    </li>
+    <li><a href="#users"><i class="material-icons">face</i>Users</a></li>
+    <li><a href="#events"><i class="material-icons">stars</i>Events</a></li>
+    <li><a href="#errors"><i class="material-icons">error</i>Errors</a></li>
+    <li><a href="#logs"><i class="material-icons">description</i>Logs</a></li>
+    <li><a href="#health"><i class="material-icons">favorite</i>Health</a></li>
+</ul>
+<main>
+    <div th:replace="fragments/header"></div>
+    <main id="fragment"></main>
+    <div th:replace="fragments/footer"></div>
+</main>
+<script type="text/javascript">
+    $(window).on('hashchange', function () {
+        loadFragment()
+    });
+
+    function loadFragment() {
+        var fragment = window.location.hash.replace('#', '');
+        if (fragment == null || fragment == "") {
+            fragment = window.location.hash = "#users";
+        }
+        fragment = location.protocol + '//' + location.host + location.pathname + (location.search ? location.search : "") + "/" + fragment;
+        $.ajax({
+            url: fragment,
+            type: 'post',
+            data: $('#form').serialize(),
+            success: function (response) {
+                try {
+                    $("#fragment").text(JSON.parse(response));
+                    $("#fragment").text(response);
+                } catch (error) {
+                    $("#fragment").text(JSON.stringify(response));
+                }
+            }
+        });
+    }
+
+    loadFragment();
+</script>
+</body>
+</html>

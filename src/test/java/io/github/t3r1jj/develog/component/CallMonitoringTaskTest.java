@@ -1,21 +1,15 @@
 package io.github.t3r1jj.develog.component;
 
 import io.github.t3r1jj.develog.aspect.CallMonitoringAspect;
-import io.github.t3r1jj.develog.model.monitoring.Call;
+import io.github.t3r1jj.develog.model.monitor.Call;
 import io.github.t3r1jj.develog.repository.monitoring.CallRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyCollection;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

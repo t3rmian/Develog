@@ -1,6 +1,6 @@
 package io.github.t3r1jj.develog.aspect;
 
-import io.github.t3r1jj.develog.model.monitoring.Error;
+import io.github.t3r1jj.develog.model.monitor.Error;
 import io.github.t3r1jj.develog.repository.monitoring.ErrorRepository;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;

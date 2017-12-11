@@ -1,4 +1,4 @@
-package io.github.t3r1jj.develog.model.monitoring;
+package io.github.t3r1jj.develog.model.monitor;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
