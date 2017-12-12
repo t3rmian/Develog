@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.HashMap;
 
 @Component
@@ -24,6 +25,8 @@ public class CallMonitoringTask {
     public void dumpToDb() {
         synchronized (callMonitoringAspect) {
             HashMap<String, Call> logs = callMonitoringAspect.getLogs();
+            long dumpTime = Instant.now().toEpochMilli();
+            logs.values().forEach(log -> log.setLogTime(dumpTime));
             callRepository.saveAll(logs.values());
             callMonitoringAspect.reset();
         }

@@ -1,5 +1,6 @@
 package io.github.t3r1jj.develog.model.monitor;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Document
 @NoArgsConstructor
+@AllArgsConstructor
 public class Call {
     private String name;
     private int callCount = 0;

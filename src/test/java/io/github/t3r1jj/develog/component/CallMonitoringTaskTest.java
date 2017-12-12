@@ -8,8 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.Instant;
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,8 +37,11 @@ class CallMonitoringTaskTest {
 
     @Test
     void dumpToDb() {
+        long before = Instant.now().toEpochMilli();
         callMonitoringTask.dumpToDb();
         verify(callRepository).saveAll(callMonitoringAspect.getLogs().values());
+        verify(callMonitoringAspect).reset();
+        assertTrue(call.getLogTime() - before > 0, "Dump time has been set");
     }
 
 }

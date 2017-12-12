@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Data
 @Document
@@ -17,5 +19,9 @@ public class Error {
         this.name = name;
         this.stackTrace = stackTrace;
         this.info = info;
+    }
+
+    public LocalDateTime getDate() {
+        return LocalDateTime.ofEpochSecond(time / 1000, 0, ZoneOffset.UTC);
     }
 }

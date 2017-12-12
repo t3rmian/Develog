@@ -3,7 +3,6 @@ package io.github.t3r1jj.develog.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoDatabase;
-import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.model.monitor.Call;
 import io.github.t3r1jj.develog.model.monitor.Error;
 import io.github.t3r1jj.develog.model.monitor.Event;
@@ -23,11 +22,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class AdminController {
@@ -55,9 +55,9 @@ public class AdminController {
     }
 
     @RequestMapping("admin/users")
-    @ResponseBody
-    List<HashMap.Entry<User, Long>> getUsersFragment(Model model) {
-        return userService.findAllUsersDataSize();
+    ModelAndView getUsersFragment(Model model) {
+        model.addAttribute("users", userService.findAllUsersDataSize());
+        return new ModelAndView("fragments/users", model.asMap());
     }
 
     @RequestMapping("admin/events")
@@ -74,8 +74,28 @@ public class AdminController {
 
     @RequestMapping("admin/logs")
     @ResponseBody
-    List<Call> getLogsFragment(Model model) {
-        return callRepository.findAll();
+    List<Map<String, String>> getLogsFragment(Model model) {
+        List<Map<String, String>> output = new ArrayList<>();
+        callRepository.findAll().stream()
+                .collect(Collectors.groupingBy(Call::getName))
+                .values()
+                .stream()
+                .map(list -> new Call(list.get(0).getName(),
+                        list.stream().mapToInt(Call::getCallCount).sum(),
+                        list.stream().mapToLong(Call::getAccumulatedCallTime).sum(),
+                        list.stream().mapToLong(Call::getLogTime).min().getAsLong()
+                ))
+                .sorted(Comparator.comparing(Call::getCallTime)
+                        .reversed())
+                .forEach(call -> {
+                    Map<String, String> row = new HashMap<>();
+                    row.put("Call name", call.getName());
+                    row.put("Average call time", String.valueOf(call.getCallTime()) + " ms");
+                    row.put("Total call count", String.valueOf(call.getCallCount()));
+                    row.put("Since", LocalDateTime.ofEpochSecond(call.getLogTime() / 1000, 0, ZoneOffset.UTC).toString());
+                    output.add(row);
+                });
+        return output;
     }
 
     @RequestMapping("admin/health")
@@ -83,8 +103,13 @@ public class AdminController {
     String getHealthFragment(Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> dbDetails = new HashMap<>(healthEndpoint.health().getDetails());
-        dbDetails.put("mongoDbSize", getMongoDbSize());
-        dbDetails.put("postgresDbSize", userService.getUsersDataSize());
+        dbDetails.put("mongoDbSize", getMongoDbSize() + " MB");
+        dbDetails.put("postgresDbSize", userService.getUsersDataSize() + " MB");
+        System.out.println(objectMapper.writeValueAsString(Arrays.asList(
+                dbDetails,
+                traceEndpoint.traces().getTraces(),
+                infoEndpoint.info())
+        ));
         return objectMapper.writeValueAsString(Arrays.asList(
                 dbDetails,
                 traceEndpoint.traces().getTraces(),
@@ -100,6 +125,15 @@ public class AdminController {
         } catch (Exception ex) {
             return -1;
         }
+    }
+
+    @RequestMapping("admin/reset")
+    @ResponseBody
+    boolean getHealthFragment() {
+        callRepository.deleteAll();
+        eventRepository.deleteAll();
+        errorRepository.deleteAll();
+        return true;
     }
 
 }
