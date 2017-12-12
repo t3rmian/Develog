@@ -2,23 +2,32 @@ package io.github.t3r1jj.develog.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.MongoDatabase;
+import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.model.monitor.Call;
 import io.github.t3r1jj.develog.model.monitor.Error;
 import io.github.t3r1jj.develog.model.monitor.Event;
 import io.github.t3r1jj.develog.repository.monitoring.CallRepository;
 import io.github.t3r1jj.develog.repository.monitoring.ErrorRepository;
 import io.github.t3r1jj.develog.repository.monitoring.EventRepository;
+import io.github.t3r1jj.develog.service.UserService;
+import org.bson.BsonDocument;
+import org.bson.BsonInt32;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.HealthEndpoint;
 import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.boot.actuate.trace.TraceEndpoint;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AdminController {
@@ -35,6 +44,10 @@ public class AdminController {
     private TraceEndpoint traceEndpoint;
     @Autowired
     private InfoEndpoint infoEndpoint;
+    @Autowired
+    private MongoTemplate mongoTemplate;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping("admin")
     String getPage(Model model) {
@@ -43,8 +56,8 @@ public class AdminController {
 
     @RequestMapping("admin/users")
     @ResponseBody
-    String getUsersFragment(Model model) {
-        return "users";
+    List<HashMap.Entry<User, Long>> getUsersFragment(Model model) {
+        return userService.findAllUsersDataSize();
     }
 
     @RequestMapping("admin/events")
@@ -69,11 +82,24 @@ public class AdminController {
     @ResponseBody
     String getHealthFragment(Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> dbDetails = new HashMap<>(healthEndpoint.health().getDetails());
+        dbDetails.put("mongoDbSize", getMongoDbSize());
+        dbDetails.put("postgresDbSize", userService.getUsersDataSize());
         return objectMapper.writeValueAsString(Arrays.asList(
-                healthEndpoint.health().getDetails(),
+                dbDetails,
                 traceEndpoint.traces().getTraces(),
                 infoEndpoint.info())
         );
+    }
+
+    private long getMongoDbSize() {
+        try {
+            MongoDatabase db = mongoTemplate.getDb();
+            Document document = db.runCommand(new BsonDocument("dbStats", new BsonInt32(1)).append("scale", new BsonInt32(1024 * 1024)));
+            return Double.valueOf(document.get("dataSize").toString()).longValue();
+        } catch (Exception ex) {
+            return -1;
+        }
     }
 
 }
