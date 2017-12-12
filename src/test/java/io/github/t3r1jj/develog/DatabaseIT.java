@@ -1,9 +1,11 @@
 package io.github.t3r1jj.develog;
 
-import io.github.t3r1jj.develog.repository.NoteRepository;
-import io.github.t3r1jj.develog.repository.TagRepository;
-import io.github.t3r1jj.develog.repository.UserRepository;
-import org.junit.jupiter.api.Tag;
+import io.github.t3r1jj.develog.repository.data.NoteRepository;
+import io.github.t3r1jj.develog.repository.data.TagRepository;
+import io.github.t3r1jj.develog.repository.data.UserRepository;
+import io.github.t3r1jj.develog.repository.monitoring.ErrorRepository;
+import io.github.t3r1jj.develog.repository.monitoring.EventRepository;
+import io.github.t3r1jj.develog.repository.monitoring.CallRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,12 @@ class DatabaseIT {
     private NoteRepository noteRepository;
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private ErrorRepository errorRepository;
+    @Autowired
+    private CallRepository callRepository;
+    @Autowired
+    private EventRepository eventRepository;
 
     @Test
     @Transactional(readOnly = true)
@@ -27,5 +35,12 @@ class DatabaseIT {
         System.out.println(userRepository.findAll());
         System.out.println(noteRepository.findAll());
         System.out.println(tagRepository.findAll());
+    }
+
+    @Test
+    void monitoringDbConnection() {
+        System.out.println(errorRepository.findAll());
+        System.out.println(callRepository.findAll());
+        System.out.println(eventRepository.findAll());
     }
 }

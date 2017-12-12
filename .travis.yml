@@ -1,5 +1,7 @@
 language: java
 sudo: false
+services:
+  - mongodb
 
 script: "mvn clean clover:setup verify clover:aggregate clover:clover"
 

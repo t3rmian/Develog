@@ -2,7 +2,7 @@ package io.github.t3r1jj.develog.service;
 
 import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.User;
-import io.github.t3r1jj.develog.repository.UserRepository;
+import io.github.t3r1jj.develog.repository.data.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -41,7 +41,7 @@ class UserServiceTest {
 
     @Test
     void getUser() {
-        assertEquals(user, userService.getUser(user.getId()));
+        assertEquals(user, userService.getUser(user.getId()).get());
     }
 
     @Test

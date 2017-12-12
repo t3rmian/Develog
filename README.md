@@ -48,13 +48,12 @@ c) BANNED:
 ### Technologies/Components/Services
 
 - Maven
-- Spring + Spring Boot
+- Spring + Spring Boot + Spring Actuators
 - Thymeleaf
 - Materialize + _LESS/SASS_
 - Wro4j
 - PostgreSQL
 - AspectJ
-- Elasticsearch + Kibana (Monitoring)
 - Lombok
 - Flyingsaucer (PDF)
 - PlantUML

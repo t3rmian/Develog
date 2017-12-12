@@ -61,3 +61,22 @@ form > .row {
 .card-content {
     height: 100%;
 }
+
+@media only screen and (min-width: 992px) {
+    #nav-mobile + main {
+        margin-left: 300px;
+    }
+}
+
+#nav-mobile > li.center {
+    background-color: navy;
+    color: white;
+}
+
+.sidenav li.active {
+    background-color: #ffee58;
+}
+
+#nav-mobile .divider {
+    background-color: black;
+}

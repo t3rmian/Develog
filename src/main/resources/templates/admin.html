@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Develog - Note</title>
+    <meta th:replace="fragments/head"/>
+    <link href="yesmeck-jquery-jsonview/jquery.jsonview.css" type="text/css" rel="stylesheet"
+          media="screen,projection"/>
+</head>
+<body>
+
+<ul id="nav-mobile" class="sidenav sidenav-fixed">
+    <li class="center" style="height: 64px; display: table; width: 100%">
+        <h4 style="margin: auto;vertical-align: middle; display: table-cell;">Admin panel</h4>
+    </li>
+    <li>
+        <div class="divider" style="margin: 0;"></div>
+    </li>
+    <li><a href="#users"><i class="material-icons">face</i>Users</a></li>
+    <li><a href="#events"><i class="material-icons">stars</i>Events</a></li>
+    <li><a href="#errors"><i class="material-icons">error</i>Errors</a></li>
+    <li><a href="#logs"><i class="material-icons">description</i>Logs</a></li>
+    <li><a href="#health"><i class="material-icons">favorite</i>Health</a></li>
+    <a class="waves-effect waves-light btn-large"
+       style="position: absolute; bottom: 60px; left:0;right:0;margin:16px"><i
+            class="material-icons left">email</i>Email everyone</a>
+    <a class="waves-effect waves-light btn-large" onclick="clearLogs()"
+       style="position: absolute; bottom: 130px; left:0;right:0;margin:16px"><i
+            class="material-icons left">layers_clear</i>Clear all logs</a>
+</ul>
+<main>
+    <div th:replace="fragments/header"></div>
+    <main id="fragment"></main>
+    <div th:replace="fragments/footer"></div>
+</main>
+<script src="yesmeck-jquery-jsonview/jquery.jsonview.js"></script>
+<script type="text/javascript">
+    $(window).on('hashchange', function () {
+        loadFragment()
+    });
+
+    function clearLogs() {
+        $.ajax({
+            url: getLocation() + "/reset",
+            type: 'post',
+            data: $('#form').serialize()
+        });
+        loadFragment();
+    }
+
+    function loadFragment() {
+        var fragment = window.location.hash.replace('#', '');
+        if (fragment == null || fragment == "") {
+            window.location.hash = "#users";
+            fragment = "users"
+        }
+        $('li').removeClass('active');
+        $('a[href*="' + window.location.hash + '"]').each(function () {
+            $(this).parent().addClass('active');
+        });
+
+        fragment = getLocation() + "/" + fragment;
+        $.ajax({
+            url: fragment,
+            type: 'post',
+            data: $('#form').serialize(),
+            success: function (response) {
+                try {
+                    $("#fragment").JSONView(JSON.parse(response));
+                } catch (jsonError) {
+                    try {
+                        $("#fragment").JSONView(response);
+                    } catch (htmlError) {
+                        $("#fragment").html(response);
+                    }
+                }
+            }
+        });
+    }
+
+    function getLocation() {
+        return location.protocol + '//' + location.host + location.pathname + (location.search ? location.search : "");
+    }
+
+    loadFragment();
+</script>
+</body>
+</html>
