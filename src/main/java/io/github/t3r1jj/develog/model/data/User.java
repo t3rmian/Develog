@@ -33,7 +33,7 @@ public class User {
         return notes.stream().filter(note -> note.getDate().isEqual(date)).findAny();
     }
 
-    public Note getOrCreate(@Nullable LocalDate date) {
+    public Note getNoteOrCreate(@Nullable LocalDate date) {
         return getNote(date).orElseGet(() -> {
             Note note = Note.builder().date(date).build();
             notes.add(note);

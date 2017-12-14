@@ -111,4 +111,11 @@ public class NoteService {
         User loggedUser = userService.getLoggedUser();
         return loggedUser.getNote(date);
     }
+
+    public Note getNoteOrCreate() {
+        User loggedUser = userService.getLoggedUser();
+        Note note = loggedUser.getNoteOrCreate(LocalDate.now());
+        userService.updateUser(loggedUser);
+        return note;
+    }
 }

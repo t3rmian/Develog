@@ -34,6 +34,8 @@
                     $("#editor").replaceWith(response);
                     $("#output").contents().find('html').html($("#output0")[0].innerText);
                     $("#output0").remove();
+                } else {
+                    $("#editor").text("");
                 }
             }
         });

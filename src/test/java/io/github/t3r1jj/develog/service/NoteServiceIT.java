@@ -41,8 +41,8 @@ class NoteServiceIT {
     void addNoteTag() {
         LocalDate yesterday = LocalDate.now().minusDays(1);
         LocalDate today = LocalDate.now();
-        user.getOrCreate(yesterday);
-        user.getOrCreate(today);
+        user.getNoteOrCreate(yesterday);
+        user.getNoteOrCreate(today);
         user = userRepository.save(user);
 
         noteService.addNoteTag(yesterday, "tag1");
