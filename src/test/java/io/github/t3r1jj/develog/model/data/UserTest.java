@@ -58,4 +58,10 @@ class UserTest {
         assertTrue(user.getNotes().contains(newNote), "And the note has been put in user's collection");
     }
 
+    @Test
+    void getAllNotes() {
+        assertEquals(3, user.getAllNotes().size());
+        assertTrue(user.getAllNotes().contains(Note.builder().id(0L).build()));
+        assertTrue(user.getAllNotes().contains(yesterdayNote));
+    }
 }

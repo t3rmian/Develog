@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
@@ -91,5 +92,10 @@ class UserServiceTest {
         assertEquals(0, user.getNotes().size(), "Empty notes");
     }
 
-
+    @Test
+    void getUsersDataSize() {
+        when(userRepository.getDbSize()).thenThrow(new RuntimeException("incompatible db"));
+        assertEquals(-1, userService.getUsersDataSize());
+        verify(userRepository).getDbSize();
+    }
 }

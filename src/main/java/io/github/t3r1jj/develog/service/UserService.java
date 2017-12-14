@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,10 +55,9 @@ public class UserService {
      * @return number of characters written by user (notes body, tags) in thousands (1k)
      */
     @Transactional
-    public List<HashMap.Entry<User, Long>> findAllUsersDataSize() {
+    public Map<User, Long> findAllUsersDataSize() {
         return userRepository.findAllUsersDataSize().stream()
-                .map(result -> new HashMap.SimpleImmutableEntry<>((User) result[0], ((Long) result[1]) / 1000))
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(res -> (User) res[0], res -> ((Long) res[1]) / 1000));
     }
 
     /**
@@ -72,6 +72,10 @@ public class UserService {
             ex.printStackTrace();
             return -1;
         }
+    }
+
+    public List<LocalDate> getUserNoteDates() {
+        return userRepository.findNoteDatesByUserId(getLoggedUser().getId());
     }
 
 }

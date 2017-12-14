@@ -91,7 +91,6 @@ public class NoteService {
         User loggedUser = userService.getLoggedUser();
         List<Tag> tags = values.stream().map(v -> new Tag(v, loggedUser.getId())).collect(Collectors.toList());
         return loggedUser.getAllNotes().stream()
-                .peek(Note::getTags) // TODO: LAZY FETCH
                 .filter(n -> tagsMatch(n.getTags(), tags))
                 .collect(Collectors.toList());
     }
@@ -112,16 +111,15 @@ public class NoteService {
     }
 
     @Transactional
-    public Note getNoteOrCreate() {
+    public Note getNoteOrCreate(LocalDate date) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNoteOrCreate(LocalDate.now());
+        Note note = loggedUser.getNoteOrCreate(date);
         userService.updateUser(loggedUser);
         return note;
     }
 
     @Transactional(readOnly = true)
-    public List<LocalDate> getAllNoteDates() {
-        User loggedUser = userService.getLoggedUser();
-        return loggedUser.getNotes().stream().map(Note::getDate).collect(Collectors.toList());
+    public List<LocalDate> getNoteDates() {
+        return userService.getUserNoteDates();
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,9 @@ public class SearchController {
     @ResponseBody
     public ModelAndView findAllByTags(Model model, @RequestParam(value = "values[]", defaultValue = "") List<String> values) {
         List<Note> notes = noteService.findAllByTags(values);
-        model.addAttribute("editor", new Editor(notes));
+        Editor editor = new Editor();
+        editor.setInput(notes);
+        model.addAttribute("editor", editor);
         return new ModelAndView("fragments/editor", model.asMap());
     }
 
@@ -50,7 +51,9 @@ public class SearchController {
     public ModelAndView findByDate(Model model, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         List<Note> notes = new ArrayList<>();
         noteService.findByDate(date).ifPresent(notes::add);
-        model.addAttribute("editor", new Editor(notes));
+        Editor editor = new Editor();
+        editor.setInput(notes);
+        model.addAttribute("editor", editor);
         return new ModelAndView("fragments/editor", model.asMap());
     }
 

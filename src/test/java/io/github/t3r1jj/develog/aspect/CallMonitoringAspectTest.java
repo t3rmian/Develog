@@ -55,5 +55,5 @@ class CallMonitoringAspectTest {
         assertTrue(call.getAccumulatedCallTime() > 0, "Positive call time");
         assertEquals(call.getAccumulatedCallTime() / 3, call.getCallTime(), "Correct call count");
     }
-    
+
 }

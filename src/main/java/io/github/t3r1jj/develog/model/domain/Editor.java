@@ -19,12 +19,12 @@ import java.util.Objects;
 
 
 public class Editor {
+    private final Parser parser;
+    private final HtmlRenderer renderer;
     @Getter
     private String input = "";
     @Getter
     private String output = "";
-    private final Parser parser;
-    private final HtmlRenderer renderer;
 
     public Editor() {
         MutableDataSet options = new MutableDataSet();
@@ -37,8 +37,7 @@ public class Editor {
         setInput(input);
     }
 
-    public Editor(List<Note> notes) {
-        this();
+    public void setInput(List<Note> notes) {
         notes.forEach(n -> {
             String inputPart = "---\n\n#### " + n.getDate().toString() + "\n\n---\n\n" + n.getBody();
             this.input += inputPart;
@@ -51,7 +50,7 @@ public class Editor {
         this.output = parse(input);
     }
 
-    private String parse(String input) {
+    String parse(String input) {
         return parseMarkdown(parsePlantUML(input));
     }
 

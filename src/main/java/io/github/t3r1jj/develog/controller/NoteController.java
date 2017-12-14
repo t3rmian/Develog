@@ -26,11 +26,10 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @RequestMapping({"/today"})
-    // TODO: Client date? server date?
+    @RequestMapping({"/today/{date}"})
     @Transactional
-    public ModelAndView todayNote() {
-        LocalDate date = noteService.getNoteOrCreate().getDate();
+    public ModelAndView todayNote(@PathVariable LocalDate date) {
+        noteService.getNoteOrCreate(date);
         return new ModelAndView("redirect:/note/" + DateTimeFormatter.ISO_LOCAL_DATE.format(date));
     }
 
@@ -66,7 +65,7 @@ public class NoteController {
     @RequestMapping("notes")
     @ResponseBody
     public List<LocalDate> getAllNoteDates() {
-        return noteService.getAllNoteDates();
+        return noteService.getNoteDates();
     }
 
     enum Action {
