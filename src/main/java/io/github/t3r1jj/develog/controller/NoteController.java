@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static io.github.t3r1jj.develog.controller.NoteController.Action.ADD;
 
@@ -21,6 +23,14 @@ public class NoteController {
     @Autowired
     public NoteController(NoteService noteService) {
         this.noteService = noteService;
+    }
+
+    @RequestMapping({"/today"})
+    // TODO: Client date? server date?
+    @Transactional
+    public ModelAndView todayNote() {
+        LocalDate date = noteService.getNoteOrCreate().getDate();
+        return new ModelAndView("redirect:/note/" + DateTimeFormatter.ISO_LOCAL_DATE.format(date));
     }
 
     @RequestMapping({"/note", "/note/{date}"})
