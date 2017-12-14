@@ -19,7 +19,7 @@ function initChips(tags) {
         onChipAdd: function (e, chip) {
             var value = chip.innerText.substring(0, chip.innerText.length - 'close'.length);
             if ($(location).attr('href').indexOf("search") !== -1) {
-                search($('#tags')[0].M_Chips.chipsData)
+                searchByTags($('#tags')[0].M_Chips.chipsData)
             } else {
                 $.post($(location).attr('href') + '/tag', {action: "ADD", value: value});
             }
@@ -27,7 +27,7 @@ function initChips(tags) {
         onChipDelete: function (e, chip) {
             var value = chip.innerText.substring(0, chip.innerText.length - 'close'.length);
             if ($(location).attr('href').indexOf("search") !== -1) {
-                search($('#tags')[0].M_Chips.chipsData)
+                searchByTags($('#tags')[0].M_Chips.chipsData)
             } else {
                 $.post($(location).attr('href') + '/tag', {action: "REMOVE", value: value});
             }

@@ -20,15 +20,11 @@
 <div th:replace="fragments/footer"></div>
 
 <script th:inline="javascript">
-    function search(chips) {
-        var tags = [];
-        for (var i = 0; i < chips.length; i++) {
-            tags.push(chips[i].tag);
-        }
+    function search(url, data) {
         $.ajax({
-            url: $(location).attr('href') + '/tag',
+            url: url,
             type: 'post',
-            data: {values: tags},
+            data: data,
             success: function (response) {
                 if (response != "") {
                     $("#editor").replaceWith(response);
@@ -41,7 +37,23 @@
         });
     }
 
+    function searchByTags(chips) {
+        var tags = [];
+        for (var i = 0; i < chips.length; i++) {
+            tags.push(chips[i].tag);
+        }
+        search('/search/tag', {values: tags});
+        history.replaceState({}, "Search", "/search");
+    }
+
+    function searchByDate(date) {
+        search('/search/' + date);
+    }
+
     initChips([]);
+    if (/*[[${date}]]*/ null) {
+        searchByDate(/*[[${date}]]*/);
+    }
 </script>
 </body>
 </html>

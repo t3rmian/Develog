@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static io.github.t3r1jj.develog.controller.NoteController.Action.ADD;
 
@@ -60,6 +61,12 @@ public class NoteController {
         } else {
             return noteService.removeNoteTag(date, value);
         }
+    }
+
+    @RequestMapping("notes")
+    @ResponseBody
+    public List<LocalDate> getAllNoteDates() {
+        return noteService.getAllNoteDates();
     }
 
     enum Action {
