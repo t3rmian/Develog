@@ -11,10 +11,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class NoteServiceTest {
@@ -77,4 +82,39 @@ class NoteServiceTest {
         assertFalse(noteService.removeNoteTag(LocalDate.now(), "tag3"));
     }
 
+    @Test
+    void findAllByTags() {
+        Tag tag1 = new Tag("tag1", user.getId());
+        Note note2 = Note.builder().id(3L).build();
+        Note note3 = Note.builder().id(4L).build();
+        when(user.getAllNotes()).thenReturn(Arrays.asList(note, note2, note3));
+        note.setTags(new HashSet<Tag>() {{
+            this.add(tag1);
+        }});
+        note2.setTags(new HashSet<Tag>() {{
+            this.add(tag1);
+        }});
+        assertTrue(noteService.findAllByTags(Collections.singletonList("tag1")).contains(note));
+        assertTrue(noteService.findAllByTags(Collections.singletonList("tag1")).contains(note2));
+        assertFalse(noteService.findAllByTags(Collections.singletonList("tag1")).contains(note3));
+        assertFalse(noteService.findAllByTags(Arrays.asList("tag1", "tag2")).contains(note));
+    }
+
+    @Test
+    void findByDate() {
+        assertEquals(note, noteService.findByDate(LocalDate.now()).get());
+    }
+
+    @Test
+    void getNoteOrCreate() {
+        noteService.getNoteOrCreate(LocalDate.now());
+        verify(userService).updateUser(user);
+        verify(user).getNoteOrCreate(LocalDate.now());
+    }
+
+    @Test
+    void getNoteDates() {
+        noteService.getNoteDates();
+        verify(userService).getUserNoteDates();
+    }
 }

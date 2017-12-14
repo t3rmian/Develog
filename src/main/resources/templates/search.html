@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Develog - Note</title>
+    <meta th:replace="fragments/head"/>
+    <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script th:src="@{/owr/note.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+<main>
+    <form id="form">
+        <!--<h4 class="center orange-text" th:text="${note.date}">DATE</h4>-->
+        <div id="tags" class="chips chips-autocomplete"></div>
+        <div id="editor" class="row">
+        </div>
+    </form>
+</main>
+
+<div th:replace="fragments/footer"></div>
+
+<script th:inline="javascript">
+    function search(url, data) {
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: data,
+            success: function (response) {
+                if (response != "") {
+                    $("#editor").replaceWith(response);
+                    $("#output").contents().find('html').html($("#output0")[0].innerText);
+                    $("#output0").remove();
+                } else {
+                    $("#editor").text("");
+                }
+            }
+        });
+    }
+
+    function searchByTags(chips) {
+        var tags = [];
+        for (var i = 0; i < chips.length; i++) {
+            tags.push(chips[i].tag);
+        }
+        search('/search/tag', {values: tags});
+        history.replaceState({}, "Search", "/search");
+    }
+
+    function searchByDate(date) {
+        search('/search/' + date);
+    }
+
+    initChips([]);
+    if (/*[[${date}]]*/ null) {
+        searchByDate(/*[[${date}]]*/);
+    }
+</script>
+</body>
+</html>

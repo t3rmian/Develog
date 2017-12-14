@@ -1,7 +1,11 @@
 <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
-            <li><a href="#">Navbar Link</a></li>
+            <li><a href="/note">Global note</a></li>
+            <li><a href="javascript:void(0)" onclick="openTodayNote()">Today's note</a></li>
+            <li class="datepicker"><a href="javascript:void(0)">Calendar</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/admin">Admin</a></li>
         </ul>
 
         <ul id="nav-mobile" class="sidenav">
@@ -10,3 +14,29 @@
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
 </nav>
+<script type="text/javascript">
+    function openTodayNote() {
+        window.location.href = "/today/" + new Date().toISOString().split("T")[0];
+    }
+
+    $.ajax({
+        url: '/notes',
+        type: 'get',
+        success: function (response) {
+            $(document).ready(function () {
+                $('.datepicker').datepicker({
+                    defaultDate: new Date(),
+                    maxDate: new Date(),
+                    disableDayFn: function (date) {
+                        date.setDate(date.getDate() + 1);
+                        return $.inArray(date.toISOString().split("T")[0], response) === -1
+                    },
+                    onSelect: function (date) {
+                        date.setDate(date.getDate() + 1);
+                        window.location.href = "/search?date=" + date.toISOString().split("T")[0];
+                    }
+                });
+            });
+        }
+    });
+</script>

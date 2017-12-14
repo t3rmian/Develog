@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -53,10 +52,16 @@ class UserTest {
 
     @Test
     void getOrCreateNote() {
-        Note newNote = user.getOrCreate(LocalDate.now().plusYears(2));
+        Note newNote = user.getNoteOrCreate(LocalDate.now().plusYears(2));
         assertTrue(newNote != null, "New note created");
-        assertEquals(newNote, user.getOrCreate(LocalDate.now().plusYears(2)), "Returned cached note");
+        assertEquals(newNote, user.getNoteOrCreate(LocalDate.now().plusYears(2)), "Returned cached note");
         assertTrue(user.getNotes().contains(newNote), "And the note has been put in user's collection");
     }
 
+    @Test
+    void getAllNotes() {
+        assertEquals(3, user.getAllNotes().size());
+        assertTrue(user.getAllNotes().contains(Note.builder().id(0L).build()));
+        assertTrue(user.getAllNotes().contains(yesterdayNote));
+    }
 }

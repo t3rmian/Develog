@@ -1,8 +1,13 @@
 package io.github.t3r1jj.develog.model.domain;
 
+import io.github.t3r1jj.develog.model.data.Note;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 class EditorTest {
 
@@ -36,7 +41,7 @@ class EditorTest {
         System.out.println(output);
         assertTrue(output.contains("<svg"));
     }
-    
+
     @Test
     void parseMarkdownUML() {
         Editor editor = new Editor("# HEADER" +
@@ -54,6 +59,14 @@ class EditorTest {
         assertTrue(output.contains("<h1>"), "Contains header from markdown");
         assertTrue(output.contains("<svg"), "Generated UML image");
         assertTrue(output.contains("<li>"), "Contains list items from markdown");
+    }
+
+    @Test
+    void multiNoteEditor() {
+        Editor editor = spy(new Editor());
+        editor.setInput(Arrays.asList(Note.builder().body("abc").build(), Note.builder().body("defg").build()));
+        verify(editor, times(2)).parse(anyString());
+        assertTrue(editor.getInput().contains("---"));
     }
 
 }

@@ -33,12 +33,18 @@ public class User {
         return notes.stream().filter(note -> note.getDate().isEqual(date)).findAny();
     }
 
-    public Note getOrCreate(@Nullable LocalDate date) {
+    public Note getNoteOrCreate(@Nullable LocalDate date) {
         return getNote(date).orElseGet(() -> {
             Note note = Note.builder().date(date).build();
             notes.add(note);
             return note;
         });
+    }
+
+    public List<Note> getAllNotes() {
+        ArrayList<Note> notes = new ArrayList<>(this.notes);
+        notes.add(globalNote);
+        return notes;
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")

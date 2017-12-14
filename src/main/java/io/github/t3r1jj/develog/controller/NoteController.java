@@ -8,8 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static io.github.t3r1jj.develog.controller.NoteController.Action.ADD;
 
 @Controller
 public class NoteController {
@@ -19,6 +24,13 @@ public class NoteController {
     @Autowired
     public NoteController(NoteService noteService) {
         this.noteService = noteService;
+    }
+
+    @RequestMapping({"/today/{date}"})
+    @Transactional
+    public ModelAndView todayNote(@PathVariable LocalDate date) {
+        noteService.getNoteOrCreate(date);
+        return new ModelAndView("redirect:/note/" + DateTimeFormatter.ISO_LOCAL_DATE.format(date));
     }
 
     @RequestMapping({"/note", "/note/{date}"})
@@ -40,19 +52,20 @@ public class NoteController {
         return editor.getOutput();
     }
 
-    @RequestMapping(value = {"/note/tag", "/note/{date}/tag"})
+    @RequestMapping(value = {"/note/tag", "/note/{date}/tag"}, method = RequestMethod.POST)
     @ResponseBody
-    public Boolean updateTags(@RequestParam String tag, @RequestParam Action action, @PathVariable(required = false) LocalDate date) {
-        switch (action) {
-            case ADD: {
-                return noteService.addNoteTag(date, tag);
-            }
-            case REMOVE: {
-                return noteService.removeNoteTag(date, tag);
-            }
-            default:
-                throw new UnsupportedOperationException();
+    public Boolean updateTags(@RequestParam String value, @RequestParam Action action, @PathVariable(required = false) LocalDate date) {
+        if (action == ADD) {
+            return noteService.addNoteTag(date, value);
+        } else {
+            return noteService.removeNoteTag(date, value);
         }
+    }
+
+    @RequestMapping("notes")
+    @ResponseBody
+    public List<LocalDate> getAllNoteDates() {
+        return noteService.getNoteDates();
     }
 
     enum Action {

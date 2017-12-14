@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,4 +83,43 @@ public class NoteService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public List<Note> findAllByTags(List<String> values) {
+        if (values.isEmpty()) {
+            return Collections.emptyList();
+        }
+        User loggedUser = userService.getLoggedUser();
+        List<Tag> tags = values.stream().map(v -> new Tag(v, loggedUser.getId())).collect(Collectors.toList());
+        return loggedUser.getAllNotes().stream()
+                .filter(n -> tagsMatch(n.getTags(), tags))
+                .collect(Collectors.toList());
+    }
+
+    private boolean tagsMatch(Set<Tag> t1, List<Tag> t2) {
+        for (Tag t : t2) {
+            if (!t1.contains(t)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Note> findByDate(LocalDate date) {
+        User loggedUser = userService.getLoggedUser();
+        return loggedUser.getNote(date);
+    }
+
+    @Transactional
+    public Note getNoteOrCreate(LocalDate date) {
+        User loggedUser = userService.getLoggedUser();
+        Note note = loggedUser.getNoteOrCreate(date);
+        userService.updateUser(loggedUser);
+        return note;
+    }
+
+    @Transactional(readOnly = true)
+    public List<LocalDate> getNoteDates() {
+        return userService.getUserNoteDates();
+    }
 }

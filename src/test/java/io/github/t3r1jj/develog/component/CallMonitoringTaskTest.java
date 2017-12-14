@@ -17,13 +17,12 @@ import static org.mockito.Mockito.when;
 
 class CallMonitoringTaskTest {
 
+    private final Call call = new Call("test");
     @Mock
     private CallMonitoringAspect callMonitoringAspect;
     @Mock
     private CallRepository callRepository;
-
     private CallMonitoringTask callMonitoringTask;
-    private final Call call = new Call("test");
 
     @BeforeEach
     void setUp() {

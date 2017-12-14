@@ -105,11 +105,6 @@ public class AdminController {
         Map<String, Object> dbDetails = new HashMap<>(healthEndpoint.health().getDetails());
         dbDetails.put("mongoDbSize", getMongoDbSize() + " MB");
         dbDetails.put("postgresDbSize", userService.getUsersDataSize() + " MB");
-        System.out.println(objectMapper.writeValueAsString(Arrays.asList(
-                dbDetails,
-                traceEndpoint.traces().getTraces(),
-                infoEndpoint.info())
-        ));
         return objectMapper.writeValueAsString(Arrays.asList(
                 dbDetails,
                 traceEndpoint.traces().getTraces(),

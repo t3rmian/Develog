@@ -27,7 +27,7 @@ public class Note {
     @Column(length = 65536)
     private String body = "";
     private boolean isGlobal;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "notes_tags", joinColumns = {
             @JoinColumn(name = "notes_id", referencedColumnName = "id", nullable = false)}, inverseJoinColumns = {
             @JoinColumn(name = "tags_value", referencedColumnName = "value", nullable = false),

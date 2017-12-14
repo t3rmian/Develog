@@ -13,7 +13,7 @@
     <tr th:each="user : ${users}">
         <td th:text="${user.key.id}">0</td>
         <td th:text="${user.key.name}">John</td>
-        <td>[[${user.value}]] MB</td>
+        <td>[[${user.value}]] kB</td>
         <td></td>
         <td>
             <a class="waves-effect waves-light btn"><i class="material-icons left">email</i>Email</a>
