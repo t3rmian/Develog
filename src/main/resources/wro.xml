@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro">
+    <group name="admin">
+        <group-ref>base</group-ref>
+        <css>/yesmeck-jquery-jsonview/jquery.jsonview.css</css>
+        <js>/yesmeck-jquery-jsonview/jquery.jsonview.js</js>
+        <js>/js/admin.js</js>
+    </group>
+    <group name="note">
+        <group-ref>base</group-ref>
+        <js>/js/note.js</js>
+    </group>
+    <group name="base">
+        <css>/materialize/css/materialize.css</css>
+        <css>/css/style.less</css>
+        <js>/jquery/jquery-3.2.1.min.js</js>
+        <js>/materialize/js/materialize.js</js>
+        <js>/materialize/js/init.js</js>
+    </group>
+</groups>

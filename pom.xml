@@ -105,6 +105,11 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
         </dependency>
+        <dependency>
+            <groupId>eu.michael-simons</groupId>
+            <artifactId>wro4j-spring-boot-starter</artifactId>
+            <version>0.3.4</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>

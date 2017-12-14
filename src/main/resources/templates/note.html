@@ -3,6 +3,8 @@
 <head>
     <title>Develog - Note</title>
     <meta th:replace="fragments/head"/>
+    <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script th:src="@{/owr/note.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header"></div>
@@ -32,80 +34,11 @@
 
 <div th:replace="fragments/footer"></div>
 
-<script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
-
-    var chips = [];
-    var tags = [[${note.tags}]]
-    for (i = 0; i < tags.length; i++) {
-        chips.push({tag: tags[i].id.value});
-    }
-    $('#tags').chips({
-        data: chips,
-        placeholder: 'Enter a tag',
-        secondaryPlaceholder: '+Tag',
-        autocompleteOptions: {
-            data: {
-                'Apple': null,
-                'Microsoft': null,
-                'Google': null
-            },
-            limit: Infinity,
-            minLength: 2
-        },
-        onChipAdd: function (e, chip) {
-            var value = chip.innerText.substring(0, chip.innerText.length - 'close'.length)
-            $.get($(location).attr('href') + '/tag', {action: "ADD", tag: value});
-        },
-        onChipDelete: function (e, chip) {
-            var value = chip.innerText.substring(0, chip.innerText.length - 'close'.length)
-            $.get($(location).attr('href') + '/tag', {action: "REMOVE", tag: value});
-        }
-    });
-
-    function updateNote() {
-        $.ajax({
-            url: $(location).attr('href') + '/update',
-            type: 'post',
-            data: $('#form').serialize(),
-            success: function (response) {
-                if ($(response).find('.has-error').length) {
-                    $("#output").contents().find('html').html(response);
-                } else {
-                    $("#output").contents().find('html').html(response);
-                }
-            }
-        });
-    }
-
-    var pendingTimeout = false;
-    $('#input').on('input propertychange change', function () {
-        if (!pendingTimeout) {
-            pendingTimeout = true;
-            setTimeout(function () {
-                updateNote();
-                pendingTimeout = false;
-            }, 1000);
-        }
-    });
-    $('#input').on('paste', function (event) {
-        var items = (event.clipboardData || event.originalEvent.clipboardData).items;
-        console.log(JSON.stringify(items)); // will give you the mime types
-        for (index in items) {
-            var item = items[index];
-            if (item.kind === 'file') {
-                var blob = item.getAsFile();
-                var reader = new FileReader();
-                reader.onload = function (event) {
-                    console.log(event.target.result)
-                }; // data url!
-                reader.readAsDataURL(blob);
-            }
-        }
-    });
-
+<script th:inline="javascript">
+    var tags = /*[[${note.tags}]]*/ null;
+    initChips(tags);
+    initEditor();
     updateNote();
-    /*]]>*/
 </script>
 </body>
 </html>

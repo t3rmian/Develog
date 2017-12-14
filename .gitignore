@@ -77,5 +77,6 @@ buildNumber.properties
 # End of https://www.gitignore.io/api/maven,intellij+all
 
 *.iml
-src/main/resources/static/materialize*
-src/main/resources/static/yesmeck-jquery-jsonview
+src/main/resources/static/materialize/*
+src/main/resources/static/yesmeck-jquery-jsonview/*
+src/main/resources/static/jquery/*

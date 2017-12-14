@@ -11,7 +11,6 @@ class PlantUmlMatcher {
         Matcher matcher = pattern.matcher(input);
         List<String> groups = new ArrayList<>();
         while (matcher.find()) {
-            System.out.println(matcher.groupCount());
             groups.add(matcher.group(1));
         }
         return groups;

@@ -3,8 +3,8 @@
 <head>
     <title>Develog - Note</title>
     <meta th:replace="fragments/head"/>
-    <link href="yesmeck-jquery-jsonview/jquery.jsonview.css" type="text/css" rel="stylesheet"
-          media="screen,projection"/>
+    <link th:href="@{/owr/admin.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script th:src="@{/owr/admin.js}" th:inline="javascript"></script>
 </head>
 <body>
 
@@ -32,56 +32,5 @@
     <main id="fragment"></main>
     <div th:replace="fragments/footer"></div>
 </main>
-<script src="yesmeck-jquery-jsonview/jquery.jsonview.js"></script>
-<script type="text/javascript">
-    $(window).on('hashchange', function () {
-        loadFragment()
-    });
-
-    function clearLogs() {
-        $.ajax({
-            url: getLocation() + "/reset",
-            type: 'post',
-            data: $('#form').serialize()
-        });
-        loadFragment();
-    }
-
-    function loadFragment() {
-        var fragment = window.location.hash.replace('#', '');
-        if (fragment == null || fragment == "") {
-            window.location.hash = "#users";
-            fragment = "users"
-        }
-        $('li').removeClass('active');
-        $('a[href*="' + window.location.hash + '"]').each(function () {
-            $(this).parent().addClass('active');
-        });
-
-        fragment = getLocation() + "/" + fragment;
-        $.ajax({
-            url: fragment,
-            type: 'post',
-            data: $('#form').serialize(),
-            success: function (response) {
-                try {
-                    $("#fragment").JSONView(JSON.parse(response));
-                } catch (jsonError) {
-                    try {
-                        $("#fragment").JSONView(response);
-                    } catch (htmlError) {
-                        $("#fragment").html(response);
-                    }
-                }
-            }
-        });
-    }
-
-    function getLocation() {
-        return location.protocol + '//' + location.host + location.pathname + (location.search ? location.search : "");
-    }
-
-    loadFragment();
-</script>
 </body>
 </html>
