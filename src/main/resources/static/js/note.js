@@ -18,11 +18,19 @@ function initChips(tags) {
         },
         onChipAdd: function (e, chip) {
             var value = chip.innerText.substring(0, chip.innerText.length - 'close'.length);
-            $.get($(location).attr('href') + '/tag', {action: "ADD", tag: value});
+            if ($(location).attr('href').indexOf("search") !== -1) {
+                search($('#tags')[0].M_Chips.chipsData)
+            } else {
+                $.post($(location).attr('href') + '/tag', {action: "ADD", value: value});
+            }
         },
         onChipDelete: function (e, chip) {
             var value = chip.innerText.substring(0, chip.innerText.length - 'close'.length);
-            $.get($(location).attr('href') + '/tag', {action: "REMOVE", tag: value});
+            if ($(location).attr('href').indexOf("search") !== -1) {
+                search($('#tags')[0].M_Chips.chipsData)
+            } else {
+                $.post($(location).attr('href') + '/tag', {action: "REMOVE", value: value});
+            }
         }
     });
 }

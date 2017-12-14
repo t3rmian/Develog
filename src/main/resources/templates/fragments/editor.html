@@ -1,0 +1,18 @@
+<div id="editor" th:if="${!editor.isEmpty()}" class="row" xmlns:th="http://www.thymeleaf.org">
+    <div class="col s6">
+        <h5 class="header center">Editor</h5>
+        <div class="input-field col s12">
+            <textarea id="input" class="materialize-textarea" th:field="${editor.input}" disabled></textarea>
+            <label for="input"></label>
+        </div>
+    </div>
+    <div class="col s6 center">
+        <h5 class="header center">View</h5>
+        <div class="card white">
+            <div class="card-content">
+                <iframe id="output"></iframe>
+                <div id="output0" th:text="${editor.output}" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>

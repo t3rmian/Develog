@@ -41,6 +41,12 @@ public class User {
         });
     }
 
+    public List<Note> getAllNotes() {
+        ArrayList<Note> notes = new ArrayList<>(this.notes);
+        notes.add(globalNote);
+        return notes;
+    }
+
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object o) {

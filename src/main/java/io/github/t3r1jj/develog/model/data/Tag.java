@@ -21,6 +21,10 @@ public class Tag {
         this.id = new TagId(value, userId);
     }
 
+    public Tag(String value) {
+        this(value, null);
+    }
+
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object o) {
