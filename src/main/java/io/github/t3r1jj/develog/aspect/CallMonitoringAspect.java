@@ -17,7 +17,6 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 
 @Aspect
 @Component
-@Scope(value = SCOPE_SINGLETON)
 public class CallMonitoringAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(CallMonitoringAspect.class);

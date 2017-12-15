@@ -52,6 +52,7 @@ public class NoteController {
         return editor.getOutput();
     }
 
+    @Transactional
     @RequestMapping(value = {"/note/tag", "/note/{date}/tag"}, method = RequestMethod.POST)
     @ResponseBody
     public Boolean updateTags(@RequestParam String value, @RequestParam Action action, @PathVariable(required = false) LocalDate date) {
@@ -62,6 +63,7 @@ public class NoteController {
         }
     }
 
+    @Transactional
     @RequestMapping("notes")
     @ResponseBody
     public List<LocalDate> getAllNoteDates() {

@@ -3,6 +3,8 @@ package io.github.t3r1jj.develog.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoDatabase;
+import io.github.t3r1jj.develog.model.data.User;
+import io.github.t3r1jj.develog.model.domain.BusinessRoles;
 import io.github.t3r1jj.develog.model.monitor.Call;
 import io.github.t3r1jj.develog.model.monitor.Error;
 import io.github.t3r1jj.develog.model.monitor.Event;
@@ -30,6 +32,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
+@BusinessRoles(values = User.Role.ADMIN)
 public class AdminController {
 
     @Autowired

@@ -9,9 +9,9 @@ import java.io.IOException;
 @Controller
 public class RedirectController {
 
-//    @RequestMapping("/")
-    public void redirectRootToNote(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/note");
+    @RequestMapping("/")
+    public String index() {
+        return "index";
     }
 
 }
