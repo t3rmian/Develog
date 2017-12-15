@@ -41,6 +41,13 @@ function getLocation() {
     return location.protocol + '//' + location.host + location.pathname + (location.search ? location.search : "");
 }
 
+(function ($) {
+    $(function () {
+        $('.sidenav').sidenav();
+    });
+})(jQuery);
+
+
 $(window).on('hashchange', function () {
     loadFragment()
 });
