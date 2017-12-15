@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,15 @@ public class Application extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/owr/*").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
                 .and()
                 .oauth2Login()
                 .successHandler(new SavedRequestAwareAuthenticationSuccessHandler() {

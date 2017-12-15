@@ -21,6 +21,8 @@ import static org.mockito.Mockito.when;
 class UserServiceTest {
 
     @Mock
+    private SessionService sessionService;
+    @Mock
     private UserRepository userRepository;
     private UserService userService;
     private User user;
@@ -37,7 +39,7 @@ class UserServiceTest {
             when(userRepository.findById(user.getId())).thenReturn(Optional.of(newUser));
             return newUser;
         });
-        userService = spy(new UserService(userRepository));
+        userService = spy(new UserService(sessionService, userRepository));
     }
 
     @Test

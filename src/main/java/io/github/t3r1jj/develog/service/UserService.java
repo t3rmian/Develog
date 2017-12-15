@@ -2,13 +2,9 @@ package io.github.t3r1jj.develog.service;
 
 import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.User;
-import io.github.t3r1jj.develog.model.domain.GitHubPrincipalExtractor;
 import io.github.t3r1jj.develog.repository.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +16,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private final SessionService sessionService;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(SessionService sessionService, UserRepository userRepository) {
+        this.sessionService = sessionService;
         this.userRepository = userRepository;
     }
 
     @Transactional
     public User getLoggedUser() {
-        return getUser(getAuthenticatedUserId()).orElseThrow(() -> new UsernameNotFoundException("Couldn't find the user in db."));
+        return getUser(sessionService.getAuthenticatedUserId())
+                .orElseThrow(() -> new UsernameNotFoundException("Couldn't find the user in db."));
     }
 
     @Transactional(readOnly = true)
@@ -83,20 +82,8 @@ public class UserService {
         return userRepository.findNoteDatesByUserId(getLoggedUser().getId());
     }
 
-    private User getAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
-        return new GitHubPrincipalExtractor().extract(token.getPrincipal());
-    }
-
-    private Long getAuthenticatedUserId() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
-        return GitHubPrincipalExtractor.extractId(token.getPrincipal());
-    }
-
     public void onAuthenticationSuccess() {
-        User authenticatedUser = getAuthenticatedUser();
+        User authenticatedUser = sessionService.getAuthenticatedUser();
         User dbUser = getUser(authenticatedUser.getId()).orElseGet(() -> registerUser(authenticatedUser));
         if (!authenticatedUser.infoEquals(dbUser)) {
             updateUser(User.builder()
