@@ -4,11 +4,11 @@ import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.repository.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,16 +16,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+    private final SessionService sessionService;
     private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(SessionService sessionService, UserRepository userRepository) {
+        this.sessionService = sessionService;
         this.userRepository = userRepository;
     }
 
     @Transactional
     public User getLoggedUser() {
-        return getUser(123L).orElseGet(() -> registerUser(User.builder().id(123L).build()));
+        return getUser(sessionService.getAuthenticatedUserId())
+                .orElseThrow(() -> new UsernameNotFoundException("Couldn't find the user in db."));
     }
 
     @Transactional(readOnly = true)
@@ -44,6 +47,7 @@ public class UserService {
                 .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
+                .role(user.getRole())
                 .globalNote(Note.builder()
                         .isGlobal(true)
                         .build()
@@ -74,8 +78,29 @@ public class UserService {
         }
     }
 
+    @Transactional
     public List<LocalDate> getUserNoteDates() {
         return userRepository.findNoteDatesByUserId(getLoggedUser().getId());
     }
 
+    @Transactional
+    public void onAuthenticationSuccess() {
+        User authenticatedUser = sessionService.getAuthenticatedUser();
+        User dbUser = getUser(authenticatedUser.getId()).orElseGet(() -> registerUser(authenticatedUser));
+        if (!authenticatedUser.infoEquals(dbUser)) {
+            updateUser(User.builder()
+                    .id(authenticatedUser.getId())
+                    .globalNote(dbUser.getGlobalNote())
+                    .email(authenticatedUser.getEmail())
+                    .name(authenticatedUser.getName())
+                    .notes(authenticatedUser.getNotes())
+                    .role(dbUser.getRole())
+                    .build()
+            );
+        }
+    }
+
+    public boolean isUserAuthenticated() {
+        return sessionService.isSessionAuthenticated();
+    }
 }

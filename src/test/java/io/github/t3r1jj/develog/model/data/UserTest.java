@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UserTest {
 
-
     private Note todayNote;
     private Note yesterdayNote;
     private User user;
@@ -63,5 +62,26 @@ class UserTest {
         assertEquals(3, user.getAllNotes().size());
         assertTrue(user.getAllNotes().contains(Note.builder().id(0L).build()));
         assertTrue(user.getAllNotes().contains(yesterdayNote));
+    }
+
+    @Test
+    void infoEquals_DifferentEmail() {
+        User user1 = User.builder().id(1L).email("a").build();
+        User user2 = User.builder().id(2L).email("b").build();
+        assertFalse(user1.infoEquals(user2));
+    }
+
+    @Test
+    void infoEquals_DifferentName() {
+        User user1 = User.builder().id(1L).name("a").build();
+        User user2 = User.builder().id(2L).name("b").build();
+        assertFalse(user1.infoEquals(user2));
+    }
+
+    @Test
+    void infoEquals_SameInfoEmail() {
+        User user1 = User.builder().id(1L).email("w").name("a").build();
+        User user2 = User.builder().id(2L).email("w").name("a").build();
+        assertTrue(user1.infoEquals(user2));
     }
 }

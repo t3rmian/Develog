@@ -7,7 +7,6 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Supplier;
 
 @Getter
 @ToString
@@ -21,10 +20,13 @@ public class User {
     private String name;
     private String email;
     @OneToOne(cascade = CascadeType.ALL)
-    private Note globalNote;
+    @Builder.Default
+    private Note globalNote = Note.builder().isGlobal(true).build();
     @OneToMany(cascade = CascadeType.ALL)
     @Builder.Default
     private List<Note> notes = Collections.emptyList();
+    @Builder.Default
+    private Role role = Role.USER;
 
     public Optional<Note> getNote(@Nullable LocalDate date) {
         if (date == null) {
@@ -59,5 +61,14 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    public boolean infoEquals(User user) {
+        return Objects.equals(this.email, user.email) &&
+                Objects.equals(this.name, user.name);
+    }
+
+    public enum Role {
+        ADMIN, USER, BANNED
     }
 }

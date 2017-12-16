@@ -101,6 +101,11 @@ class NoteServiceTest {
     }
 
     @Test
+    void findAllByTags_Empty() {
+        assertEquals(0, noteService.findAllByTags(Collections.emptyList()).size());
+    }
+
+    @Test
     void findByDate() {
         assertEquals(note, noteService.findByDate(LocalDate.now()).get());
     }

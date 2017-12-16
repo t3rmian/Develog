@@ -4,7 +4,6 @@ import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.domain.Editor;
 import io.github.t3r1jj.develog.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -48,7 +47,7 @@ public class SearchController {
     @Transactional(readOnly = true)
     @RequestMapping(value = "/search/{date}", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView findByDate(Model model, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ModelAndView findByDate(Model model, @PathVariable LocalDate date) {
         List<Note> notes = new ArrayList<>();
         noteService.findByDate(date).ifPresent(notes::add);
         Editor editor = new Editor();

@@ -35,4 +35,10 @@ class NoteTest {
         return new Tag(value, 123L);
     }
 
+    @Test
+    void testHashCode() {
+        assertEquals(Note.builder().build().hashCode(), Note.builder().build().hashCode());
+        assertEquals(Note.builder().id(1L).build().hashCode(), Note.builder().id(1L).build().hashCode());
+        assertNotEquals(Note.builder().id(1L).build().hashCode(), Note.builder().id(2L).build().hashCode());
+    }
 }

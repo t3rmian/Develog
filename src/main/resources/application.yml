@@ -1,0 +1,9 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${DEVELOG_GITHUB_CLIENT_ID}
+            client-secret: ${DEVELOG_GITHUB_CLIENT_SECRET}
+            scope: read:user

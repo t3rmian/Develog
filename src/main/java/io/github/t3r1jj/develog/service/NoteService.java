@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.ws.http.HTTPException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -38,7 +39,7 @@ public class NoteService {
     @Transactional
     public void updateNoteBody(LocalDate date, String body) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNote(date).get();
+        Note note = loggedUser.getNote(date).orElseThrow(() -> new HTTPException(404));
         note.setBody(body);
         updateNote(note);
     }
@@ -46,7 +47,7 @@ public class NoteService {
     @Transactional
     public boolean addNoteTag(LocalDate date, String tag) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNote(date).get();
+        Note note = loggedUser.getNote(date).orElseThrow(() -> new HTTPException(404));
         if (note.addTag(new Tag(tag, loggedUser.getId()))) {
             updateNote(note);
             return true;
@@ -57,7 +58,7 @@ public class NoteService {
     @Transactional
     public boolean removeNoteTag(LocalDate date, String tag) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNote(date).get();
+        Note note = loggedUser.getNote(date).orElseThrow(() -> new HTTPException(404));
         if (note.removeTag(new Tag(tag, loggedUser.getId()))) {
             updateNote(note);
             return true;
@@ -65,13 +66,11 @@ public class NoteService {
         return false;
     }
 
-    @Transactional
     private void updateNote(Note note) {
         persistNewTags(note);
         noteRepository.saveAndFlush(note);
     }
 
-    @Transactional
     private void persistNewTags(Note note) {
         List<Tag> presentTags = tagRepository.findAllById(note.getTags().stream()
                 .map(Tag::getId)
