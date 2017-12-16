@@ -2,6 +2,7 @@ package io.github.t3r1jj.develog.controller;
 
 import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.domain.Editor;
+import io.github.t3r1jj.develog.model.domain.exception.ResourceNotFoundException;
 import io.github.t3r1jj.develog.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class NoteController {
     // TODO: Change to readonly when registering user is implemented
     @Transactional
     public String openNote(Model model, @PathVariable(required = false) LocalDate date) {
-        Note note = noteService.getNote(date).get();
+        Note note = noteService.getNote(date).orElseThrow(ResourceNotFoundException::new);
         Editor noteEditor = new Editor(note.getBody());
         model.addAttribute("editor", noteEditor);
         model.addAttribute("note", note);
@@ -75,3 +76,4 @@ public class NoteController {
     }
 
 }
+

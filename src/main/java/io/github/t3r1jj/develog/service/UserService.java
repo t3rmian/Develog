@@ -47,6 +47,7 @@ public class UserService {
                 .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
+                .role(user.getRole())
                 .globalNote(Note.builder()
                         .isGlobal(true)
                         .build()
@@ -96,5 +97,9 @@ public class UserService {
                     .build()
             );
         }
+    }
+
+    public boolean isUserAuthenticated() {
+        return sessionService.isSessionAuthenticated();
     }
 }

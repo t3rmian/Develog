@@ -11,6 +11,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -31,11 +32,16 @@ public class AuthorizationAspect {
     public void businessRolesPointcut() {
     }
 
+    @Pointcut("within(@org.springframework.stereotype.Controller *)")
+    public void userInfoPointcut() {
+    }
+
     @Before("businessRolesPointcut()")
     public void authorize(JoinPoint joinPoint) throws AccessDeniedException {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         BusinessRoles[] businessRolesAnnotations = getBusinessRoles(method);
+        System.err.println("CALLING2: " + joinPoint.getSignature());
         for (BusinessRoles roles : businessRolesAnnotations) {
             List<User.Role> roleValues = Arrays.asList(roles.values());
             if (!roleValues.isEmpty() && !roleValues.contains(userService.getLoggedUser().getRole())) {
@@ -50,6 +56,21 @@ public class AuthorizationAspect {
             businessRolesAnnotations = method.getDeclaringClass().getAnnotationsByType(BusinessRoles.class);
         }
         return businessRolesAnnotations;
+    }
+
+    @Before("userInfoPointcut()")
+    public void addUserInfoModel(JoinPoint joinPoint) {
+        if (!userService.isUserAuthenticated()) {
+            return;
+        }
+        Object[] args = joinPoint.getArgs();
+        for (Object arg : args) {
+            if (arg instanceof Model) {
+                Model model = (Model) arg;
+                model.addAttribute("loggedUser", userService.getLoggedUser());
+                return;
+            }
+        }
     }
 
 }

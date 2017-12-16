@@ -15,5 +15,7 @@
         <css>/css/style.less</css>
         <js>/webjars/jquery/jquery.min.js</js>
         <js>/webjars/materialize-css/dist/js/materialize.js</js>
+        <js>/js/ajax.js</js>
+        <js>/js/header.js</js>
     </group>
 </groups>

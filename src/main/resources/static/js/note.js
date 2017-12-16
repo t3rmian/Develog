@@ -58,3 +58,33 @@ function updateNote() {
         }
     });
 }
+
+function search(url, data) {
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: data,
+        success: function (response) {
+            if (response != "") {
+                $("#editor").replaceWith(response);
+                $("#output").contents().find('html').html($("#output0")[0].innerText);
+                $("#output0").remove();
+            } else {
+                $("#editor").text("");
+            }
+        }
+    });
+}
+
+function searchByTags(chips) {
+    var tags = [];
+    for (var i = 0; i < chips.length; i++) {
+        tags.push(chips[i].tag);
+    }
+    search('/search/tag', {values: tags});
+    history.replaceState({}, "Search", "/search");
+}
+
+function searchByDate(date) {
+    search('/search/' + date);
+}

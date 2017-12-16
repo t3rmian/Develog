@@ -4,6 +4,6 @@ spring:
       client:
         registration:
           github:
-            client-id: ${DEVELOG_GITHUB_CLIENT_ID}
-            client-secret: ${DEVELOG_GITHUB_CLIENT_SECRET}
+            client-id: abc
+            client-secret: 123
             scope: read:user
