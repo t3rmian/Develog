@@ -4,7 +4,6 @@ import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.model.domain.GitHubPrincipalExtractor;
 import io.github.t3r1jj.develog.model.domain.exception.UnauthenticatedException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;

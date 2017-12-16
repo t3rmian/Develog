@@ -5,10 +5,14 @@ import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.options.MutableDataSet;
 import io.github.t3r1jj.develog.model.data.Note;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.lang.NonNull;
 
 import java.io.ByteArrayOutputStream;
@@ -17,7 +21,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Objects;
 
-
+@ToString
 public class Editor {
     private final Parser parser;
     private final HtmlRenderer renderer;
@@ -71,23 +75,21 @@ public class Editor {
                 outputStream.close();
                 outputPart = new String(outputStream.toByteArray(), Charset.forName("UTF-8"));
             } catch (IOException ioe) {
-                ioe.printStackTrace();
-                outputPart = "ERROR: " + ioe.getLocalizedMessage();
+                outputPart = handleIOException(ioe);
             }
             output = output.replace(group, outputPart);
         }
         return output;
     }
 
+    @NotNull
+    String handleIOException(IOException ioe) {
+        ioe.printStackTrace();
+        return "ERROR: " + ioe.getLocalizedMessage();
+    }
+
     public boolean isEmpty() {
         return Objects.equals(input, "") && Objects.equals(output, "");
     }
 
-    @Override
-    public String toString() {
-        return "Editor{" +
-                ", input='" + input + '\'' +
-                ", output='" + output + '\'' +
-                '}';
-    }
 }

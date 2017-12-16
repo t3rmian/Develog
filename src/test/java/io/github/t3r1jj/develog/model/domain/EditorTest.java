@@ -3,8 +3,10 @@ package io.github.t3r1jj.develog.model.domain;
 import io.github.t3r1jj.develog.model.data.Note;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -69,4 +71,16 @@ class EditorTest {
         assertTrue(editor.getInput().contains("---"));
     }
 
+    @Test
+    void isEmpty() {
+        assertTrue(new Editor("").isEmpty());
+        assertFalse(new Editor("a").isEmpty());
+    }
+
+    @Test
+    void handleIOException() {
+        Editor editor = spy(new Editor());
+        String output = editor.handleIOException(new IOException("TEST: Missing system component?"));
+        assertTrue(output.contains("ERROR"), "Contains error instead of UML");
+    }
 }

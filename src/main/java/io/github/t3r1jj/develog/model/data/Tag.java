@@ -6,7 +6,6 @@ import org.hibernate.Hibernate;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -19,10 +18,6 @@ public class Tag {
 
     public Tag(String value, Long userId) {
         this.id = new TagId(value, userId);
-    }
-
-    public Tag(String value) {
-        this(value, null);
     }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")

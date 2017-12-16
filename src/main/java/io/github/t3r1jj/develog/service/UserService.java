@@ -83,6 +83,7 @@ public class UserService {
         return userRepository.findNoteDatesByUserId(getLoggedUser().getId());
     }
 
+    @Transactional
     public void onAuthenticationSuccess() {
         User authenticatedUser = sessionService.getAuthenticatedUser();
         User dbUser = getUser(authenticatedUser.getId()).orElseGet(() -> registerUser(authenticatedUser));

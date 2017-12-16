@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -95,9 +96,26 @@ class UserServiceTest {
     }
 
     @Test
-    void getUsersDataSize() {
+    void getUsersDataSize_IncompatibleDB() {
         when(userRepository.getDbSize()).thenThrow(new RuntimeException("incompatible db"));
         assertEquals(-1, userService.getUsersDataSize());
         verify(userRepository).getDbSize();
+    }
+
+    @Test
+    void getUsersDataSize_MockedResult() {
+        when(userRepository.getDbSize()).thenReturn(new HashMap<String, Object>() {{
+            this.put("pg_database_size", "1048576");
+        }});
+        assertEquals(1, userService.getUsersDataSize());
+        verify(userRepository).getDbSize();
+    }
+
+    @Test
+    void onAuthenticationSuccess() {
+        User updatedUser = User.builder().id(333L).email("a").name("b").build();
+        when(sessionService.getAuthenticatedUser()).thenReturn(updatedUser);
+        userService.onAuthenticationSuccess();
+        verify(userRepository).save(updatedUser);
     }
 }

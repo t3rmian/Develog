@@ -41,7 +41,6 @@ public class AuthorizationAspect {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         BusinessRoles[] businessRolesAnnotations = getBusinessRoles(method);
-        System.err.println("CALLING2: " + joinPoint.getSignature());
         for (BusinessRoles roles : businessRolesAnnotations) {
             List<User.Role> roleValues = Arrays.asList(roles.values());
             if (!roleValues.isEmpty() && !roleValues.contains(userService.getLoggedUser().getRole())) {

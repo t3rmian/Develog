@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
@@ -54,6 +54,22 @@ class CallMonitoringAspectTest {
         assertEquals(3, call.getCallCount(), "Correct call count");
         assertTrue(call.getAccumulatedCallTime() > 0, "Positive call time");
         assertEquals(call.getAccumulatedCallTime() / 3, call.getCallTime(), "Correct call count");
+    }
+
+    @Test
+    void invokeDisabled() throws NoSuchFieldException, IllegalAccessException {
+        Field isEnabled = CallMonitoringAspect.class.getDeclaredField("isEnabled");
+        boolean accessible = isEnabled.isAccessible();
+        isEnabled.setAccessible(true);
+        isEnabled.set(callMonitoringAspect, false);
+        isEnabled.setAccessible(accessible);
+
+        assertFalse(callMonitoringAspect.isEnabled());
+        userService.getUser(1);
+        userService.getUser(2);
+        userService.getUser(3);
+        HashMap<String, Call> logs = callMonitoringAspect.getLogs();
+        assertTrue(logs.size() == 0, "One call log");
     }
 
 }

@@ -53,31 +53,31 @@ public class AdminController {
     private UserService userService;
 
     @RequestMapping("admin")
-    String getPage(Model model) {
+    public String getPage(Model model) {
         return "admin";
     }
 
     @RequestMapping("admin/users")
-    ModelAndView getUsersFragment(Model model) {
+    public ModelAndView getUsersFragment(Model model) {
         model.addAttribute("users", userService.findAllUsersDataSize());
         return new ModelAndView("fragments/users", model.asMap());
     }
 
     @RequestMapping("admin/events")
     @ResponseBody
-    List<Event> getEventsFragment(Model model) {
+    public List<Event> getEventsFragment(Model model) {
         return eventRepository.findAll();
     }
 
     @RequestMapping("admin/errors")
     @ResponseBody
-    List<Error> getErrorsFragment(Model model) {
+    public List<Error> getErrorsFragment(Model model) {
         return errorRepository.findAll();
     }
 
     @RequestMapping("admin/logs")
     @ResponseBody
-    List<Map<String, String>> getLogsFragment(Model model) {
+    public List<Map<String, String>> getLogsFragment(Model model) {
         List<Map<String, String>> output = new ArrayList<>();
         callRepository.findAll().stream()
                 .collect(Collectors.groupingBy(Call::getName))
@@ -103,7 +103,7 @@ public class AdminController {
 
     @RequestMapping("admin/health")
     @ResponseBody
-    String getHealthFragment(Model model) throws JsonProcessingException {
+    public String getHealthFragment(Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> dbDetails = new HashMap<>(healthEndpoint.health().getDetails());
         dbDetails.put("mongoDbSize", getMongoDbSize() + " MB");
@@ -118,7 +118,8 @@ public class AdminController {
     private long getMongoDbSize() {
         try {
             MongoDatabase db = mongoTemplate.getDb();
-            Document document = db.runCommand(new BsonDocument("dbStats", new BsonInt32(1)).append("scale", new BsonInt32(1024 * 1024)));
+            Document document = db.runCommand(new BsonDocument("dbStats", new BsonInt32(1)).append("scale",
+                    new BsonInt32(1024 * 1024)));
             return Double.valueOf(document.get("dataSize").toString()).longValue();
         } catch (Exception ex) {
             return -1;
@@ -127,7 +128,7 @@ public class AdminController {
 
     @RequestMapping("admin/reset")
     @ResponseBody
-    boolean getHealthFragment() {
+    public boolean getHealthFragment() {
         callRepository.deleteAll();
         eventRepository.deleteAll();
         errorRepository.deleteAll();
