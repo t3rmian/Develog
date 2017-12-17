@@ -13,12 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -69,5 +66,11 @@ class UserServiceIT {
         assertTrue(userRepository.findNoteDatesByUserId(user.getId()).contains(LocalDate.now().plusDays(1)));
         assertTrue(userRepository.findNoteDatesByUserId(user.getId()).contains(LocalDate.now().plusDays(2)));
         assertFalse(userRepository.findNoteDatesByUserId(user.getId()).contains(LocalDate.now()), "Should not contain global note");
+    }
+
+    @Test
+    @Transactional
+    void getEmails() {
+        assertTrue(userService.getUserEmails().contains(user.getEmail()));
     }
 }

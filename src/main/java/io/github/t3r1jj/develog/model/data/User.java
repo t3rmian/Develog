@@ -17,7 +17,9 @@ import java.util.*;
 public class User {
     @Id
     private Long id;
+    @Setter
     private String name;
+    @Setter
     private String email;
     @OneToOne(cascade = CascadeType.ALL)
     @Builder.Default
@@ -26,6 +28,7 @@ public class User {
     @Builder.Default
     private List<Note> notes = Collections.emptyList();
     @Builder.Default
+    @Setter
     private Role role = Role.USER;
 
     public Optional<Note> getNote(@Nullable LocalDate date) {

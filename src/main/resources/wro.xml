@@ -4,6 +4,7 @@
         <group-ref>base</group-ref>
         <css>/webjars/jquery-jsonview/jquery.jsonview.css</css>
         <js>/webjars/jquery-jsonview/jquery.jsonview.js</js>
+        <js>/webjars/chartjs/Chart.bundle.min.js</js>
         <js>/js/admin.js</js>
     </group>
     <group name="note">
