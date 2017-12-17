@@ -113,4 +113,9 @@ public class UserService {
     public List<String> getUserEmails() {
         return userRepository.findAllEmails();
     }
+
+    @Transactional
+    public Long getLoggedUserDataSize() {
+        return userRepository.getUserDataSize(sessionService.getAuthenticatedUserId()) / 1000;
+    }
 }

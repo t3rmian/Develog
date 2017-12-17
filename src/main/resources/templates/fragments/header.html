@@ -1,5 +1,18 @@
 <nav class="light-blue lighten-1" role="navigation" xmlns:th="http://www.thymeleaf.org">
     <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Logo</a>
+        <div th:if="${loggedUser}" class="right hide-on-med-and-down" style="height: 64px;">
+            <img th:src="'https://github.com/' + ${loggedUser.name} + '.png'" width="48" style="border-radius: 5%; margin: 8px">
+            <div class="right"
+                 style="display: table-cell; vertical-align: middle; height: 64px; line-height: normal; text-align: center;">
+                <span style="height: 32px; font-weight: bold; display: table-row">
+                    <span th:text="${loggedUser.name}" style="display:table-cell; vertical-align: bottom; ">USER</span>
+                </span>
+                <span style="height: 32px; display: table-row">
+                    <span th:text="${dataSize} + ' kB'"
+                          style="height: 32px; line-height: normal; vertical-align: top; display: table-cell">SIZE</span>
+                </span>
+            </div>
+        </div>
         <ul class="right hide-on-med-and-down">
             <li th:if="not${loggedUser}"><a class="waves-effect waves-light btn"
                                             href="/oauth2/authorization/github">

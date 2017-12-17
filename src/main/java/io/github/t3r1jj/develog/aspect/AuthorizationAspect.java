@@ -58,6 +58,7 @@ public class AuthorizationAspect {
             if (arg instanceof Model) {
                 Model model = (Model) arg;
                 model.addAttribute("loggedUser", userService.getLoggedUser());
+                model.addAttribute("dataSize", userService.getLoggedUserDataSize());
                 return;
             }
         }

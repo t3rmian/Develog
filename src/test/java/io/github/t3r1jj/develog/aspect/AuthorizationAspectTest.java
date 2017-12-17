@@ -67,6 +67,7 @@ class AuthorizationAspectTest {
         ConcurrentModel model = new ConcurrentModel();
         adminController.getPage(model);
         assertEquals(loggedUser, model.get("loggedUser"));
+        assertTrue(model.containsAttribute("dataSize"));
     }
 
     @Test
@@ -77,6 +78,7 @@ class AuthorizationAspectTest {
         ConcurrentModel model = new ConcurrentModel();
         adminController.getPage(model);
         assertFalse(model.containsAttribute("loggedUser"));
+        assertFalse(model.containsAttribute("dataSize"));
     }
 
 }
