@@ -6,7 +6,6 @@ import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.model.domain.BusinessRoles;
 import io.github.t3r1jj.develog.model.monitor.Call;
 import io.github.t3r1jj.develog.model.monitor.Error;
-import io.github.t3r1jj.develog.model.monitor.Event;
 import io.github.t3r1jj.develog.repository.monitoring.CallRepository;
 import io.github.t3r1jj.develog.repository.monitoring.ErrorRepository;
 import io.github.t3r1jj.develog.repository.monitoring.EventRepository;
@@ -19,6 +18,7 @@ import org.springframework.boot.actuate.trace.TraceEndpoint;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -119,6 +119,24 @@ public class AdminController {
         eventRepository.deleteAll();
         errorRepository.deleteAll();
         return true;
+    }
+
+    @RequestMapping("admin/user")
+    @ResponseBody
+    public boolean changeRole(@RequestParam Long id, @RequestParam User.Role role) {
+        return userService.changeRole(id, role);
+    }
+
+    @RequestMapping("admin/email")
+    @ResponseBody
+    public String getEmail(@RequestParam Long userId) {
+        return userService.getUser(userId).map(User::getEmail).orElse("");
+    }
+
+    @RequestMapping("admin/email/all")
+    @ResponseBody
+    public String getEmails() {
+        return userService.getUserEmails().stream().collect(Collectors.joining(","));
     }
 
 }

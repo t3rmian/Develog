@@ -14,10 +14,35 @@
         <td th:text="${user.key.id}">0</td>
         <td th:text="${user.key.name}">John</td>
         <td>[[${user.value}]] kB</td>
-        <td></td>
         <td>
-            <a class="waves-effect waves-light btn"><i class="material-icons left">email</i>Email</a>
+            <select th:onChange="'javascript:changeUserRole(\'' + ${user.key.id} + '\', ' + this[this.selectedIndex].value + ');'">
+                <option th:each="role : ${T(io.github.t3r1jj.develog.model.data.User.Role).values()}"
+                        th:value="${role}" th:text="${role}" th:selected="${role == user.key.role}">ROLE
+                </option>
+            </select>
+        </td>
+        <td>
+            <a class="waves-effect waves-light btn"
+               th:onclick="'openEmail(\'' + ${user.key.id} + '\', \'' + ${user.key.name} + '\');'">
+                <i class="material-icons left">email</i>Email</a>
         </td>
     </tr>
     </tbody>
 </table>
+<script type="text/javascript">
+    // It IS used, watch out for renaming
+    function changeUserRole(userId, newRole) {
+        $.ajax({
+            url: '/admin/user',
+            type: 'post',
+            data: {id: userId, role: newRole},
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('select').select();
+    });
+</script>

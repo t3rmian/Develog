@@ -12,12 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserServiceTest {
 
@@ -118,4 +115,16 @@ class UserServiceTest {
         userService.onAuthenticationSuccess();
         verify(userRepository).save(updatedUser);
     }
+
+    @Test
+    void changeRole() {
+        assertTrue(userService.changeRole(user.getId(), User.Role.USER));
+        assertEquals(User.Role.USER, user.getRole());
+        assertTrue(userService.changeRole(user.getId(), User.Role.BANNED));
+        assertEquals(User.Role.BANNED, user.getRole());
+        assertTrue(userService.changeRole(user.getId(), User.Role.ADMIN));
+        assertEquals(User.Role.ADMIN, user.getRole());
+        assertFalse(userService.changeRole(27836127836L, User.Role.USER));
+    }
+
 }

@@ -126,6 +126,32 @@ function displayOnlineEvents(events) {
     });
 }
 
+function openEmail(userId, userName) {
+    var url;
+    var prefix = "";
+    if (isNaN(userId)) {
+        url = '/admin/email/all';
+        prefix = "?bcc="
+    } else {
+        url = '/admin/email';
+    }
+    console.log("send " + url);
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: {userId: userId},
+        success: function (response) {
+            if (response !== "") {
+                var subject = encodeURIComponent("Hello " + userName);
+                var body = encodeURIComponent("Important information");
+                window.location.href = 'mailto:' + prefix
+                    + response + (prefix !== "" ? '&' : '?')
+                    + 'subject=' + subject + '&body=' + body;
+            }
+        }
+    });
+}
+
 (function ($) {
     $(function () {
         $('.sidenav').sidenav();
@@ -135,5 +161,8 @@ function displayOnlineEvents(events) {
 
 $(window).on('hashchange', function () {
     loadFragment()
+});
+$(document).ready(function () {
+    $('.modal').modal();
 });
 loadFragment();

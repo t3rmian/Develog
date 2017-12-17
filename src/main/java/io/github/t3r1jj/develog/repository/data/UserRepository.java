@@ -27,4 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT n.date FROM users u JOIN u.notes n WHERE u.id = :id")
     List<LocalDate> findNoteDatesByUserId(@Param("id") Long id);
 
+    @Query("SELECT u.email FROM users u")
+    List<String> findAllEmails();
+
 }

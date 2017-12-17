@@ -27,18 +27,18 @@ public class AuthorizationAspect {
         this.userService = userService;
     }
 
-    @Before("@annotation(io.github.t3r1jj.develog.model.domain.BusinessRoles) || within(@io.github.t3r1jj.develog.model.domain.BusinessRoles *)")
-    public void authorize(JoinPoint joinPoint) throws AccessDeniedException {
-        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        Method method = signature.getMethod();
-        BusinessRoles[] businessRolesAnnotations = getBusinessRoles(method);
-        for (BusinessRoles roles : businessRolesAnnotations) {
-            List<User.Role> roleValues = Arrays.asList(roles.values());
-            if (!roleValues.isEmpty() && !roleValues.contains(userService.getLoggedUser().getRole())) {
-                throw new AccessDeniedException("Unauthorized");
-            }
-        }
-    }
+//    @Before("@annotation(io.github.t3r1jj.develog.model.domain.BusinessRoles) || within(@io.github.t3r1jj.develog.model.domain.BusinessRoles *)")
+//    public void authorize(JoinPoint joinPoint) throws AccessDeniedException {
+//        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+//        Method method = signature.getMethod();
+//        BusinessRoles[] businessRolesAnnotations = getBusinessRoles(method);
+//        for (BusinessRoles roles : businessRolesAnnotations) {
+//            List<User.Role> roleValues = Arrays.asList(roles.values());
+//            if (!roleValues.isEmpty() && !roleValues.contains(userService.getLoggedUser().getRole())) {
+//                throw new AccessDeniedException("Unauthorized");
+//            }
+//        }
+//    }
 
     private BusinessRoles[] getBusinessRoles(Method method) {
         BusinessRoles[] businessRolesAnnotations = method.getAnnotationsByType(BusinessRoles.class);

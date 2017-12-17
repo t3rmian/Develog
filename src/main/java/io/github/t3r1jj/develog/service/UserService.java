@@ -88,19 +88,29 @@ public class UserService {
         User authenticatedUser = sessionService.getAuthenticatedUser();
         User dbUser = getUser(authenticatedUser.getId()).orElseGet(() -> registerUser(authenticatedUser));
         if (!authenticatedUser.infoEquals(dbUser)) {
-            updateUser(User.builder()
-                    .id(authenticatedUser.getId())
-                    .globalNote(dbUser.getGlobalNote())
-                    .email(authenticatedUser.getEmail())
-                    .name(authenticatedUser.getName())
-                    .notes(authenticatedUser.getNotes())
-                    .role(dbUser.getRole())
-                    .build()
-            );
+            dbUser.setName(authenticatedUser.getName());
+            dbUser.setEmail(authenticatedUser.getEmail());
+            updateUser(dbUser);
         }
     }
 
     public boolean isUserAuthenticated() {
         return sessionService.isSessionAuthenticated();
+    }
+
+    public boolean changeRole(Long id, User.Role role) {
+        Optional<User> queriedUser = getUser(id);
+        if (queriedUser.isPresent()) {
+            User user = queriedUser.get();
+            user.setRole(role);
+            updateUser(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<String> getUserEmails() {
+        return userRepository.findAllEmails();
     }
 }
