@@ -1,87 +1,63 @@
-.icon-block {
-  padding: 0 15px;
-}
-
-.icon-block .material-icons {
-  font-size: inherit;
-}
-
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  align-items: stretch;
 }
 
 main {
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 }
 
-form {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  flex: 1 1 auto;
+.user-info {
+  line-height: normal;
+  text-align: center;
 }
 
-form > .row {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: stretch;
-  flex: 1 1 auto;
+.user-info img {
+  width: 48px;
+  margin: 8px;
+  border-radius: 5%;
 }
 
-#form > div.row > div.col.s6.center > div,
-#form > div.row > div:nth-child(1) > div,
-#input {
-  height: 100%;
+.user-info .username {
+  font-weight: bold;
+  vertical-align: bottom;
 }
 
-#form > div.row > div:nth-child(1) > div {
-  padding-bottom: 60px;
+.user-info > div > span {
+  height: 32px;
+  display: table-row;
 }
 
-#form > div.row > div.col.s6.center {
-  margin-bottom: 50px;
+.user-info > div > span > span {
+  height: 32px;
+  display: table-cell;
 }
 
-.card-content > #output {
-  width: 100%;
-  height: 100%;
-  border: none;
+.sidenav li > a {
+  height: 64px;
+  line-height: 64px;
 }
 
-.card-content {
-  height: 100%;
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+  height: 64px;
+  line-height: 64px;
 }
 
-@media only screen and (min-width: 992px) {
-  #nav-mobile + main {
-    margin-left: 300px;
-  }
+.sidenav .user-info {
+  height: 200px;
+  padding-bottom: 32px;
 }
 
-#nav-mobile > li.center {
-  background-color: navy;
-  color: white;
+.sidenav .user-info img {
+  width: 120px;
+  height: 120px;
 }
 
-.sidenav li.active {
-  background-color: #ffee58;
+.develog-color-primary {
+  background: lightcoral;
 }
 
-#nav-mobile .divider {
-  background-color: black;
+.sidenav .divider {
+  margin: 0;
 }
-
-nav td {
-  color: black;
-}
-

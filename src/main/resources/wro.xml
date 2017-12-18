@@ -12,6 +12,7 @@
         <js>/js/note.js</js>
     </group>
     <group name="base">
+        <css>/webjars/material-design-icons/material-icons.css</css>
         <css>/webjars/materialize-css/dist/css/materialize.css</css>
         <css>/css/style.less</css>
         <js>/webjars/jquery/jquery.min.js</js>

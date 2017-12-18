@@ -1,56 +1,129 @@
-<nav class="light-blue lighten-1" role="navigation" xmlns:th="http://www.thymeleaf.org">
-    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Logo</a>
-        <div th:if="${loggedUser}" class="right hide-on-med-and-down" style="height: 64px;">
-            <img th:src="'https://github.com/' + ${loggedUser.name} + '.png'" width="48" style="border-radius: 5%; margin: 8px">
-            <div class="right"
-                 style="display: table-cell; vertical-align: middle; height: 64px; line-height: normal; text-align: center;">
-                <span style="height: 32px; font-weight: bold; display: table-row">
-                    <span th:text="${loggedUser.name}" style="display:table-cell; vertical-align: bottom; ">USER</span>
-                </span>
-                <span style="height: 32px; display: table-row">
-                    <span th:text="${dataSize} + ' kB'"
-                          style="height: 32px; line-height: normal; vertical-align: top; display: table-cell">SIZE</span>
-                </span>
+<header xmlns:th="http://www.thymeleaf.org">
+    <nav class="develog-color-primary lighten-1" role="navigation">
+        <div class="nav-wrapper container">
+            <a href="/" class="brand-logo">Develog</a>
+            <ul class="right">
+                <li th:if="not${loggedUser}">
+                    <a class="waves-effect waves-light btn" href="/oauth2/authorization/github">
+                        <i class="material-icons left">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
+                            <image id="image0" width="32" height="32" x="0" y="0"
+                                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
+                                AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElN
+                                RQfhDA8NHy/iDD9EAAACIElEQVRIx5WVvUtbYRTGT24vpEJCYuhHuihuToVohBaKpQ6lW2dBsJiK
+                                3TqkhdLBP6CLo4PgHsVQJ+lUbF06uGTIoJJgu0ibJaQqJCG/Dknee+715t7b8y7nnPd5nvt+nXNj
+                                iI/dkZfyTB7KlCRE5K/UpSJfZV8aPli8I0eJDn7WoUTOi3eHKbboEWQ9tkiNEshRI4rV9Doc+gLN
+                                SHSAJgtegdn/oPclZrXAOPXBRJW9AKkme1QHfp1xR2DbQJYQ4hS4AFpUOOSQCi3gggJxhCWD3R4K
+                                5NU3Zsx9TGOZ87GYNmc/o9D5vkBZpeaQkDGn0GVEyNJVqeVQgWWF7pIV1lTiF5lQgQw/FWNNKKlw
+                                JZQuCCuKURJzLdB1P9KRI6U2XRWuTHAeiS4I54ZzZcmYKcy2RLWO8cYslb4fWeCe41rSMn5STwTS
+                                k8ZvWVJTUy8iCWhUzZJjFRbFDqXbUlTRsbDoqreN0BvYcOEXhSSXrtQu2ZHkB+y6sJckBWETgE88
+                                5RsAbXZYJc8tQ7R5zBvKtD39YbNfjRNcAz2KxPmhKi1mBGJ89mkv10wMG8r6IPWIKVMqT1yLn/cR
+                                WHc6ks0RAF8Q0hT4yHO1AUG4e4N+hK2bapYzAN6OOL60h342PGoHMskpAN95zys+cDtA4JRJvx9L
+                                hgMFSo8UONBtx73QGK/5HSjwh1V1OzcEBCFBkRMaxF3ZOA1OeEfCi48R+viD7R/aXKLWQo0lLAAA
+                                ACV0RVh0ZGF0ZTpjcmVhdGUAMjAxNy0xMi0xNVQxMzozMTo0Ny0wNzowMK8KIToAAAAldEVYdGRh
+                                dGU6bW9kaWZ5ADIwMTctMTItMTVUMTM6MzE6NDctMDc6MDDeV5mGAAAAGXRFWHRTb2Z0d2FyZQBB
+                                ZG9iZSBJbWFnZVJlYWR5ccllPAAAAABJRU5ErkJggg==">
+                            </image>
+                        </svg>
+                        </i>
+                        Sign in with GitHub
+                    </a>
+                </li>
+                <li th:if="${loggedUser}">
+                    <a class="waves-effect waves-light btn" href="/logout">
+                        <i class="material-icons left">exit_to_app</i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+            <div th:if="${loggedUser}" class="right hide-on-med-and-down user-info">
+                <img th:src="'https://github.com/' + ${loggedUser.name} + '.png'">
+                <div class="right">
+                    <span>
+                        <span class="username" th:text="${loggedUser.name}">USER</span>
+                    </span>
+                    <span>
+                        <span th:text="${dataSize} + ' kB'">SIZE</span>
+                    </span>
+                </div>
             </div>
+            <ul th:if="${loggedUser}" class="right hide-on-med-and-down">
+                <li>
+                    <a href="/note" class="tooltipped" data-position="bottom" data-delay="50"
+                       data-tooltip="Global note">
+                        <i class="material-icons">note</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" onclick="openTodayNote()" class="tooltipped" data-position="bottom"
+                       data-delay="50" data-tooltip="Today's note">
+                        <i class="material-icons">note_add</i>
+                    </a>
+                </li>
+                <li class="datepicker">
+                    <a href="javascript:void(0)" onclick="initializeDatePicker()" class="tooltipped"
+                       data-position="bottom" data-delay="50" data-tooltip="Calendar">
+                        <i class="material-icons">date_range</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/search" class="tooltipped" data-position="bottom" data-delay="50"
+                       data-tooltip="Search">
+                        <i class="material-icons">search</i>
+                    </a>
+                </li>
+                <li th:if="${loggedUser.role.name() == 'ADMIN'}">
+                    <a href="/admin" class="tooltipped" data-position="bottom" data-delay="50"
+                       data-tooltip="Admin">
+                        <i class="material-icons">settings_applications</i>
+                    </a>
+                </li>
+            </ul>
+            <ul th:if="${loggedUser}" id="nav-mobile" class="sidenav">
+                <div class="center user-info text-darken-4 develog-color-primary">
+                    <img th:src="'https://github.com/' + ${loggedUser.name} + '.png'">
+                    <div>
+                        <div class="username" th:text="${loggedUser.name}">USER</div>
+                        <div th:text="${dataSize} + ' kB'">SIZE</div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <ul>
+                    <li>
+                        <a href="/note">
+                            <i class="material-icons">note</i>
+                            Global note
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" onclick="openTodayNote()">
+                            <i class="material-icons">note_add</i>
+                            Today's note
+                        </a>
+                    </li>
+                    <li class="datepicker">
+                        <a href="javascript:void(0)" onclick="initializeDatePicker()">
+                            <i class="material-icons">date_range</i>
+                            Calendar
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/search">
+                            <i class="material-icons">search</i>
+                            Search
+                        </a>
+                    </li>
+                    <li th:if="${loggedUser.role.name() == 'ADMIN'}">
+                        <a href="/admin">
+                            <i class="material-icons">settings_applications</i>
+                            Admin
+                        </a>
+                    </li>
+                </ul>
+            </ul>
+            <a th:if="${loggedUser}" href="#" data-target="nav-mobile" class="sidenav-trigger"><i
+                    class="material-icons">menu</i></a>
         </div>
-        <ul class="right hide-on-med-and-down">
-            <li th:if="not${loggedUser}"><a class="waves-effect waves-light btn"
-                                            href="/oauth2/authorization/github">
-                <i class="material-icons left">
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-            <image id="image0" width="32" height="32" x="0" y="0"
-                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
-                AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElN
-                RQfhDA8NHy/iDD9EAAACIElEQVRIx5WVvUtbYRTGT24vpEJCYuhHuihuToVohBaKpQ6lW2dBsJiK
-                3TqkhdLBP6CLo4PgHsVQJ+lUbF06uGTIoJJgu0ibJaQqJCG/Dknee+715t7b8y7nnPd5nvt+nXNj
-                iI/dkZfyTB7KlCRE5K/UpSJfZV8aPli8I0eJDn7WoUTOi3eHKbboEWQ9tkiNEshRI4rV9Doc+gLN
-                SHSAJgtegdn/oPclZrXAOPXBRJW9AKkme1QHfp1xR2DbQJYQ4hS4AFpUOOSQCi3gggJxhCWD3R4K
-                5NU3Zsx9TGOZ87GYNmc/o9D5vkBZpeaQkDGn0GVEyNJVqeVQgWWF7pIV1lTiF5lQgQw/FWNNKKlw
-                JZQuCCuKURJzLdB1P9KRI6U2XRWuTHAeiS4I54ZzZcmYKcy2RLWO8cYslb4fWeCe41rSMn5STwTS
-                k8ZvWVJTUy8iCWhUzZJjFRbFDqXbUlTRsbDoqreN0BvYcOEXhSSXrtQu2ZHkB+y6sJckBWETgE88
-                5RsAbXZYJc8tQ7R5zBvKtD39YbNfjRNcAz2KxPmhKi1mBGJ89mkv10wMG8r6IPWIKVMqT1yLn/cR
-                WHc6ks0RAF8Q0hT4yHO1AUG4e4N+hK2bapYzAN6OOL60h342PGoHMskpAN95zys+cDtA4JRJvx9L
-                hgMFSo8UONBtx73QGK/5HSjwh1V1OzcEBCFBkRMaxF3ZOA1OeEfCi48R+viD7R/aXKLWQo0lLAAA
-                ACV0RVh0ZGF0ZTpjcmVhdGUAMjAxNy0xMi0xNVQxMzozMTo0Ny0wNzowMK8KIToAAAAldEVYdGRh
-                dGU6bW9kaWZ5ADIwMTctMTItMTVUMTM6MzE6NDctMDc6MDDeV5mGAAAAGXRFWHRTb2Z0d2FyZQBB
-                ZG9iZSBJbWFnZVJlYWR5ccllPAAAAABJRU5ErkJggg==" ></image>
-        </svg>
-                </i>Sign in with GitHub</a>
-            </li>
-            <li th:if="${loggedUser}"><a class="waves-effect waves-light btn" href="/logout">
-                <i class="material-icons left">exit_to_app
-                </i>Logout</a></li>
-        </ul>
-        <ul th:if="${loggedUser}" class="right hide-on-med-and-down">
-            <li><a href="/note">Global note</a></li>
-            <li><a href="javascript:void(0)" onclick="openTodayNote()">Today's note</a></li>
-            <li class="datepicker"><a href="javascript:void(0)" onclick="initializeDatePicker()">Calendar</a></li>
-            <li><a href="/search">Search</a></li>
-            <li th:if="${loggedUser.role.name() == 'ADMIN'}"><a href="/admin">Admin</a></li>
-        </ul>
-        <ul id="nav-mobile" class="sidenav">
-            <li><a href="#">Navbar Link</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
+    </nav>
+</header>

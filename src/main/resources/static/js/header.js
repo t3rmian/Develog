@@ -31,3 +31,8 @@ function initializeDatePicker() {
         });
     }
 }
+
+$(document).ready(function () {
+    $('.sidenav').sidenav();
+    $('.tooltipped').tooltip();
+});

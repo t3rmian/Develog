@@ -152,13 +152,6 @@ function openEmail(userId, userName) {
     });
 }
 
-(function ($) {
-    $(function () {
-        $('.sidenav').sidenav();
-    });
-})(jQuery);
-
-
 $(window).on('hashchange', function () {
     loadFragment()
 });
