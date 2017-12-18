@@ -13,8 +13,9 @@ function loadFragment() {
         window.location.hash = "#users";
         fragment = "users"
     }
-    $('li').removeClass('active');
-    $('a[href*="' + window.location.hash + '"]').each(function () {
+    var adminNav = $('#nav-admin');
+    adminNav.find('li').removeClass('active');
+    adminNav.find('a[href*="' + window.location.hash + '"]').each(function () {
         $(this).parent().addClass('active');
     });
 
@@ -157,5 +158,5 @@ $(window).on('hashchange', function () {
 });
 $(document).ready(function () {
     $('.modal').modal();
+    loadFragment();
 });
-loadFragment();

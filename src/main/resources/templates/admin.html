@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Develog - Note</title>
+    <title>Develog - Admin Panel</title>
     <meta th:replace="fragments/head"/>
     <link th:href="@{/owr/admin.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/admin.js}" th:inline="javascript"></script>
 </head>
 <body>
-
-<ul id="nav-mobile" class="sidenav sidenav-fixed">
-    <li class="center" style="height: 64px; display: table; width: 100%">
-        <h4 style="margin: auto;vertical-align: middle; display: table-cell;">Admin panel</h4>
+<ul id="nav-admin" class="sidenav sidenav-fixed" role="navigation">
+    <li class="center develog-color-primary darken-2 admin-header">
+        <h4>Admin panel</h4>
     </li>
     <li>
         <div class="divider" style="margin: 0;"></div>
@@ -20,17 +19,17 @@
     <li><a href="#errors"><i class="material-icons">error</i>Errors</a></li>
     <li><a href="#logs"><i class="material-icons">description</i>Logs</a></li>
     <li><a href="#health"><i class="material-icons">favorite</i>Health</a></li>
-    <a class="waves-effect waves-light btn-large" onclick='openEmail("USERS","EVERYONE")'
-       style="position: absolute; bottom: 60px; left:0;right:0;margin:16px"><i
-            class="material-icons left">email</i>Email everyone</a>
-    <a class="waves-effect waves-light btn-large" onclick="clearLogs()"
-       style="position: absolute; bottom: 130px; left:0;right:0;margin:16px"><i
-            class="material-icons left">layers_clear</i>Clear all logs</a>
+    <a class="waves-effect waves-light btn-large" onclick='openEmail("USERS","EVERYONE")'>
+        <i class="material-icons left">email</i>
+        Email everyone
+    </a>
+    <a class="waves-effect waves-light btn-large" onclick="clearLogs()">
+        <i class="material-icons left">layers_clear</i>
+        Clear all logs
+    </a>
 </ul>
-<main>
-    <div th:replace="fragments/header"></div>
-    <main id="fragment"></main>
-    <div th:replace="fragments/footer"></div>
-</main>
+<div th:replace="fragments/header"></div>
+<main id="fragment"></main>
+<div th:replace="fragments/footer"></div>
 </body>
 </html>

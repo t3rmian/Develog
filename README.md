@@ -50,7 +50,7 @@ c) BANNED:
 - Maven
 - Spring + Spring Boot + Spring Actuators
 - Thymeleaf
-- Materialize + _LESS/SASS_
+- Materialize
 - Wro4j
 - PostgreSQL
 - MongoDB

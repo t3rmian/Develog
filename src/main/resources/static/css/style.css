@@ -1,0 +1,98 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.user-info {
+    line-height: normal;
+    text-align: center;
+}
+
+.user-info img {
+    width: 48px;
+    margin: 8px;
+    border-radius: 5%;
+}
+
+.user-info .username {
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+.user-info > div > span {
+    height: 32px;
+    display: table-row;
+}
+
+.user-info > div > span > span {
+    height: 32px;
+    display: table-cell;
+}
+
+.sidenav li > a {
+    height: 64px;
+    line-height: 64px;
+}
+
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+    height: 64px;
+    line-height: 64px;
+}
+
+.sidenav .user-info {
+    height: 230px;
+    padding-bottom: 32px;
+}
+
+.sidenav .user-info img {
+    margin-top: 30px;
+    width: 120px;
+    height: 120px;
+}
+
+.develog-color-primary {
+    background: lightcoral;
+    color: white;
+}
+
+.develog-color-primary.darken-2 {
+    background: #ef5350;
+}
+
+.develog-color-secondary {
+    background: teal;
+    color: white;
+}
+
+.active {
+    background: teal;
+    color: white;
+}
+
+.sidenav .divider {
+    margin: 0;
+}
+
+@media only screen and (max-width: 500px) {
+    .brand-logo {
+        display: none !important;
+    }
+}
+
+pre.about {
+    text-align: justify;
+    white-space: initial;
+    text-indent: 2.5em;
+}
+
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}

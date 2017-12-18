@@ -49,31 +49,32 @@
                 </div>
             </div>
             <ul th:if="${loggedUser}" class="right hide-on-med-and-down">
-                <li>
+                <li th:classappend="${#httpServletRequest.getRequestURI() == '/note' ? 'active':''}">
                     <a href="/note" class="tooltipped" data-position="bottom" data-delay="50"
                        data-tooltip="Global note">
                         <i class="material-icons">note</i>
                     </a>
                 </li>
-                <li>
+                <li th:classappend="${#httpServletRequest.getRequestURI().contains('/note/2') ? 'active':''}">
                     <a href="javascript:void(0)" onclick="openTodayNote()" class="tooltipped" data-position="bottom"
                        data-delay="50" data-tooltip="Today's note">
                         <i class="material-icons">note_add</i>
                     </a>
                 </li>
                 <li class="datepicker">
-                    <a href="javascript:void(0)" onclick="initializeDatePicker()" class="tooltipped"
+                    <a href="javascript:void(0)" onclick="initializeDatePicker(this)" class="tooltipped"
                        data-position="bottom" data-delay="50" data-tooltip="Calendar">
                         <i class="material-icons">date_range</i>
                     </a>
                 </li>
-                <li>
+                <li th:classappend="${#httpServletRequest.getRequestURI().contains('/search') ? 'active':''}">
                     <a href="/search" class="tooltipped" data-position="bottom" data-delay="50"
                        data-tooltip="Search">
                         <i class="material-icons">search</i>
                     </a>
                 </li>
-                <li th:if="${loggedUser.role.name() == 'ADMIN'}">
+                <li th:if="${loggedUser.role.name() == 'ADMIN'}"
+                    th:classappend="${#httpServletRequest.getRequestURI().contains('/admin') ? 'active':''}">
                     <a href="/admin" class="tooltipped" data-position="bottom" data-delay="50"
                        data-tooltip="Admin">
                         <i class="material-icons">settings_applications</i>
@@ -90,31 +91,26 @@
                 </div>
                 <div class="divider"></div>
                 <ul>
-                    <li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI() == '/note' ? 'active':''}">
                         <a href="/note">
                             <i class="material-icons">note</i>
                             Global note
                         </a>
                     </li>
-                    <li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI().contains('/note/2') ? 'active':''}">
                         <a href="javascript:void(0)" onclick="openTodayNote()">
                             <i class="material-icons">note_add</i>
                             Today's note
                         </a>
                     </li>
-                    <li class="datepicker">
-                        <a href="javascript:void(0)" onclick="initializeDatePicker()">
-                            <i class="material-icons">date_range</i>
-                            Calendar
-                        </a>
-                    </li>
-                    <li>
+                    <li th:classappend="${#httpServletRequest.getRequestURI().contains('/search') ? 'active':''}">
                         <a href="/search">
                             <i class="material-icons">search</i>
                             Search
                         </a>
                     </li>
-                    <li th:if="${loggedUser.role.name() == 'ADMIN'}">
+                    <li th:if="${loggedUser.role.name() == 'ADMIN'}"
+                        th:classappend="${#httpServletRequest.getRequestURI().contains('/admin') ? 'active':''}">
                         <a href="/admin">
                             <i class="material-icons">settings_applications</i>
                             Admin
@@ -122,8 +118,20 @@
                     </li>
                 </ul>
             </ul>
-            <a th:if="${loggedUser}" href="#" data-target="nav-mobile" class="sidenav-trigger"><i
-                    class="material-icons">menu</i></a>
+            <a th:if="${loggedUser}" href="javascript:void(0)" data-target="nav-mobile"
+               class="sidenav-trigger tooltipped"
+               data-position="bottom" data-delay="50" data-tooltip="Menu">
+                <i class="material-icons">menu</i>
+            </a>
+            <a th:if="${loggedUser != null and loggedUser.role.name() == 'ADMIN'}" href="javascript:void(0)"
+               th:unless="${not #httpServletRequest.getRequestURI().contains('/admin')}" data-target="nav-admin"
+               class="sidenav-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Admin menu">
+                <i class="material-icons">settings</i>
+            </a>
+            <a href="javascript:void(0)" onclick="initializeDatePicker(this);" class="tooltipped sidenav-trigger
+             show-on-medium-and-down hide-on-large-only" data-position="bottom" data-delay="50" data-tooltip="Calendar">
+                <i class="material-icons">date_range</i>
+            </a>
         </div>
     </nav>
 </header>

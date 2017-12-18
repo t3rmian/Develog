@@ -2,9 +2,9 @@ function openTodayNote() {
     window.location.href = "/today/" + new Date().toISOString().split("T")[0];
 }
 
-function initializeDatePicker() {
+function initializeDatePicker(button) {
     try {
-        $(".datepicker").datepicker('open');
+        $(button).datepicker('open');
     } catch (uninitialized) {
         $.ajax({
             url: '/notes',
@@ -13,7 +13,7 @@ function initializeDatePicker() {
                 if (response === "") {
                     return;
                 }
-                var datePicker = $('.datepicker');
+                var datePicker = $(button);
                 datePicker.datepicker({
                     defaultDate: new Date(),
                     maxDate: new Date(),

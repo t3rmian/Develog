@@ -1,0 +1,55 @@
+header, main, footer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width: 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1150px) {
+    nav a.sidenav-trigger {
+        display: block;
+        float: none;
+    }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1320px) {
+    .brand-logo {
+        display: none !important;
+    }
+}
+
+.sidenav {
+    padding-bottom: 0;
+    bottom: 0;
+    height: 100%;
+}
+
+.sidenav a.btn-large {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 16px;
+}
+
+.sidenav a.btn-large:nth-last-child(1) {
+    bottom: 70px;
+}
+
+.admin-header {
+    height: 64px;
+    display: table;
+    width: 100%
+}
+
+.admin-header > * {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+table.highlight > tbody > tr:hover {
+    background-color: rgba(222, 222, 222, 1);
+}
