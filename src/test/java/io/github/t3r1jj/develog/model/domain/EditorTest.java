@@ -68,6 +68,7 @@ class EditorTest {
         Editor editor = spy(new Editor());
         editor.setInput(Arrays.asList(Note.builder().body("abc").build(), Note.builder().body("defg").build()));
         verify(editor, times(2)).parse(anyString());
+        System.out.println(editor.getOutput());
         assertTrue(editor.getInput().contains("---"));
     }
 

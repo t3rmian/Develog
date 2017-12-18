@@ -29,7 +29,7 @@ a) USER:
     3. Markdown support
     4. PlantUML (diagrams) support
     5. two panels side by side - editor and view
-    6. pdf generating
+    6. export to txt/html
 2. _one global note (see 1.)_
 3. notes listing by days
 4. notes listing by tags (append into one?)
