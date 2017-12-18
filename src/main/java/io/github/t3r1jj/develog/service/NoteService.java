@@ -86,6 +86,8 @@ public class NoteService {
     public List<Note> findAllByTags(List<String> values) {
         if (values.isEmpty()) {
             return Collections.emptyList();
+        } else if (values.contains("*")) {
+            return userService.getLoggedUser().getAllNotes();
         }
         User loggedUser = userService.getLoggedUser();
         List<Tag> tags = values.stream().map(v -> new Tag(v, loggedUser.getId())).collect(Collectors.toList());
