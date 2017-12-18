@@ -53,9 +53,9 @@ c) BANNED:
 - Materialize + _LESS/SASS_
 - Wro4j
 - PostgreSQL
+- MongoDB
 - AspectJ
 - Lombok
-- Flyingsaucer (PDF)
 - PlantUML
 - Flexmark-java (Markdown)
 - Selenium

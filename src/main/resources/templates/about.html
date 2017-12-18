@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Develog - Note</title>
+    <meta th:replace="fragments/head"/>
+    <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script th:src="@{/owr/base.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+<main>
+    <div class="row">
+        <div class="col s12">
+            <h4>
+                License
+            </h4>
+            <pre class="row">
+    Develog - a web logbook for developers
+    Copyright (C) 2017 Damian Terlecki
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <a href="http://www.gnu.org/licenses">&lt;http://www.gnu.org/licenses/></a>.
+            </pre>
+            <div class="divider"></div>
+            <h4>Components</h4>
+            <pre class="row">
+    The project incorporates third party components whose licenses require
+to publish copies of the copyright notices. In compliance with those
+requirements, an aggregated list of attributions has been presented below.
+            </pre>
+            <pre class="row">
+    GPL (http://www.gnu.org/licenses/gpl.txt):
+        Compile scope:
+            - PlantUML (http://plantuml.com/)
+    Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html):
+        Compile scope:
+            - Spring Framework 5 (https://projects.spring.io/spring-framework/)
+            - Spring Boot 2 (https://projects.spring.io/spring-boot/)
+            - Spring Data (https://projects.spring.io/spring-data/)
+            - Thymeleaf (http://www.thymeleaf.org/)
+            - Wro4j (https://duckduckgo.com/?q=wro4j)
+            - Wro4j Spring Boot Starter (https://github.com/michael-simons/wro4j-spring-boot-starter)
+        Test scope:
+            - EqualsVerifier (http://jqno.nl/equalsverifier/)
+            - OpenClover (http://openclover.org/)
+    MIT (http://www.opensource.org/licenses/MIT):
+        Compile scope:
+            - ChartJS (http://www.chartjs.org/)
+            - jQuery (https://jquery.com/)
+            - jQuery JSONView (https://github.com/yesmeck/jquery-jsonview)
+            - MaterializeCSS (http://materializecss.com/)
+            - Lombok (https://projectlombok.org/)
+            - Webjars Locator (https://github.com/webjars/webjars-locator)
+        Test scope:
+            - Mockito (http://site.mockito.org/)
+    BSD-2 (https://opensource.org/licenses/BSD-2-Clause):
+        Compile scope:
+            - Flexmark (https://github.com/vsch/flexmark-java)
+            - PostgreSQL driver (https://www.postgresql.org/)
+    EPL2 (https://eclipse.org/legal/epl-2.0/):
+        Test scope:
+            - JUnit 5 (http://junit.org/junit5/)
+    EPL1 (https://eclipse.org/org/documents/epl-v10.php):
+        Compile scope:
+            - AspectJ (http://www.eclipse.org/aspectj/)
+        Test scope:
+            - H2 Database Engine (http://www.h2database.com/html/main.html)
+            </pre>
+            <pre class="row">
+The project additionally utilizes other components, tools and services like:
+    - TravisCI (https://travis-ci.org/)
+    - Codecov (https://codecov.io/)
+    - MongoDB (https://www.mongodb.com/)
+    - PostgreSQL DB (https://www.postgresql.org/)
+    - Maven + Surefire / Failsafe plugins (https://maven.apache.org/)
+            </pre>
+        </div>
+    </div>
+</main>
+<div th:replace="fragments/footer"></div>
+</body>
+</html>
