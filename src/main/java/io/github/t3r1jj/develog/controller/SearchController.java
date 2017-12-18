@@ -53,6 +53,7 @@ public class SearchController {
         Editor editor = new Editor();
         editor.setInput(notes);
         model.addAttribute("editor", editor);
+        model.addAttribute("date", date);
         return new ModelAndView("fragments/editor", model.asMap());
     }
 

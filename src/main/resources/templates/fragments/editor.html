@@ -4,6 +4,9 @@
         <div class="input-field col s12">
             <textarea id="input" class="materialize-textarea" th:field="${editor.input}" disabled></textarea>
             <label for="input"></label>
+            <a id="downloadRaw" href="javascript:void(0);"
+               class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">file_download</i></a>
         </div>
     </div>
     <div class="col s6 center">
@@ -13,6 +16,12 @@
                 <iframe id="output"></iframe>
                 <div id="output0" th:text="${editor.output}" style="display: none;"></div>
             </div>
+            <a id="downloadHtml" href="javascript:void(0);"
+               class="btn-floating btn-large waves-effect waves-light red"><i
+                    class="material-icons">file_download</i></a>
         </div>
     </div>
 </div>
+<script type="text/javascript" th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
+    initDownloadButtons(/*[[${date}]]*/ "search");
+</script>

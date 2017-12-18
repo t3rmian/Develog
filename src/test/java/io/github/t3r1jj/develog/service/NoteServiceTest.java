@@ -17,10 +17,7 @@ import java.util.HashSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class NoteServiceTest {
 
@@ -98,6 +95,16 @@ class NoteServiceTest {
         assertTrue(noteService.findAllByTags(Collections.singletonList("tag1")).contains(note2));
         assertFalse(noteService.findAllByTags(Collections.singletonList("tag1")).contains(note3));
         assertFalse(noteService.findAllByTags(Arrays.asList("tag1", "tag2")).contains(note));
+    }
+
+    @Test
+    void findAllByTags_Asterisk() {
+        Note note2 = Note.builder().id(3L).build();
+        Note note3 = Note.builder().id(4L).build();
+        when(user.getAllNotes()).thenReturn(Arrays.asList(note, note2, note3));
+        assertTrue(noteService.findAllByTags(Collections.singletonList("*")).contains(note));
+        assertTrue(noteService.findAllByTags(Collections.singletonList("*")).contains(note2));
+        assertTrue(noteService.findAllByTags(Collections.singletonList("*")).contains(note3));
     }
 
     @Test
