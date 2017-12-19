@@ -100,7 +100,7 @@ textarea.materialize_textarea:disabled, textarea.materialize_textarea[readonly="
     z-index: 500;
 }
 
-.chips .material-icons {
+#tags > i {
     vertical-align: middle;
     padding: 4px;
 }

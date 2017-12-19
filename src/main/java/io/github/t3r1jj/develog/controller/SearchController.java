@@ -27,6 +27,7 @@ public class SearchController {
 
     @RequestMapping("/search")
     public String showSearch(Model model, @RequestParam(required = false) LocalDate date) {
+        model.addAttribute("tags", noteService.getAllTags());
         if (date != null) {
             model.addAttribute("date", DateTimeFormatter.ISO_LOCAL_DATE.format(date));
         }

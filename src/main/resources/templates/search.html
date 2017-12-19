@@ -19,7 +19,8 @@
 <div th:replace="fragments/footer"></div>
 
 <script th:inline="javascript">
-    initChips([]);
+    var autocompleteTags = /*[[${tags}]]*/ [];
+    initChips([], autocompleteTags);
     if (/*[[${date}]]*/ null) {
         searchByDate(/*[[${date}]]*/);
     }

@@ -1,18 +1,18 @@
-function initChips(tags) {
+function initChips(tags, autocompleteTags) {
     var chips = [];
+    var autocompleteData = {};
     for (var i = 0; i < tags.length; i++) {
         chips.push({tag: tags[i].id.value});
+    }
+    for (i = 0; i < autocompleteTags.length; i++) {
+        autocompleteData[autocompleteTags[i]] = null;
     }
     $('#tags').chips({
         data: chips,
         placeholder: 'Enter a tag',
         secondaryPlaceholder: '+Tag',
         autocompleteOptions: {
-            data: {
-                'Apple': null,
-                'Microsoft': null,
-                'Google': null
-            },
+            data: autocompleteData,
             limit: Infinity,
             minLength: 2
         },

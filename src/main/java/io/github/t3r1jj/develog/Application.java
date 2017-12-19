@@ -11,12 +11,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @SpringBootApplication
 @ComponentScan
 @EnableScheduling
 @EnableAutoConfiguration
+@EnableTransactionManagement
 public class Application extends WebSecurityConfigurerAdapter {
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
@@ -33,7 +36,7 @@ public class Application extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/owr/*", "/about/*", "/img/*", "**").permitAll()
+                .antMatchers("/", "/owr/*", "/about/*", "/img/*", "/webjars/material-design-icons/**", "/error/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

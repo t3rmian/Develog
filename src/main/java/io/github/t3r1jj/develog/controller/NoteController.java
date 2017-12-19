@@ -1,6 +1,8 @@
 package io.github.t3r1jj.develog.controller;
 
 import io.github.t3r1jj.develog.model.data.Note;
+import io.github.t3r1jj.develog.model.data.User;
+import io.github.t3r1jj.develog.model.domain.BusinessRoles;
 import io.github.t3r1jj.develog.model.domain.Editor;
 import io.github.t3r1jj.develog.model.domain.exception.ResourceNotFoundException;
 import io.github.t3r1jj.develog.service.NoteService;
@@ -27,6 +29,7 @@ public class NoteController {
         this.noteService = noteService;
     }
 
+    @BusinessRoles(values = {User.Role.USER, User.Role.ADMIN})
     @RequestMapping({"/today/{date}"})
     @Transactional
     public ModelAndView todayNote(@PathVariable LocalDate date) {
@@ -42,9 +45,11 @@ public class NoteController {
         Editor noteEditor = new Editor(note.getBody());
         model.addAttribute("editor", noteEditor);
         model.addAttribute("note", note);
+        model.addAttribute("tags", noteService.getAllTags());
         return "note";
     }
 
+    @BusinessRoles(values = {User.Role.USER, User.Role.ADMIN})
     @Transactional
     @RequestMapping(value = {"/note/update", "/note/{date}/update"}, method = RequestMethod.POST)
     @ResponseBody
@@ -53,6 +58,7 @@ public class NoteController {
         return editor.getOutput();
     }
 
+    @BusinessRoles(values = {User.Role.USER, User.Role.ADMIN})
     @Transactional
     @RequestMapping(value = {"/note/tag", "/note/{date}/tag"}, method = RequestMethod.POST)
     @ResponseBody

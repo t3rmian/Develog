@@ -41,9 +41,10 @@
 
 <div th:replace="fragments/footer"></div>
 <script th:inline="javascript">
+    var autocompleteTags = /*[[${tags}]]*/ [];
     var tags = /*[[${note.tags}]]*/ null;
     var fileName = (/*[[${note.date}]]*/ null);
-    initChips(tags);
+    initChips(tags, autocompleteTags);
     initEditor();
     updateNote();
     initDownloadButtons(fileName);

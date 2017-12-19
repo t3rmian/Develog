@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="parallax-container">
-        <div class="parallax"><img src="/img/notebook.jpg"></div>
+        <div class="parallax" style="opacity: 0"><img src="/img/notebook.jpg"></div>
     </div>
     <div class="container">
         <div class="row">
@@ -90,7 +90,13 @@
 <div th:replace="fragments/footer"></div>
 <script>
     $(document).ready(function () {
-        $('.parallax').parallax();
+        setTimeout(function () {
+            var parallax = $('.parallax');
+            parallax.parallax();
+            parallax.animate({
+                opacity: 1
+            }, 1000);
+        }, 100);
     });
 </script>
 </body>
