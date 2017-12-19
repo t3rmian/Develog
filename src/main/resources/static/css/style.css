@@ -96,3 +96,48 @@ pre {
     white-space: -o-pre-wrap;
     word-wrap: break-word;
 }
+
+.material-icons svg {
+    width: 24px;
+    height: 24px;
+}
+
+.parallax-container {
+    height: 300px;
+}
+
+.container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.container {
+    text-align: justify;
+}
+
+h1, h2, h3, h4, h5, h6, figcaption {
+    text-align: center;
+}
+
+figure {
+    height: 100%;
+    margin: 0;
+}
+
+.how-imgs .col {
+    margin: auto;
+    padding-bottom: 20px;
+}
+
+.initial.container .col {
+    padding-top: 24px;
+    padding-bottom: 16px;
+}
+
+.initial.container .col:nth-last-child(1) {
+    text-indent: 2.5em;
+}
+
+.col.single-right-img {
+    padding-right: 0;
+}

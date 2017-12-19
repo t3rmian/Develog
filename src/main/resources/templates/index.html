@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Develog - Note</title>
+    <title>Develog - Developer Logbook</title>
     <meta th:replace="fragments/head"/>
     <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/base.js}"></script>
@@ -9,34 +9,89 @@
 <body>
 <div th:replace="fragments/header"></div>
 <main>
-    <div class="row" style="margin: auto">
-        <a class="waves-effect waves-light btn-large" href="/oauth2/authorization/github">
-            <i class="material-icons left">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-            <image id="image0" width="32" height="32" x="0" y="0"
-                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAAABGdBTUEAALGPC/xhBQAAACBjSFJN
-                AAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAHdElN
-                RQfhDA8NHy/iDD9EAAACIElEQVRIx5WVvUtbYRTGT24vpEJCYuhHuihuToVohBaKpQ6lW2dBsJiK
-                3TqkhdLBP6CLo4PgHsVQJ+lUbF06uGTIoJJgu0ibJaQqJCG/Dknee+715t7b8y7nnPd5nvt+nXNj
-                iI/dkZfyTB7KlCRE5K/UpSJfZV8aPli8I0eJDn7WoUTOi3eHKbboEWQ9tkiNEshRI4rV9Doc+gLN
-                SHSAJgtegdn/oPclZrXAOPXBRJW9AKkme1QHfp1xR2DbQJYQ4hS4AFpUOOSQCi3gggJxhCWD3R4K
-                5NU3Zsx9TGOZ87GYNmc/o9D5vkBZpeaQkDGn0GVEyNJVqeVQgWWF7pIV1lTiF5lQgQw/FWNNKKlw
-                JZQuCCuKURJzLdB1P9KRI6U2XRWuTHAeiS4I54ZzZcmYKcy2RLWO8cYslb4fWeCe41rSMn5STwTS
-                k8ZvWVJTUy8iCWhUzZJjFRbFDqXbUlTRsbDoqreN0BvYcOEXhSSXrtQu2ZHkB+y6sJckBWETgE88
-                5RsAbXZYJc8tQ7R5zBvKtD39YbNfjRNcAz2KxPmhKi1mBGJ89mkv10wMG8r6IPWIKVMqT1yLn/cR
-                WHc6ks0RAF8Q0hT4yHO1AUG4e4N+hK2bapYzAN6OOL60h342PGoHMskpAN95zys+cDtA4JRJvx9L
-                hgMFSo8UONBtx73QGK/5HSjwh1V1OzcEBCFBkRMaxF3ZOA1OeEfCi48R+viD7R/aXKLWQo0lLAAA
-                ACV0RVh0ZGF0ZTpjcmVhdGUAMjAxNy0xMi0xNVQxMzozMTo0Ny0wNzowMK8KIToAAAAldEVYdGRh
-                dGU6bW9kaWZ5ADIwMTctMTItMTVUMTM6MzE6NDctMDc6MDDeV5mGAAAAGXRFWHRTb2Z0d2FyZQBB
-                ZG9iZSBJbWFnZVJlYWR5ccllPAAAAABJRU5ErkJggg==" ></image>
-        </svg>
-            </i>Sign in with GitHub</a>
-      <a class="waves-effect waves-light btn-large" href="/logout">
-            <i class="material-icons left">exit_to_app
-            </i>Logout</a>
+    <div class="container initial">
+        <div class="row">
+            <div class="col s12 l8 center">
+                <img src="/img/idea.png">
+            </div>
+            <div class="col s12 l4">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consectetur magna eu risus malesuada
+                fermentum. Proin velit nisi, mattis vitae feugiat ut, maximus in lorem. Sed tempor ipsum in consequat
+                feugiat. Donec porta arcu orci, sed vestibulum urna feugiat ac. In hac habitasse platea dictumst.
+                Phasellus
+                suscipit massa imperdiet, ultricies arcu nec, lobortis dolor. Curabitur in ullamcorper massa. Aliquam
+                eget
+                varius eros, a dapibus nisi. Ut euismod arcu in erat rutrum, ac dignissim quam auctor. Mauris lacus
+                nisl,
+                vulputate quis semper at, interdum eget turpis. Integer efficitur vitae est vel varius. Aenean aliquam
+                eros
+                et velit ornare lacinia.
+            </div>
+        </div>
     </div>
-
+    <div class="parallax-container">
+        <div class="parallax"><img src="/img/notebook.jpg"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h3 class="header">How does it work?</h3>
+            <div class="valign-wrapper center how-imgs">
+                <div class="col s3 center">
+                    <figure>
+                        <img src="/img/markdown.png">
+                        <figcaption>Markdown</figcaption>
+                    </figure>
+                </div>
+                <div class="col">
+                    <h3 class="header">+</h3>
+                </div>
+                <div class="col s3 center">
+                    <figure>
+                        <img src="/img/uml.png">
+                        <figcaption>UML (PlantUML)</figcaption>
+                    </figure>
+                </div>
+                <div class="col">
+                    <h3 class="header">→</h3>
+                </div>
+                <div class="col s3 center">
+                    <figure>
+                        <img src="/img/html.png">
+                        <figcaption>HTML</figcaption>
+                    </figure>
+                </div>
+            </div>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consectetur magna eu risus malesuada
+            fermentum. Proin velit nisi, mattis vitae feugiat ut, maximus in lorem. Sed tempor ipsum in consequat
+            feugiat. Donec porta arcu orci, sed vestibulum urna feugiat ac. In hac habitasse platea dictumst.
+            Phasellus
+            suscipit massa imperdiet, ultricies arcu nec, lobortis dolor. Curabitur in ullamcorper massa. Aliquam
+            eget
+            varius eros, a dapibus nisi. Ut euismod arcu in erat rutrum, ac dignissim quam auctor. Mauris lacus
+            nisl,
+            vulputate quis semper at, interdum eget turpis. Integer efficitur vitae est vel varius. Aenean aliquam
+            eros
+            et velit ornare lacinia.
+        </div>
+        <div class="row valign-wrapper quotes">
+            <blockquote class="col s5">
+                This is an example quotation that uses the blockquote tag.
+                This is an example quotation that uses the blockquote tag.
+                This is an example quotation that uses the blockquote tag.
+                This is an example quotation that uses the blockquote tag.
+                This is an example quotation that uses the blockquote tag.
+            </blockquote>
+            <div class="col s6 offset-s1 single-right-img">
+                <img src="/img/code.png">
+            </div>
+        </div>
+    </div>
 </main>
 <div th:replace="fragments/footer"></div>
+<script>
+    $(document).ready(function () {
+        $('.parallax').parallax();
+    });
+</script>
 </body>
 </html>

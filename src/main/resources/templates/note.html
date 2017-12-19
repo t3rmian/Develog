@@ -12,9 +12,31 @@
         <h4 class="date-type" th:text="${#httpServletRequest.getRequestURI() == '/note' ? 'Global note' : note.date}">
             DATE</h4>
         <div id="tags" class="chips chips-autocomplete"><i class="material-icons">label</i></div>
-        <div id="editor" th:replace="fragments/editor">
-        </div>
+        <div id="editor" th:replace="fragments/editor"></div>
     </form>
+    <a id="help" class="waves-effect waves-light btn-large btn-floating"
+       onclick="$('.tap-target').featureDiscovery('open');">
+        <i class="material-icons">help</i>
+    </a>
+    <div class="tap-target" data-target="help">
+        <div class="tap-target-content">
+            <h5>Help</h5>
+            <div class="row">
+                <div class="col s6 center">
+                    <p>abc</p>
+                    <p>abc</p>
+                    <p>abc</p>
+                    <p>abc</p>
+                </div>
+                <div class="col s6 center">
+                    <p>abc</p>
+                    <p>abc</p>
+                    <p>abc</p>
+                    <p>abc</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 <div th:replace="fragments/footer"></div>
@@ -25,6 +47,7 @@
     initEditor();
     updateNote();
     initDownloadButtons(fileName);
+    $('.tap-target').featureDiscovery();
 </script>
 </body>
 </html>

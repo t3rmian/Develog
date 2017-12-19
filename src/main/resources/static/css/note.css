@@ -104,3 +104,15 @@ textarea.materialize_textarea:disabled, textarea.materialize_textarea[readonly="
     vertical-align: middle;
     padding: 4px;
 }
+
+#help {
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+}
+
+.tap-target .tap-target-content {
+    color: white;
+}
