@@ -141,3 +141,30 @@ figure {
 .col.single-right-img {
     padding-right: 0;
 }
+
+.brand-logo {
+    max-height: 64px;
+}
+
+.brand-logo img {
+    max-height: 64px;
+}
+
+.main-nav .material-icons {
+    width: 34px;
+    text-align: center;
+}
+
+.brand-logo {
+    max-height: 64px;
+}
+
+.brand-logo span {
+    vertical-align: top;
+}
+
+@media screen and (max-width: 1120px) {
+    .brand-logo span {
+        display: none;
+    }
+}
