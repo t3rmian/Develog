@@ -1,0 +1,106 @@
+main, form, form .row .col, form .row .input-field, .card, .card-content, iframe, #input {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 1 1 auto;
+}
+
+form .row {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 1 1 auto;
+}
+
+textarea.materialize_textarea {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 8px 0;
+    padding: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+textarea.materialize_textarea {
+    line-height: normal;
+    overflow-y: hidden;
+    padding: .8rem 0 .8rem 0;
+    resize: none;
+    min-height: 3rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: none;
+    transition: none;
+}
+
+textarea.materialize_textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #26a69a;
+    -webkit-box-shadow: 0 1px 0 0 #26a69a;
+    box-shadow: 0 1px 0 0 #26a69a;
+}
+
+textarea.materialize_textarea {
+    overflow: auto;
+    resize: none;
+}
+
+textarea.materialize_textarea:disabled, textarea.materialize_textarea[readonly="readonly"] {
+    color: rgba(0, 0, 0, 0.42);
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.42);
+}
+
+#output {
+    border: 0;
+    padding: 0;
+    margin: 0
+}
+
+.input-field, #input, .card {
+    padding: 0;
+    margin: 0;
+}
+
+#downloadRaw {
+    position: absolute;
+    bottom: -26px;
+}
+
+#downloadHtml {
+    position: absolute;
+    bottom: -26px;
+    right: 0;
+}
+
+#input-container, #output-container {
+    min-width: 10%;
+    margin-top: 10px;
+}
+
+#handle {
+    border-left: 2px dashed black;
+    border-right: 2px dashed black;
+    cursor: ew-resize;
+}
+
+.date-type {
+    position: absolute;
+    right: 8px;
+    top: 48px;
+    color: lightcoral;
+    z-index: 500;
+}
+
+.chips .material-icons {
+    vertical-align: middle;
+    padding: 4px;
+}

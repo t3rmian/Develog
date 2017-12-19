@@ -65,7 +65,7 @@ function search(url, data) {
         type: 'post',
         data: data,
         success: function (response) {
-            if (response != "") {
+            if (response != null && response.indexOf("#editor") !== -1) {
                 $("#editor").replaceWith(response);
                 $("#output").contents().find('html').html($("#output0")[0].innerText);
                 $("#output0").remove();
@@ -139,5 +139,40 @@ function initDownloadButtons(fileName) {
             fileName = "archive";
         }
         saveAsHtml($("#output").contents().find('html')[0], fileName, getChipsAsString(), "text/plain;charset=" + document.characterSet);
+    });
+}
+
+function enableEditorResizing(containerSelector, leftSelector, rightSelector, handleSelector) {
+    function startDragging() {
+        dragging = true;
+    }
+
+    var stopDragging = function () {
+        dragging = false;
+    };
+    var container = $(containerSelector),
+        left = $(leftSelector),
+        right = $(rightSelector),
+        handle = $(handleSelector),
+        dragging = false;
+
+    handle.on('mousedown', startDragging);
+    $(document).on('mouseup', stopDragging);
+    $(document).on('mousemove', function (e) {
+        if (dragging) {
+            var rightOffset = container.width() - (e.clientX - container.offset().left);
+            left.css('width', container.width() - rightOffset);
+            right.css('width', rightOffset);
+        }
+    });
+    $('iframe').contents().on({
+        mouseup: stopDragging,
+        mousemove: function (e) {
+            if (dragging) {
+                var rightOffset = right.width() - e.clientX;
+                left.css('width', container.width() - rightOffset);
+                right.css('width', rightOffset);
+            }
+        }
     });
 }

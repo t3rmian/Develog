@@ -46,6 +46,7 @@ function displayOtherEvents(events) {
     var otherEvents = events.filter(function (event) {
         return event.type !== 'ONLINE';
     });
+    otherEvents.slice(otherEvents.length - 100, otherEvents.length);
     if (otherEvents.length === 0) {
         $(".other").css("display", "none");
     } else {
