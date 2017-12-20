@@ -173,3 +173,23 @@ input:not([type]):focus:not([readonly]) {
     -webkit-box-shadow: 0 1px 0 0 #303f9f;
     box-shadow: 0 1px 0 0 #303f9f;
 }
+
+.datepicker-date-display {
+    background-color: #1a237e;
+}
+
+.datepicker-today, .datepicker-done {
+    color: #303f9f;
+}
+
+.datepicker-table td.is-today {
+    color: #303f9f;
+}
+
+nav .datepicker-modal td {
+    color: #303f9f;
+}
+
+.datepicker-day-button {
+    -webkit-tap-highlight-color: #2196f3;
+}
