@@ -54,7 +54,7 @@ function displayOtherEvents(events) {
     }
 }
 
-function displayOnlineEvents(events) {
+function displayOnlineEvents(events, i18n) {
     var onlineEvents = events.filter(function (event) {
         return event.type === 'ONLINE';
     });
@@ -80,7 +80,7 @@ function displayOnlineEvents(events) {
         type: 'bubble',
         data: {
             datasets: [{
-                label: '# of users online',
+                label: i18n.numberOnline,
                 data: online,
                 borderWidth: 1,
                 backgroundColor: "rgb(255, 99, 132)"
@@ -94,7 +94,7 @@ function displayOnlineEvents(events) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Online'
+                        labelString: i18n.online
                     }
                 }],
                 xAxes: [{
@@ -102,7 +102,7 @@ function displayOnlineEvents(events) {
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Date'
+                        labelString: i18n.date
                     },
                     ticks: {
                         major: {
@@ -117,7 +117,7 @@ function displayOnlineEvents(events) {
             tooltips: {
                 callbacks: {
                     label: function (tooltipItem) {
-                        return '# of users online: ' + tooltipItem.yLabel;
+                        return  i18n.numberOnline + ': ' + tooltipItem.yLabel;
                     },
                     title: function (tooltipItem) {
                         return tooltipItem[0].xLabel;

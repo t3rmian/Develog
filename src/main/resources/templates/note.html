@@ -34,10 +34,12 @@
 
 <div th:replace="fragments/footer"></div>
 <script th:inline="javascript">
+    var chipsLabel = /*[[#{tagsLabel}]]*/ null;
+    var secondaryChipsLabel = /*[[#{tagsSecondaryLabel}]]*/ null;
     var autocompleteTags = /*[[${tags}]]*/ [];
     var tags = /*[[${note.tags}]]*/ null;
     var fileName = (/*[[${note.date}]]*/ null);
-    initChips(tags, autocompleteTags);
+    initChips(tags, autocompleteTags, chipsLabel, secondaryChipsLabel);
     initEditor();
     updateNote();
     initDownloadButtons(fileName);

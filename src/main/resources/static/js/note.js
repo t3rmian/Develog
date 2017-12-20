@@ -1,4 +1,4 @@
-function initChips(tags, autocompleteTags) {
+function initChips(tags, autocompleteTags, label, secondaryLabel) {
     var chips = [];
     var autocompleteData = {};
     for (var i = 0; i < tags.length; i++) {
@@ -9,8 +9,8 @@ function initChips(tags, autocompleteTags) {
     }
     $('#tags').chips({
         data: chips,
-        placeholder: 'Enter a tag',
-        secondaryPlaceholder: '+Tag',
+        placeholder: label,
+        secondaryPlaceholder: '+' + secondaryLabel,
         autocompleteOptions: {
             data: autocompleteData,
             limit: Infinity,

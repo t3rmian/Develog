@@ -24,7 +24,8 @@ function initializeDatePicker(button) {
                     onSelect: function (date) {
                         date.setDate(date.getDate() + 1);
                         window.location.href = "/search?date=" + date.toISOString().split("T")[0];
-                    }
+                    },
+                    i18n: i18n.calendar
                 });
                 datePicker.datepicker('open');
             }

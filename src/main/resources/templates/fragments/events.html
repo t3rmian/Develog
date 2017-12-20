@@ -7,7 +7,10 @@
     <div id="other"></div>
 </div>
 <script type="text/javascript" xmlns:th="http://www.thymeleaf.org" th:inline="javascript">
+    i18n.online = /*[[#{online}]]*/ null;
+    i18n.numberOnline = /*[[#{numberOnline}]]*/ null;
+    i18n.date = /*[[#{date}]]*/ null;
     var events = /*[[${events}]]*/ [];
     displayOtherEvents(events);
-    displayOnlineEvents(events);
+    displayOnlineEvents(events, i18n);
 </script>

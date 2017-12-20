@@ -134,9 +134,26 @@
                 <i class="material-icons">settings</i>
             </a>
             <a th:if="${loggedUser}" href="javascript:void(0)" onclick="initializeDatePicker(this);" class="tooltipped sidenav-trigger
-             show-on-medium-and-down hide-on-large-only" data-position="bottom" data-delay="50" th:data-tooltip="#{calendar}">
+             show-on-medium-and-down hide-on-large-only" data-position="bottom" data-delay="50"
+               th:data-tooltip="#{calendar}">
                 <i class="material-icons">date_range</i>
             </a>
         </div>
     </nav>
 </header>
+<script th:inline="javascript" xmlns:th="http://www.thymeleaf.org">
+    var i18n = {
+        calendar: {
+            clear: /*[[#{clear}]]*/ 'Clear',
+            today: /*[[#{today}]]*/ 'Today',
+            done: /*[[#{done}]]*/ 'Ok',
+            previousMonth: /*[[#{previousMonth}]]*/ '‹',
+            nextMonth: /*[[#{nextMonth}]]*/ '›',
+            months: (/*[[#{months}]]*/ "").split(','),
+            monthsShort: (/*[[#{monthsShort}]]*/ "").split(','),
+            weekdaysShort: (/*[[#{weekdaysShort}]]*/ "").split(','),
+            weekdays: (/*[[#{weekdays}]]*/ "").split(','),
+            weekdaysAbbrev: (/*[[#{weekdaysAbbrev}]]*/ "").split(',')
+        }
+    }
+</script>

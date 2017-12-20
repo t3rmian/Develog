@@ -19,8 +19,10 @@
 <div th:replace="fragments/footer"></div>
 
 <script th:inline="javascript">
+    var chipsLabel = /*[[#{tagsLabel}]]*/ null;
+    var secondaryChipsLabel = /*[[#{tagsSecondaryLabel}]]*/ null;
     var autocompleteTags = /*[[${tags}]]*/ [];
-    initChips([], autocompleteTags);
+    initChips([], autocompleteTags, chipsLabel, secondaryChipsLabel);
     if (/*[[${date}]]*/ null) {
         searchByDate(/*[[${date}]]*/);
     }
