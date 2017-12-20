@@ -2,10 +2,10 @@
     <thead>
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Data size</th>
-        <th>Role</th>
-        <th>Action</th>
+        <th th:text="#{name}">Name</th>
+        <th th:text="#{dataSize}">Data size</th>
+        <th th:text="#{role}">Role</th>
+        <th th:text="#{action}">Action</th>
     </tr>
     </thead>
 
@@ -31,17 +31,6 @@
 </table>
 <script type="text/javascript">
     // It IS used, watch out for renaming
-    function changeUserRole(userId, newRole) {
-        $.ajax({
-            url: '/admin/user',
-            type: 'post',
-            data: {id: userId, role: newRole},
-            success: function (response) {
-                console.log(response);
-            }
-        });
-    }
-
     $(document).ready(function () {
         $('select').select();
     });

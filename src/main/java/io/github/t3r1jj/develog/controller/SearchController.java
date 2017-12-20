@@ -5,7 +5,6 @@ import io.github.t3r1jj.develog.model.domain.Editor;
 import io.github.t3r1jj.develog.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,7 +33,6 @@ public class SearchController {
         return "search";
     }
 
-    @Transactional(readOnly = true)
     @RequestMapping(value = "/search/tag", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView findAllByTags(Model model, @RequestParam(value = "values[]", defaultValue = "") List<String> values) {
@@ -45,7 +43,6 @@ public class SearchController {
         return new ModelAndView("fragments/editor", model.asMap());
     }
 
-    @Transactional(readOnly = true)
     @RequestMapping(value = "/search/{date}", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView findByDate(Model model, @PathVariable LocalDate date) {

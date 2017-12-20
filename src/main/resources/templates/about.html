@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <title>Develog - About</title>
+    <title th:text="aboutPageTitle">Develog - About</title>
     <meta th:replace="fragments/head"/>
     <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/base.js}"></script>
+    <style>
+        pre.row > pre.row.about {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        pre.about.no-indent {
+            text-indent: 0;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="fragments/header"></div>
 <main>
     <div class="row">
         <div class="col s12 l6 offset-l3">
-            <h4>
+            <h4 th:text="#{about}">
                 About
             </h4>
-            <pre class="row about">
-    <b>Develog</b> is a web application inspired by James Routley's
-idea of <a href="https://routley.io/tech/2017/11/23/logbook.html">using a logbook to improve your programming</a>. The app allows
-users to create one private and tagged note per day. Simple Markdown together with PlantUML speeds up and facilitates
-the process of describing a solution to a problem. The app is open source - <a href="https://github.com/T3r1jj/Develog">see the repository on Github</a>.
+            <pre class="row about" th:utext="#{aboutText}">
             </pre>
-            <h4>
+            <h4 th:text="#{license}">
                 License
             </h4>
             <pre class="row">
@@ -41,14 +46,12 @@ the process of describing a solution to a problem. The app is open source - <a h
     along with this program.  If not, see <a href="http://www.gnu.org/licenses">&lt;http://www.gnu.org/licenses/></a>.
             </pre>
             <div class="divider"></div>
-            <h4>Components</h4>
+            <h4 th:text="#{components}">Components</h4>
             <pre class="row">
+                <pre class="row about" th:utext="#{aboutComponents}">
     The project incorporates third party components whose licenses require
 to publish copies of the copyright notices. In compliance with those
-requirements, an aggregated list of attributions has been presented below.
-            </pre>
-            <pre class="row">
-    GPL (http://www.gnu.org/licenses/gpl.txt):
+requirements, an aggregated list of attributions has been presented below.</pre>
         Compile scope:
             - PlantUML (http://plantuml.com/)
     Apache 2.0 (https://www.apache.org/licenses/LICENSE-2.0.html):
@@ -87,18 +90,18 @@ requirements, an aggregated list of attributions has been presented below.
             - H2 Database Engine (http://www.h2database.com/html/main.html)
             </pre>
             <pre class="row">
-The project additionally utilizes other components, tools and services like:
-    - TravisCI (https://travis-ci.org/)
+<pre class="row about no-indent" th:utext="#{aboutComponentsOther}">The project additionally utilizes other components, tools and services like:</pre>    - TravisCI (https://travis-ci.org/)
     - Codecov (https://codecov.io/)
     - MongoDB (https://www.mongodb.com/)
     - PostgreSQL DB (https://www.postgresql.org/)
     - Maven + Surefire / Failsafe plugins (https://maven.apache.org/)
-Other resources (CC0 images):
-    - Brain arrows bulb idea (https://pixabay.com/en/brain-arrows-right-bulb-idea-1865324/)
+
+<pre class="row about no-indent" th:utext="#{aboutComponentsOtherResources}">Other resources (CC0 images):</pre>    - Brain arrows bulb idea (https://pixabay.com/en/brain-arrows-right-bulb-idea-1865324/)
     - Parallax (https://pixabay.com/en/notebook-leaves-paper-work-office-2984108/)
     - Markdown (https://github.com/dcurtis/markdown-mark/blob/master/svg/markdown-mark-solid.svg)
-    - HTML (https://pixabay.com/en/html-file-type-source-code-code-154434/)
+    - HTML file (https://pixabay.com/en/html-file-type-source-code-code-154434/)
     - Code head (https://pixabay.com/en/code-programming-head-computer-2858768/)
+    - Failure cat (https://pixabay.com/en/failure-surprised-baseball-cat-1256743/)
             </pre>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <title>Develog - Admin Panel</title>
+    <title th:text="#{adminPageTitle}">Develog - Admin Panel</title>
     <meta th:replace="fragments/head"/>
     <link th:href="@{/owr/admin.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/admin.js}" th:inline="javascript"></script>
@@ -9,23 +9,23 @@
 <body>
 <ul id="nav-admin" class="sidenav sidenav-fixed" role="navigation">
     <li class="center develog-color-primary darken-2 admin-header">
-        <h4>Admin panel</h4>
+        <h4 th:text="#{adminPanel}">Admin panel</h4>
     </li>
     <li>
         <div class="divider"></div>
     </li>
-    <li><a href="#users"><i class="material-icons">face</i>Users</a></li>
-    <li><a href="#events"><i class="material-icons">stars</i>Events</a></li>
-    <li><a href="#errors"><i class="material-icons">error</i>Errors</a></li>
-    <li><a href="#logs"><i class="material-icons">description</i>Logs</a></li>
-    <li><a href="#health"><i class="material-icons">favorite</i>Health</a></li>
+    <li><a href="#users"><i class="material-icons">face</i>[[#{users}]]</a></li>
+    <li><a href="#events"><i class="material-icons">stars</i>[[#{events}]]</a></li>
+    <li><a href="#errors"><i class="material-icons">error</i>[[#{errors}]]</a></li>
+    <li><a href="#logs"><i class="material-icons">description</i>[[#{logs}]]</a></li>
+    <li><a href="#health"><i class="material-icons">favorite</i>[[#{health}]]</a></li>
     <a class="waves-effect waves-light btn-large" onclick='openEmail("USERS","EVERYONE")'>
         <i class="material-icons left">email</i>
-        Email everyone
+        [[#{emailEveryone}]]
     </a>
     <a class="waves-effect waves-light btn-large" onclick="clearLogs()">
         <i class="material-icons left">layers_clear</i>
-        Clear all logs
+        [[#{clearLogs}]]
     </a>
 </ul>
 <div th:replace="fragments/header"></div>

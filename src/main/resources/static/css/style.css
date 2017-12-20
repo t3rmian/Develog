@@ -69,11 +69,6 @@ main {
     color: white;
 }
 
-.active {
-    background: teal;
-    color: white;
-}
-
 .sidenav .divider {
     margin: 0;
 }
@@ -134,7 +129,7 @@ figure {
     padding-bottom: 16px;
 }
 
-.initial.container .col:nth-last-child(1) {
+.initial.container div.col:nth-last-child(1) {
     text-indent: 2.5em;
 }
 

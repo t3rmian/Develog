@@ -1,12 +1,12 @@
 <div>
-    <h3>Online</h3>
+    <h3>[[#{online}]]</h3>
     <canvas id="myChart" width="16" height="6"></canvas>
 </div>
 <div class="other">
-    <h3>Other</h3>
+    <h3>[[#{other}]]</h3>
     <div id="other"></div>
 </div>
-<script type="text/javascript" xmlns:th="http://www.thymeleaf.org" th:inline="javascript" lang="en">
+<script type="text/javascript" xmlns:th="http://www.thymeleaf.org" th:inline="javascript">
     var events = /*[[${events}]]*/ [];
     displayOtherEvents(events);
     displayOnlineEvents(events);

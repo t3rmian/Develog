@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <title>Develog - Error</title>
+    <title th:text="#{errorPageTitle}">Develog - Error</title>
     <meta th:replace="fragments/head"/>
     <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/base.js}"></script>
@@ -11,9 +11,14 @@
 <main>
     <div class="container initial">
         <div class="row">
-            <h3>Error: <span th:text="${status}" id="error_status">error_status</span></h3>
-            <h4>Type: <span th:text="${type}" id="error_type">error_type</span></h4>
-            <h4>Message: <span th:text="${message}" id="error_message">error_message</span></h4>
+            <figure class="col s6 offset-s3">
+                <img src="/img/failure.png">
+            </figure>
+        </div>
+        <div class="row">
+            <h3>[[#{error}]]: <span th:text="${status}" id="error_status">error_status</span></h3>
+            <h4>[[#{type}]]: <span th:text="${type}" id="error_type">error_type</span></h4>
+            <h5>[[#{message}]]: <span th:text="${message}" id="error_message">error_message</span></h5>
         </div>
     </div>
 </main>

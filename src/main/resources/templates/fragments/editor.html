@@ -4,10 +4,12 @@
         <div class="input-field">
             <textarea id="input" class="materialize_textarea" th:field="${editor.input}"
                       th:disabled="${#httpServletRequest.getRequestURI().contains('/search')}"></textarea>
-            <label for="input">Textarea</label>
+            <label for="input">Markdown + PlantUML Editor</label>
             <a id="downloadRaw" href="javascript:void(0);"
-               class="btn-floating btn-large waves-effect waves-light red"><i
-                    class="material-icons">file_download</i></a>
+               class="btn-floating btn-large waves-effect waves-light red tooltipped"
+               data-position="right" data-delay="50" th:data-tooltip="#{downloadRaw}">
+                <i class="material-icons">file_download</i>
+            </a>
         </div>
     </div>
     <div id="handle"></div>
@@ -17,8 +19,10 @@
                 <iframe id="output" th:text="${editor.output}"></iframe>
                 <div id="output0" th:text="${editor.output}" style="display: none;"></div>
                 <a id="downloadHtml" href="javascript:void(0);"
-                   class="btn-floating btn-large waves-effect waves-light red"><i
-                        class="material-icons">file_download</i></a>
+                   class="btn-floating btn-large waves-effect waves-light red tooltipped"
+                   data-position="left" data-delay="50" th:data-tooltip="#{downloadHtml}">
+                    <i class="material-icons">file_download</i>
+                </a>
             </div>
         </div>
     </div>

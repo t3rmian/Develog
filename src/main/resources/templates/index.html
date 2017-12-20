@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <title>Develog - Developer Logbook</title>
+    <title th:text="indexPageTitle">Develog - Developer Logbook</title>
     <meta th:replace="fragments/head"/>
     <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/base.js}"></script>
@@ -14,18 +14,7 @@
             <div class="col s12 l8 center">
                 <img src="/img/idea.png">
             </div>
-            <div class="col s12 l4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consectetur magna eu risus malesuada
-                fermentum. Proin velit nisi, mattis vitae feugiat ut, maximus in lorem. Sed tempor ipsum in consequat
-                feugiat. Donec porta arcu orci, sed vestibulum urna feugiat ac. In hac habitasse platea dictumst.
-                Phasellus
-                suscipit massa imperdiet, ultricies arcu nec, lobortis dolor. Curabitur in ullamcorper massa. Aliquam
-                eget
-                varius eros, a dapibus nisi. Ut euismod arcu in erat rutrum, ac dignissim quam auctor. Mauris lacus
-                nisl,
-                vulputate quis semper at, interdum eget turpis. Integer efficitur vitae est vel varius. Aenean aliquam
-                eros
-                et velit ornare lacinia.
+            <div class="col s12 l4" th:utext="#{indexFirstParagraph}">
             </div>
         </div>
     </div>
@@ -61,25 +50,10 @@
                     </figure>
                 </div>
             </div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consectetur magna eu risus malesuada
-            fermentum. Proin velit nisi, mattis vitae feugiat ut, maximus in lorem. Sed tempor ipsum in consequat
-            feugiat. Donec porta arcu orci, sed vestibulum urna feugiat ac. In hac habitasse platea dictumst.
-            Phasellus
-            suscipit massa imperdiet, ultricies arcu nec, lobortis dolor. Curabitur in ullamcorper massa. Aliquam
-            eget
-            varius eros, a dapibus nisi. Ut euismod arcu in erat rutrum, ac dignissim quam auctor. Mauris lacus
-            nisl,
-            vulputate quis semper at, interdum eget turpis. Integer efficitur vitae est vel varius. Aenean aliquam
-            eros
-            et velit ornare lacinia.
+            <span th:utext="#{indexSecondParagraph}"></span>
         </div>
         <div class="row valign-wrapper quotes">
-            <blockquote class="col s5">
-                This is an example quotation that uses the blockquote tag.
-                This is an example quotation that uses the blockquote tag.
-                This is an example quotation that uses the blockquote tag.
-                This is an example quotation that uses the blockquote tag.
-                This is an example quotation that uses the blockquote tag.
+            <blockquote class="col s5" th:utext="#{indexThirdParagraph}">
             </blockquote>
             <div class="col s6 offset-s1 single-right-img">
                 <img src="/img/code.png">

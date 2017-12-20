@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <title>Develog - Note</title>
+    <title th:text="notePageTitle">Develog - Note</title>
     <meta th:replace="fragments/head"/>
     <link th:href="@{/owr/note.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/note.js}"></script>
@@ -14,25 +14,18 @@
         <div id="tags" class="chips chips-autocomplete"><i class="material-icons">label</i></div>
         <div id="editor" th:replace="fragments/editor"></div>
     </form>
-    <a id="help" class="waves-effect waves-light btn-large btn-floating"
+    <a id="help" class="waves-effect waves-light btn-large btn-floating tooltipped"
+       data-position="top" data-delay="50" th:data-tooltip="#{help}"
        onclick="$('.tap-target').featureDiscovery('open');">
         <i class="material-icons">help</i>
     </a>
     <div class="tap-target" data-target="help">
         <div class="tap-target-content">
-            <h5>Help</h5>
+            <h5 th:text="#{helpTitle}">Help</h5>
             <div class="row">
-                <div class="col s6 center">
-                    <p>abc</p>
-                    <p>abc</p>
-                    <p>abc</p>
-                    <p>abc</p>
+                <div class="col s6 center" th:utext="#{helpHtml_1}">
                 </div>
-                <div class="col s6 center">
-                    <p>abc</p>
-                    <p>abc</p>
-                    <p>abc</p>
-                    <p>abc</p>
+                <div class="col s6 center" th:utext="#{helpHtml_2}">
                 </div>
             </div>
         </div>

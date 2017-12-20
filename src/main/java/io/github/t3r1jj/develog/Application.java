@@ -5,51 +5,65 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
+import java.util.Locale;
 
 @Configuration
 @SpringBootApplication
 @ComponentScan
 @EnableScheduling
 @EnableAutoConfiguration
-@EnableTransactionManagement
-public class Application extends WebSecurityConfigurerAdapter {
+public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
     }
 
-    private final UserUpdater userUpdater;
 
-    @Autowired
-    public Application(UserUpdater userUpdater) {
-        this.userUpdater = userUpdater;
+    @Configuration
+    static class Security extends WebSecurityConfigurerAdapter {
+        private final UserUpdater userUpdater;
+
+        @Autowired
+        public Security(UserUpdater userUpdater) {
+            this.userUpdater = userUpdater;
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .antMatchers("/", "/owr/*", "/about/*", "/img/*", "/webjars/material-design-icons/**", "/error/*").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginPage("/")
+                    .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/")
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .and()
+                    .oauth2Login()
+                    .successHandler(userUpdater);
+        }
     }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/owr/*", "/about/*", "/img/*", "/webjars/material-design-icons/**", "/error/*").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .and()
-                .oauth2Login()
-                .successHandler(userUpdater);
-    }
-
 }

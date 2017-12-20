@@ -154,6 +154,17 @@ function openEmail(userId, userName) {
     });
 }
 
+function changeUserRole(userId, newRole) {
+    $.ajax({
+        url: '/admin/user',
+        type: 'post',
+        data: {id: userId, role: newRole},
+        success: function (response) {
+            console.log(response);
+        }
+    });
+}
+
 $(window).on('hashchange', function () {
     loadFragment()
 });
