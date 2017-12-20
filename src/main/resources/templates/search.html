@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <title>Develog - Note</title>
+    <title th:text="#{searchPageTitle}">Develog - Search</title>
     <meta th:replace="fragments/head"/>
-    <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/owr/note.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/note.js}"></script>
 </head>
 <body>
 <div th:replace="fragments/header"></div>
 <main>
     <form id="form">
-        <!--<h4 class="center orange-text" th:text="${note.date}">DATE</h4>-->
-        <div id="tags" class="chips chips-autocomplete"></div>
+        <div id="tags" class="chips chips-autocomplete"><i class="material-icons">search</i></div>
         <div id="editor" class="row">
         </div>
     </form>
@@ -20,7 +19,10 @@
 <div th:replace="fragments/footer"></div>
 
 <script th:inline="javascript">
-    initChips([]);
+    var chipsLabel = /*[[#{tagsLabel}]]*/ null;
+    var secondaryChipsLabel = /*[[#{tagsSecondaryLabel}]]*/ null;
+    var autocompleteTags = /*[[${tags}]]*/ [];
+    initChips([], autocompleteTags, chipsLabel, secondaryChipsLabel);
     if (/*[[${date}]]*/ null) {
         searchByDate(/*[[${date}]]*/);
     }

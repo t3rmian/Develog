@@ -1,0 +1,175 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.user-info {
+    line-height: normal;
+    text-align: center;
+}
+
+.user-info img {
+    width: 48px;
+    margin: 8px;
+    border-radius: 5%;
+}
+
+.user-info .username {
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+.user-info > div > span {
+    height: 32px;
+    display: table-row;
+}
+
+.user-info > div > span > span {
+    height: 32px;
+    display: table-cell;
+}
+
+.sidenav li > a {
+    height: 64px;
+    line-height: 64px;
+}
+
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+    height: 64px;
+    line-height: 64px;
+}
+
+.sidenav .user-info {
+    height: 230px;
+    padding-bottom: 32px;
+}
+
+.sidenav .user-info img {
+    margin-top: 30px;
+    width: 120px;
+    height: 120px;
+}
+
+.sidenav .divider {
+    margin: 0;
+}
+
+@media only screen and (max-width: 500px) {
+    .brand-logo {
+        display: none !important;
+    }
+}
+
+pre.about {
+    text-align: justify;
+    white-space: initial;
+    text-indent: 2.5em;
+}
+
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+}
+
+.material-icons svg {
+    width: 24px;
+    height: 24px;
+}
+
+.parallax-container {
+    height: 300px;
+}
+
+.container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.container {
+    text-align: justify;
+}
+
+h1, h2, h3, h4, h5, h6, figcaption {
+    text-align: center;
+}
+
+figure {
+    height: 100%;
+    margin: 0;
+}
+
+.how-imgs .col {
+    margin: auto;
+    padding-bottom: 20px;
+}
+
+.initial.container .col img {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.initial.container div.col:nth-last-child(1) {
+    text-indent: 2.5em;
+}
+
+.col.single-right-img {
+    padding-right: 0;
+}
+
+.brand-logo {
+    max-height: 64px;
+}
+
+.brand-logo img {
+    max-height: 64px;
+}
+
+.main-nav .material-icons {
+    width: 34px;
+    text-align: center;
+}
+
+.brand-logo {
+    max-height: 64px;
+}
+
+.brand-logo span {
+    vertical-align: top;
+}
+
+@media screen and (max-width: 1120px) {
+    .brand-logo span {
+        display: none;
+    }
+}
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
+}
+
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
+}
+
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #ff5252;
+    -webkit-box-shadow: 0 1px 0 0 #ff5252;
+    box-shadow: 0 1px 0 0 #ff5252;
+}
+
+input:not([type]):focus:not([readonly]) {
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
+}

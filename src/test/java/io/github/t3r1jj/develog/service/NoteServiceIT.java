@@ -63,4 +63,21 @@ class NoteServiceIT {
 
         assertEquals(3, tagRepository.findAll().size(), "DB should have 3 different tags");
     }
+
+    @Test
+    @Transactional
+    void getAllTags() {
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDate today = LocalDate.now();
+        user.getNoteOrCreate(yesterday);
+        user.getNoteOrCreate(today);
+        user = userRepository.save(user);
+
+        noteService.addNoteTag(yesterday, "tag1");
+        noteService.addNoteTag(yesterday, "tag2");
+        noteService.addNoteTag(today, "tag2");
+        noteService.addNoteTag(today, "tag3");
+        assertEquals(3, noteService.getAllTags().size(), "Should return 3 tags for logged user");
+    }
+
 }

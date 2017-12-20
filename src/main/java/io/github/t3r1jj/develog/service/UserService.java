@@ -25,7 +25,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User getLoggedUser() {
         return getUser(sessionService.getAuthenticatedUserId())
                 .orElseThrow(() -> new UsernameNotFoundException("Couldn't find the user in db."));
@@ -36,7 +36,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public User updateUser(User user) {
         return userRepository.save(user);
     }
@@ -56,18 +56,18 @@ public class UserService {
     }
 
     /**
-     * @return number of characters written by user (notes body, tags) in thousands (1k)
+     * @return number of characters written by user (notes body, tags) in thousands [kB]
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public Map<User, Long> findAllUsersDataSize() {
         return userRepository.findAllUsersDataSize().stream()
                 .collect(Collectors.toMap(res -> (User) res[0], res -> ((Long) res[1]) / 1000));
     }
 
     /**
-     * @return user data db size [MB]
+     * @return user data db size [MiB]
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public long getUsersDataSize() {
         try {
             Map<String, Object> dbSize = userRepository.getDbSize();
@@ -78,7 +78,7 @@ public class UserService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<LocalDate> getUserNoteDates() {
         return userRepository.findNoteDatesByUserId(getLoggedUser().getId());
     }
@@ -98,6 +98,7 @@ public class UserService {
         return sessionService.isSessionAuthenticated();
     }
 
+    @Transactional
     public boolean changeRole(Long id, User.Role role) {
         Optional<User> queriedUser = getUser(id);
         if (queriedUser.isPresent()) {
@@ -114,7 +115,7 @@ public class UserService {
         return userRepository.findAllEmails();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Long getLoggedUserDataSize() {
         return userRepository.getUserDataSize(sessionService.getAuthenticatedUserId()) / 1000;
     }

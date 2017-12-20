@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <title th:text="#{errorPageTitle}">Develog - Error</title>
+    <meta th:replace="fragments/head"/>
+    <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script th:src="@{/owr/base.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header"></div>
+<main class="valign-wrapper">
+    <div class="container initial">
+        <div class="row">
+            <figure class="col s4 offset-s4 center">
+                <img src="/img/failure.png">
+            </figure>
+        </div>
+        <div class="row">
+            <h3>[[#{error}]]: <span th:text="${status}" id="error_status">error_status</span></h3>
+            <h4>[[#{type}]]: <span th:text="${type}" id="error_type">error_type</span></h4>
+            <h5>[[#{message}]]: <span th:text="${message}" id="error_message">error_message</span></h5>
+        </div>
+    </div>
+</main>
+<div th:replace="fragments/footer"></div>
+</body>
+</html>

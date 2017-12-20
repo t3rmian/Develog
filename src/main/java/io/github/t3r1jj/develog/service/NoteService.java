@@ -123,4 +123,10 @@ public class NoteService {
     public List<LocalDate> getNoteDates() {
         return userService.getUserNoteDates();
     }
+
+    @Transactional(readOnly = true)
+    public List<String> getAllTags() {
+        return tagRepository.findAllTagValuesByUserId(userService.getLoggedUser().getId());
+    }
+
 }

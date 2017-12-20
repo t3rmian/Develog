@@ -13,8 +13,9 @@ function loadFragment() {
         window.location.hash = "#users";
         fragment = "users"
     }
-    $('li').removeClass('active');
-    $('a[href*="' + window.location.hash + '"]').each(function () {
+    var adminNav = $('#nav-admin');
+    adminNav.find('li').removeClass('active');
+    adminNav.find('a[href*="' + window.location.hash + '"]').each(function () {
         $(this).parent().addClass('active');
     });
 
@@ -45,6 +46,7 @@ function displayOtherEvents(events) {
     var otherEvents = events.filter(function (event) {
         return event.type !== 'ONLINE';
     });
+    otherEvents.slice(otherEvents.length - 100, otherEvents.length);
     if (otherEvents.length === 0) {
         $(".other").css("display", "none");
     } else {
@@ -52,7 +54,7 @@ function displayOtherEvents(events) {
     }
 }
 
-function displayOnlineEvents(events) {
+function displayOnlineEvents(events, i18n) {
     var onlineEvents = events.filter(function (event) {
         return event.type === 'ONLINE';
     });
@@ -78,10 +80,10 @@ function displayOnlineEvents(events) {
         type: 'bubble',
         data: {
             datasets: [{
-                label: '# of users online',
+                label: i18n.numberOnline,
                 data: online,
                 borderWidth: 1,
-                backgroundColor: "rgb(255, 99, 132)"
+                backgroundColor: "#e53935"
             }]
         },
         options: {
@@ -92,7 +94,7 @@ function displayOnlineEvents(events) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: 'Online'
+                        labelString: i18n.online
                     }
                 }],
                 xAxes: [{
@@ -100,12 +102,12 @@ function displayOnlineEvents(events) {
                     display: true,
                     scaleLabel: {
                         display: true,
-                        labelString: 'Date'
+                        labelString: i18n.date
                     },
                     ticks: {
                         major: {
                             fontStyle: "bold",
-                            fontColor: "#FF0000"
+                            fontColor: "#ff0000"
                         }
                     }
                 }]
@@ -115,7 +117,7 @@ function displayOnlineEvents(events) {
             tooltips: {
                 callbacks: {
                     label: function (tooltipItem) {
-                        return '# of users online: ' + tooltipItem.yLabel;
+                        return  i18n.numberOnline + ': ' + tooltipItem.yLabel;
                     },
                     title: function (tooltipItem) {
                         return tooltipItem[0].xLabel;
@@ -152,17 +154,21 @@ function openEmail(userId, userName) {
     });
 }
 
-(function ($) {
-    $(function () {
-        $('.sidenav').sidenav();
+function changeUserRole(userId, newRole) {
+    $.ajax({
+        url: '/admin/user',
+        type: 'post',
+        data: {id: userId, role: newRole},
+        success: function (response) {
+            console.log(response);
+        }
     });
-})(jQuery);
-
+}
 
 $(window).on('hashchange', function () {
     loadFragment()
 });
 $(document).ready(function () {
     $('.modal').modal();
+    loadFragment();
 });
-loadFragment();

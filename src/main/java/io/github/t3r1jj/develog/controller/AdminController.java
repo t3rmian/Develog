@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.HealthEndpoint;
 import org.springframework.boot.actuate.info.InfoEndpoint;
 import org.springframework.boot.actuate.trace.TraceEndpoint;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,8 @@ public class AdminController {
     private MonitoringDao monitoringDao;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MessageSource messageSource;
 
     @RequestMapping("admin")
     public String getPage(Model model) {
@@ -74,8 +77,13 @@ public class AdminController {
 
     @RequestMapping("admin/logs")
     @ResponseBody
-    public List<Map<String, String>> getLogsFragment(Model model) {
+    public List<Map<String, String>> getLogsFragment(Model model, Locale locale) {
         List<Map<String, String>> output = new ArrayList<>();
+        String callName = messageSource.getMessage("callName", new Object[]{}, locale);
+        String averageCallTime = messageSource.getMessage("averageCallTime", new Object[]{}, locale);
+        String totalCallCount = messageSource.getMessage("totalCallCount", new Object[]{}, locale);
+        String since = messageSource.getMessage("since", new Object[]{}, locale);
+
         callRepository.findAll().stream()
                 .collect(Collectors.groupingBy(Call::getName))
                 .values()
@@ -89,10 +97,10 @@ public class AdminController {
                         .reversed())
                 .forEach(call -> {
                     Map<String, String> row = new HashMap<>();
-                    row.put("Call name", call.getName());
-                    row.put("Average call time", String.valueOf(call.getCallTime()) + " ms");
-                    row.put("Total call count", String.valueOf(call.getCallCount()));
-                    row.put("Since", LocalDateTime.ofEpochSecond(call.getLogTime() / 1000, 0, ZoneOffset.UTC).toString());
+                    row.put(callName, call.getName());
+                    row.put(averageCallTime, String.valueOf(call.getCallTime()) + " ms");
+                    row.put(totalCallCount, String.valueOf(call.getCallCount()));
+                    row.put(since, LocalDateTime.ofEpochSecond(call.getLogTime() / 1000, 0, ZoneOffset.UTC).toString());
                     output.add(row);
                 });
         return output;
@@ -103,8 +111,8 @@ public class AdminController {
     public String getHealthFragment(Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> dbDetails = new HashMap<>(healthEndpoint.health().getDetails());
-        dbDetails.put("mongoDbSize", monitoringDao.getMongoDbSize() + " MB");
-        dbDetails.put("postgresDbSize", userService.getUsersDataSize() + " MB");
+        dbDetails.put("Mongo DB size", monitoringDao.getMongoDbSize() + " MB");
+        dbDetails.put("Postgres DB size", userService.getUsersDataSize() + " MB");
         return objectMapper.writeValueAsString(Arrays.asList(
                 dbDetails,
                 traceEndpoint.traces().getTraces(),

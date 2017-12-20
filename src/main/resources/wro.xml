@@ -3,17 +3,20 @@
     <group name="admin">
         <group-ref>base</group-ref>
         <css>/webjars/jquery-jsonview/jquery.jsonview.css</css>
+        <css>/css/admin.css</css>
         <js>/webjars/jquery-jsonview/jquery.jsonview.js</js>
         <js>/webjars/chartjs/Chart.bundle.min.js</js>
         <js>/js/admin.js</js>
     </group>
     <group name="note">
         <group-ref>base</group-ref>
+        <css>/css/note.css</css>
         <js>/js/note.js</js>
     </group>
     <group name="base">
+        <css>/webjars/material-design-icons/material-icons.css</css>
         <css>/webjars/materialize-css/dist/css/materialize.css</css>
-        <css>/css/style.less</css>
+        <css>/css/style.css</css>
         <js>/webjars/jquery/jquery.min.js</js>
         <js>/webjars/materialize-css/dist/js/materialize.js</js>
         <js>/js/ajax.js</js>

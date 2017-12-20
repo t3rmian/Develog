@@ -1,50 +1,49 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
-    <title>Develog - Note</title>
+    <title th:text="notePageTitle">Develog - Note</title>
     <meta th:replace="fragments/head"/>
-    <link th:href="@{/owr/base.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link th:href="@{/owr/note.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
     <script th:src="@{/owr/note.js}"></script>
-</head>
 <body>
 <div th:replace="fragments/header"></div>
 <main>
     <form id="form" th:object="${editor}">
-        <h4 class="center orange-text" th:text="${note.date}">DATE</h4>
-        <div id="tags" class="chips chips-autocomplete"></div>
-        <div class="row">
-            <div class="col s6">
-                <h5 class="header center">Editor</h5>
-                <div class="input-field col s12">
-                    <textarea id="input" class="materialize-textarea" th:field="*{input}"></textarea>
-                    <label for="input">Textarea</label>
-                    <a id="downloadRaw" href="javascript:void(0);"
-                       class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">file_download</i></a>
+        <h4 class="date-type" th:text="${#httpServletRequest.getRequestURI() == '/note' ? 'Global note' : note.date}">
+            DATE</h4>
+        <div id="tags" class="chips chips-autocomplete"><i class="material-icons">label</i></div>
+        <div id="editor" th:replace="fragments/editor"></div>
+    </form>
+    <a id="help" class="waves-effect blue darken-1 btn-large btn-floating tooltipped"
+       data-position="top" data-delay="50" th:data-tooltip="#{help}"
+       onclick="$('.tap-target').featureDiscovery('open');">
+        <i class="material-icons">help</i>
+    </a>
+    <div class="tap-target indigo darken-4" data-target="help">
+        <div class="tap-target-content">
+            <h5 th:text="#{helpTitle}">Help</h5>
+            <div class="row">
+                <div class="col s6 center" th:utext="#{helpHtml_1}">
                 </div>
-            </div>
-            <div class="col s6 center">
-                <h5 class="header center">View</h5>
-                <div class="card white">
-                    <div class="card-content">
-                        <iframe id="output" th:text="*{output}"></iframe>
-                    </div>
-                    <a id="downloadHtml" href="javascript:void(0);"
-                       class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">file_download</i></a>
+                <div class="col s6 center" th:utext="#{helpHtml_2}">
                 </div>
             </div>
         </div>
-    </form>
+    </div>
 </main>
 
 <div th:replace="fragments/footer"></div>
-
 <script th:inline="javascript">
+    var chipsLabel = /*[[#{tagsLabel}]]*/ null;
+    var secondaryChipsLabel = /*[[#{tagsSecondaryLabel}]]*/ null;
+    var autocompleteTags = /*[[${tags}]]*/ [];
     var tags = /*[[${note.tags}]]*/ null;
     var fileName = (/*[[${note.date}]]*/ null);
-    initChips(tags);
+    initChips(tags, autocompleteTags, chipsLabel, secondaryChipsLabel);
     initEditor();
     updateNote();
     initDownloadButtons(fileName);
+    $('.tap-target').featureDiscovery();
 </script>
 </body>
 </html>
