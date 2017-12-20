@@ -55,20 +55,6 @@ main {
     height: 120px;
 }
 
-.develog-color-primary {
-    background: lightcoral;
-    color: white;
-}
-
-.develog-color-primary.darken-2 {
-    background: #ef5350;
-}
-
-.develog-color-secondary {
-    background: teal;
-    color: white;
-}
-
 .sidenav .divider {
     margin: 0;
 }
@@ -124,9 +110,9 @@ figure {
     padding-bottom: 20px;
 }
 
-.initial.container .col {
-    padding-top: 24px;
-    padding-bottom: 16px;
+.initial.container .col img {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .initial.container div.col:nth-last-child(1) {
@@ -162,4 +148,28 @@ figure {
     .brand-logo span {
         display: none;
     }
+}
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
+}
+
+.input-field input[type=text].valid {
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
+}
+
+.input-field input[type=text].invalid {
+    border-bottom: 1px solid #ff5252;
+    -webkit-box-shadow: 0 1px 0 0 #ff5252;
+    box-shadow: 0 1px 0 0 #ff5252;
+}
+
+input:not([type]):focus:not([readonly]) {
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
 }

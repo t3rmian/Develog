@@ -6,20 +6,20 @@
                       th:disabled="${#httpServletRequest.getRequestURI().contains('/search')}"></textarea>
             <label for="input" th:text="#{editorLabel}">Markdown + PlantUML Editor</label>
             <a id="downloadRaw" href="javascript:void(0);"
-               class="btn-floating btn-large waves-effect waves-light black tooltipped"
+               class="btn-floating btn-large waves-effect indigo lighten-1 tooltipped"
                data-position="right" data-delay="50" th:data-tooltip="#{downloadRaw}">
                 <i class="material-icons">file_download</i>
             </a>
         </div>
     </div>
     <div id="handle"></div>
-    <div id="output-container" class="col center ">
+    <div id="output-container" class="col center">
         <div class="card white">
             <div class="card-content">
                 <iframe id="output" th:text="${editor.output}"></iframe>
                 <div id="output0" th:text="${editor.output}" style="display: none;"></div>
                 <a id="downloadHtml" href="javascript:void(0);"
-                   class="btn-floating btn-large waves-effect deep-purple waves-light black tooltipped"
+                   class="btn-floating btn-large indigo lighten-1 tooltipped"
                    data-position="left" data-delay="50" th:data-tooltip="#{downloadHtml}">
                     <i class="material-icons">file_download</i>
                 </a>

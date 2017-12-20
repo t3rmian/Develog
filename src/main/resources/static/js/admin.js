@@ -83,7 +83,7 @@ function displayOnlineEvents(events, i18n) {
                 label: i18n.numberOnline,
                 data: online,
                 borderWidth: 1,
-                backgroundColor: "rgb(255, 99, 132)"
+                backgroundColor: "#e53935"
             }]
         },
         options: {
@@ -107,7 +107,7 @@ function displayOnlineEvents(events, i18n) {
                     ticks: {
                         major: {
                             fontStyle: "bold",
-                            fontColor: "#FF0000"
+                            fontColor: "#ff0000"
                         }
                     }
                 }]

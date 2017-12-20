@@ -1,5 +1,5 @@
 <header xmlns:th="http://www.thymeleaf.org">
-    <nav class="develog-color-primary lighten-1 main-nav" role="navigation">
+    <nav class="indigo darken-3 main-nav" role="navigation">
         <div class="nav-wrapper container">
             <a href="/" class="brand-logo">
                 <div>
@@ -9,7 +9,7 @@
             </a>
             <ul class="right">
                 <li th:if="not${loggedUser}">
-                    <a class="waves-effect waves-light btn" href="/oauth2/authorization/github">
+                    <a class="waves-effect blue darken-1 btn" href="/oauth2/authorization/github">
                         <i class="material-icons left">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                              x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li th:if="${loggedUser}">
-                    <a class="waves-effect waves-light btn" href="/logout">
+                    <a class="waves-effect blue darken-1  btn" href="/logout">
                         <i class="material-icons left">exit_to_app</i>
                         [[#{logout}]]
                     </a>
@@ -87,7 +87,7 @@
                 </li>
             </ul>
             <ul th:if="${loggedUser}" id="nav-mobile" class="sidenav">
-                <div class="center user-info text-darken-4 develog-color-primary">
+                <div class="center user-info indigo darken-3">
                     <img th:src="'https://github.com/' + ${loggedUser.name} + '.png'">
                     <div>
                         <div class="username" th:text="${loggedUser.name}">USER</div>

@@ -8,7 +8,7 @@
 </head>
 <body>
 <ul id="nav-admin" class="sidenav sidenav-fixed" role="navigation">
-    <li class="center develog-color-primary darken-2 admin-header">
+    <li class="center admin-header indigo darken-4 white-text">
         <h4 th:text="#{adminPanel}">Admin panel</h4>
     </li>
     <li>
@@ -19,11 +19,11 @@
     <li><a href="#errors"><i class="material-icons">error</i>[[#{errors}]]</a></li>
     <li><a href="#logs"><i class="material-icons">description</i>[[#{logs}]]</a></li>
     <li><a href="#health"><i class="material-icons">favorite</i>[[#{health}]]</a></li>
-    <a class="waves-effect waves-light btn-large" onclick='openEmail("USERS","EVERYONE")'>
+    <a class="waves-effect blue darken-1 btn-large" onclick='openEmail("USERS","EVERYONE")'>
         <i class="material-icons left">email</i>
         [[#{emailEveryone}]]
     </a>
-    <a class="waves-effect waves-light btn-large" onclick="clearLogs()">
+    <a class="waves-effect blue darken-1 btn-large" onclick="clearLogs()">
         <i class="material-icons left">layers_clear</i>
         [[#{clearLogs}]]
     </a>

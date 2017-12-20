@@ -14,12 +14,12 @@
         <div id="tags" class="chips chips-autocomplete"><i class="material-icons">label</i></div>
         <div id="editor" th:replace="fragments/editor"></div>
     </form>
-    <a id="help" class="waves-effect waves-light btn-large btn-floating tooltipped"
+    <a id="help" class="waves-effect blue darken-1 btn-large btn-floating tooltipped"
        data-position="top" data-delay="50" th:data-tooltip="#{help}"
        onclick="$('.tap-target').featureDiscovery('open');">
         <i class="material-icons">help</i>
     </a>
-    <div class="tap-target" data-target="help">
+    <div class="tap-target indigo darken-4" data-target="help">
         <div class="tap-target-content">
             <h5 th:text="#{helpTitle}">Help</h5>
             <div class="row">

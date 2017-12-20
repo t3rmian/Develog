@@ -31,6 +31,10 @@ textarea.materialize_textarea {
     transition: all 0.3s;
 }
 
+textarea.materialize_textarea:focus:not([readonly]) + label {
+    color: #ccc;
+}
+
 textarea.materialize_textarea {
     line-height: normal;
     overflow-y: hidden;
@@ -44,9 +48,14 @@ textarea.materialize_textarea {
 }
 
 textarea.materialize_textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #26a69a;
-    -webkit-box-shadow: 0 1px 0 0 #26a69a;
-    box-shadow: 0 1px 0 0 #26a69a;
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
+}
+.chips.focus {
+    border-bottom: 1px solid #303f9f;
+    -webkit-box-shadow: 0 1px 0 0 #303f9f;
+    box-shadow: 0 1px 0 0 #303f9f;
 }
 
 textarea.materialize_textarea {
@@ -72,12 +81,12 @@ textarea.materialize_textarea:disabled, textarea.materialize_textarea[readonly="
 
 #downloadRaw {
     position: absolute;
-    bottom: -26px;
+    bottom: -60px;
 }
 
 #downloadHtml {
     position: absolute;
-    bottom: -26px;
+    bottom: -60px;
     right: 0;
 }
 
@@ -96,7 +105,7 @@ textarea.materialize_textarea:disabled, textarea.materialize_textarea[readonly="
     position: absolute;
     right: 8px;
     top: 48px;
-    color: lightcoral;
+    color: #283593;
     z-index: 500;
 }
 
@@ -108,7 +117,7 @@ textarea.materialize_textarea:disabled, textarea.materialize_textarea[readonly="
 #help {
     position: fixed;
     margin: auto;
-    left: 2px;
+    left: 0;
     right: 0;
     bottom: 30px;
 }
