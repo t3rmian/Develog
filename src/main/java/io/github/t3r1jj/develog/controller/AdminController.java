@@ -122,7 +122,7 @@ public class AdminController {
 
     @RequestMapping("admin/reset")
     @ResponseBody
-    public boolean getHealthFragment() {
+    public boolean clearLogs() {
         callRepository.deleteAll();
         eventRepository.deleteAll();
         errorRepository.deleteAll();

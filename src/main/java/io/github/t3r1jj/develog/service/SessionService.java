@@ -14,22 +14,26 @@ import java.util.Objects;
 @Service
 class SessionService {
     User getAuthenticatedUser() {
-        OAuth2AuthenticationToken token = getOAuth2Token();
-        return new GitHubPrincipalExtractor().extract(token.getPrincipal());
+        try {
+            OAuth2AuthenticationToken token = getOAuth2Token();
+            return new GitHubPrincipalExtractor().extract(token.getPrincipal());
+        } catch (RuntimeException ex) {
+            throw new UnauthenticatedException("Could not get authenticated user details", ex);
+        }
     }
 
     Long getAuthenticatedUserId() {
-        OAuth2AuthenticationToken token = getOAuth2Token();
-        return GitHubPrincipalExtractor.extractId(token.getPrincipal());
+        try {
+            OAuth2AuthenticationToken token = getOAuth2Token();
+            return GitHubPrincipalExtractor.extractId(token.getPrincipal());
+        } catch (RuntimeException ex) {
+            throw new UnauthenticatedException("Could not get authenticated user details", ex);
+        }
     }
 
     private OAuth2AuthenticationToken getOAuth2Token() {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            return (OAuth2AuthenticationToken) authentication;
-        } catch (Exception ex) {
-            throw new UnauthenticatedException("OAuth2 authentication exception", ex);
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (OAuth2AuthenticationToken) authentication;
     }
 
     boolean isSessionAuthenticated() {
