@@ -15,4 +15,5 @@ class LocalDateConverterTest {
         String date = "2017-12-14";
         assertEquals(LocalDate.of(2017, 12, 14), localDateConverter.convert(date));
     }
+
 }

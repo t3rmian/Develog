@@ -136,7 +136,7 @@ class NoteControllerIT {
     @Test
     @WithMockOAuth2User
     @Transactional
-    void updateTags() throws Exception {
+    void addTags() throws Exception {
         userService.onAuthenticationSuccess();
         Long userId = userService.getLoggedUser().getId();
         mockMvc.perform(post("/note/tag")
@@ -147,6 +147,19 @@ class NoteControllerIT {
                 .andExpect(content().string("true"));
         Set<Tag> tags = userService.getUser(userId).get().getGlobalNote().getTags();
         assertEquals("tag", tags.iterator().next().getId().getValue());
+    }
+
+    @Test
+    @WithMockOAuth2User
+    @Transactional
+    void removeTags() throws Exception {
+        userService.onAuthenticationSuccess();
+        mockMvc.perform(post("/note/tag")
+                .with(csrf())
+                .param("value", "tag")
+                .param("action", NoteController.Action.REMOVE.toString()))
+                .andExpect(status().isOk())
+                .andExpect(content().string("false"));
     }
 
     @Test

@@ -34,11 +34,11 @@ class AuthorizationAspectTest {
     @BeforeEach
     void setUp() throws NoSuchFieldException, IllegalAccessException {
         MockitoAnnotations.initMocks(this);
-        Field isEnabled = AuthorizationAspect.class.getDeclaredField("userService");
-        boolean accessible = isEnabled.isAccessible();
-        isEnabled.setAccessible(true);
-        isEnabled.set(authorizationAspect, userService);
-        isEnabled.setAccessible(accessible);
+        Field field = AuthorizationAspect.class.getDeclaredField("userService");
+        boolean accessible = field.isAccessible();
+        field.setAccessible(true);
+        field.set(authorizationAspect, userService);
+        field.setAccessible(accessible);
     }
 
     @Test

@@ -37,11 +37,11 @@ class CallMonitoringAspectTest {
         MockitoAnnotations.initMocks(this);
         callMonitoringAspect.reset();
 
-        Field isEnabled = SessionCounter.class.getDeclaredField("monitoringDao");
-        boolean accessible = isEnabled.isAccessible();
-        isEnabled.setAccessible(true);
-        isEnabled.set(sessionCounter, monitoringDao);
-        isEnabled.setAccessible(accessible);
+        Field field = SessionCounter.class.getDeclaredField("monitoringDao");
+        boolean accessible = field.isAccessible();
+        field.setAccessible(true);
+        field.set(sessionCounter, monitoringDao);
+        field.setAccessible(accessible);
     }
 
     @Test
@@ -61,11 +61,11 @@ class CallMonitoringAspectTest {
 
     @Test
     void invokeDisabled() throws NoSuchFieldException, IllegalAccessException {
-        Field isEnabled = CallMonitoringAspect.class.getDeclaredField("isEnabled");
-        boolean accessible = isEnabled.isAccessible();
-        isEnabled.setAccessible(true);
-        isEnabled.set(callMonitoringAspect, false);
-        isEnabled.setAccessible(accessible);
+        Field field = CallMonitoringAspect.class.getDeclaredField("isEnabled");
+        boolean accessible = field.isAccessible();
+        field.setAccessible(true);
+        field.set(callMonitoringAspect, false);
+        field.setAccessible(accessible);
 
         assertFalse(callMonitoringAspect.isEnabled());
         userService.getUser(1);

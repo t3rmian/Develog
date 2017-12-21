@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SpringBootWebSecurityConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -83,6 +84,16 @@ class AdminControllerIT {
     @Test
     @WithMockOAuth2User
     void getLogsFragment() throws Exception {
+        initAdmin();
+        mockMvc.perform(get("/admin/logs"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(startsWith("[")))
+                .andExpect(content().string(endsWith("]")));
+    }
+
+    @Test
+    @WithMockOAuth2User
+    void getLogsFragmentContent() throws Exception {
         initAdmin();
         mockMvc.perform(get("/admin/logs"))
                 .andExpect(status().isOk())

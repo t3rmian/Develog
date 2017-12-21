@@ -5,6 +5,7 @@ import io.github.t3r1jj.develog.model.monitor.Event;
 import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -15,6 +16,7 @@ public class MonitoringDao {
 
     private final MongoTemplate mongoTemplate;
 
+    @Autowired
     public MonitoringDao(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }

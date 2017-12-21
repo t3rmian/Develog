@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.format.DateTimeFormatter;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,6 +47,16 @@ class SearchControllerIT {
         mockMvc.perform(get("/search"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("search"));
+    }
+
+    @Test
+    @WithMockOAuth2User
+    void showSearchByDate() throws Exception {
+        userService.onAuthenticationSuccess();
+        mockMvc.perform(get("/search").param("date", "2000-01-02"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("search"))
+                .andExpect(model().attribute("date", "2000-01-02"));
     }
 
     @Test
