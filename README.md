@@ -58,7 +58,6 @@ c) BANNED:
 - Lombok
 - PlantUML
 - Flexmark-java (Markdown)
-- Selenium
 - JUnit5
 - Mockito
 - Code Analysis tool

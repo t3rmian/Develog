@@ -4,6 +4,7 @@ import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.repository.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,12 +68,11 @@ public class UserService {
     /**
      * @return user data db size [MiB]
      */
-    @Transactional(readOnly = true)
     public long getUsersDataSize() {
         try {
             Map<String, Object> dbSize = userRepository.getDbSize();
             return Long.parseLong(dbSize.get("pg_database_size").toString()) / (1024 * 1024);
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             ex.printStackTrace();
             return -1;
         }
@@ -116,7 +116,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Long getLoggedUserDataSize() {
+    public Long getUserDataSize() {
         return userRepository.getUserDataSize(sessionService.getAuthenticatedUserId()) / 1000;
     }
 }

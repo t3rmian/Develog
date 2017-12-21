@@ -64,7 +64,7 @@ public class NoteController {
         }
     }
 
-    @RequestMapping("notes")
+    @RequestMapping("/notes")
     @ResponseBody
     public List<LocalDate> getAllNoteDates() {
         return noteService.getNoteDates();

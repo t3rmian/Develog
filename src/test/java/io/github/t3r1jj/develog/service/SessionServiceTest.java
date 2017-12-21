@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -58,7 +59,7 @@ class SessionServiceTest {
     @Test
     void getAuthenticatedUserId() {
         setUpAuthentication();
-        assertEquals((Long) 1L, sessionService.getAuthenticatedUser().getId());
+        assertEquals((Long) 1L, sessionService.getAuthenticatedUserId());
     }
 
     @Test
@@ -97,6 +98,13 @@ class SessionServiceTest {
     @Test
     void isSessionAuthenticated_Anonymous() {
         setUpAuthentication_Anonymous();
+        assertFalse(sessionService.isSessionAuthenticated());
+    }
+
+    @Test
+    void isSessionAuthenticated_Null() {
+        setUpAuthentication_Anonymous();
+        SecurityContextHolder.getContext().setAuthentication(null);
         assertFalse(sessionService.isSessionAuthenticated());
     }
 }

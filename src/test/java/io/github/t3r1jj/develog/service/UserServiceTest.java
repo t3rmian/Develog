@@ -127,4 +127,9 @@ class UserServiceTest {
         assertFalse(userService.changeRole(27836127836L, User.Role.USER));
     }
 
+    @Test
+    void isUserAuthenticated() {
+        userService.isUserAuthenticated();
+        verify(sessionService).isSessionAuthenticated();
+    }
 }

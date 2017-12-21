@@ -78,12 +78,15 @@ public class AdminController {
     @RequestMapping("admin/logs")
     @ResponseBody
     public List<Map<String, String>> getLogsFragment(Model model, Locale locale) {
-        List<Map<String, String>> output = new ArrayList<>();
         String callName = messageSource.getMessage("callName", new Object[]{}, locale);
         String averageCallTime = messageSource.getMessage("averageCallTime", new Object[]{}, locale);
         String totalCallCount = messageSource.getMessage("totalCallCount", new Object[]{}, locale);
         String since = messageSource.getMessage("since", new Object[]{}, locale);
+        return prepareCallLogs(callName, averageCallTime, totalCallCount, since);
+    }
 
+    List<Map<String, String>> prepareCallLogs(String callNameLabel, String averageCallTimeLabel, String totalCallCountLabel, String sinceLabel) {
+        List<Map<String, String>> output = new ArrayList<>();
         callRepository.findAll().stream()
                 .collect(Collectors.groupingBy(Call::getName))
                 .values()
@@ -97,10 +100,10 @@ public class AdminController {
                         .reversed())
                 .forEach(call -> {
                     Map<String, String> row = new HashMap<>();
-                    row.put(callName, call.getName());
-                    row.put(averageCallTime, String.valueOf(call.getCallTime()) + " ms");
-                    row.put(totalCallCount, String.valueOf(call.getCallCount()));
-                    row.put(since, LocalDateTime.ofEpochSecond(call.getLogTime() / 1000, 0, ZoneOffset.UTC).toString());
+                    row.put(callNameLabel, call.getName());
+                    row.put(averageCallTimeLabel, String.valueOf(call.getCallTime()) + " ms");
+                    row.put(totalCallCountLabel, String.valueOf(call.getCallCount()));
+                    row.put(sinceLabel, LocalDateTime.ofEpochSecond(call.getLogTime() / 1000, 0, ZoneOffset.UTC).toString());
                     output.add(row);
                 });
         return output;
@@ -122,7 +125,7 @@ public class AdminController {
 
     @RequestMapping("admin/reset")
     @ResponseBody
-    public boolean getHealthFragment() {
+    public boolean clearLogs() {
         callRepository.deleteAll();
         eventRepository.deleteAll();
         errorRepository.deleteAll();
