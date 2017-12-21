@@ -7,7 +7,6 @@ Develog is a web application inspired by James Routley's idea of [using a logboo
 ---
 
 ### Development
-The app is currently under development in educational purposes, with a few requirements.
 
 ![Code coverage by commits](https://codecov.io/gh/T3r1jj/Develog/branch/master/graphs/commits.svg)
  
