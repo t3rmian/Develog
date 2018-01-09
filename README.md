@@ -17,7 +17,7 @@ a) USER:
     5. export to txt/html
 2. one global note (see 1.)
 3. calendar
-4. searching by date/tags
+4. searching by date/tags/everything(*)
 5. archiving:
     1. raw
     2. html
@@ -66,11 +66,15 @@ Other:
 
 ### Config
 
-PlantUML requires a GraphViz installation for full drawing support. This is why we use a docker image. All env variables required to start the app can be found in **docker/env_sample**.
+PlantUML requires a GraphViz installation for full drawing support. This is why we use a docker image. All env variables required to start the app can be found in **docker/env_sample** (GitHub Oauth2, PostgreSQL, MongoDB).
 
 Run test coverage: __mvn clean clover:setup verify clover:aggregate clover:clover__  
 Dockerize: __mvn clean package spring-boot:repackage docker:build__  
 Run in docker: __docker run --env-file=docker/env_sample -p 8080:8080 -t develog__  
+
+After setting PostgreSQL (postgres) and MongoDB (mongo) containers you can simply run docker/start.sh 
+
+When hosting on Heroku without docker, an additional [GraphViz](https://elements.heroku.com/buildpacks/dsander/heroku-buildpack-graphviz#buildpack-instructions) build pack is required.
 
 ---
 
