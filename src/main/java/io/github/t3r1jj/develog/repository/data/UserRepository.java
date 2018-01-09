@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "SELECT pg_database_size('dev')", nativeQuery = true)
+    @Query(value = "SELECT pg_database_size((SELECT current_database()));", nativeQuery = true)
     Map<String, Object> getDbSize();
 
     @Query("SELECT SUM(LENGTH(globalNote.body))+COALESCE(SUM(LENGTH(notes.body)), 0)+(SELECT COALESCE(SUM(LENGTH(tags.id.value)), 0) FROM u, tags tags WHERE u.id = tags.id.userId)" +
