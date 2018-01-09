@@ -68,9 +68,9 @@ Other:
 
 PlantUML requires a GraphViz installation for full drawing support. This is why we use a docker image. All env variables required to start the app can be found in **docker/env_sample**.
 
-Running test coverage: __mvn clean clover:setup verify clover:aggregate clover:clover__  
-Dockerizing: __mvn clean package spring-boot:repackage docker:build__  
-Running in docker: __docker run --env-file=docker/env_sample -p 8080:8080 -t develog__  
+Run test coverage: __mvn clean clover:setup verify clover:aggregate clover:clover__  
+Dockerize: __mvn clean package spring-boot:repackage docker:build__  
+Run in docker: __docker run --env-file=docker/env_sample -p 8080:8080 -t develog__  
 
 ---
 

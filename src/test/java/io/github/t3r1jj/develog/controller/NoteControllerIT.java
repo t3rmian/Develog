@@ -4,6 +4,7 @@ import io.github.t3r1jj.develog.Application;
 import io.github.t3r1jj.develog.model.data.Note;
 import io.github.t3r1jj.develog.model.data.Tag;
 import io.github.t3r1jj.develog.model.data.User;
+import io.github.t3r1jj.develog.repository.data.UserRepository;
 import io.github.t3r1jj.develog.service.UserService;
 import io.github.t3r1jj.develog.utils.WithMockOAuth2User;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,6 +42,8 @@ class NoteControllerIT {
     private WebApplicationContext webApplicationContext;
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
@@ -48,6 +51,7 @@ class NoteControllerIT {
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
                 .build();
+        userRepository.deleteById(25926780L);
     }
 
     @Test

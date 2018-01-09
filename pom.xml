@@ -22,7 +22,6 @@
         <surefire.and.failsafe.report.dir>target/test-report</surefire.and.failsafe.report.dir>
         <java.version>1.8</java.version>
     </properties>
-    <!--mvn clean clover:setup verify clover:aggregate clover:clover-->
 
     <licenses>
         <license>
