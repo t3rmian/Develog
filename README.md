@@ -3,52 +3,51 @@
 
 
 Develog is a web application inspired by James Routley's idea of [using a logbook to improve your programming](https://routley.io/tech/2017/11/23/logbook.html). The app allows users to create one private and tagged note per day. Simple Markdown together with PlantUML speeds up and facilitates the process of describing a solution to a problem.
- 
+
+
 ---
-
-### Development
-
-![Code coverage by commits](https://codecov.io/gh/T3r1jj/Develog/branch/master/graphs/commits.svg)
- 
-Basic requirements:
-1. Project management tool (i.e. Maven/Gradle)
-2. Dependency injection framework (i.e. Spring with Inversion of Control)
-3. Object Relational Mapping (i.e. JPA) - min. 3 relational tables
-4. Aspects
-5. Docker
-6. Integration and unit tests
-7. DAO/Repository based data layer, MVC based presentation layer
-7. User authentication
 
 ### Features 
 a) USER:
 1. note creation and edition (single note, for present day)
     1. tags
-    2. ~~image insertion by pasting~~ (db size)
-    3. Markdown support
-    4. PlantUML (diagrams) support
-    5. two panels side by side - editor and view
-    6. export to txt/html
-2. _one global note (see 1.)_
-3. notes listing by days
-4. notes listing by tags (append into one?)
-5. searching by date/tags
-6. archiving (i.e. download as zip)
+    2. Markdown support
+    3. PlantUML (diagrams) support
+    4. two panels side by side - editor and view
+    5. export to txt/html
+2. one global note (see 1.)
+3. calendar
+4. searching by date/tags
+5. archiving:
+    1. raw
+    2. html
 
 b) ADMIN:
 1. same as a)
-2. monitoring - requests/performance/user data size
-3. banning
+2. monitoring:
+    1. user data size
+    2. user online stats
+    3. error logging
+    4. business methods performance
+    5. general status and app health
+3. changing roles
 4. notifying users by email
 
 c) BANNED:
 1. same as a) but cannot insert/edit
+
+Other:
+1. i18n
+2. RWD
+3. GitHub based authentication, authorization
+
 
 ### Technologies/Components/Services
 
 - Maven
 - Spring + Spring Boot + Spring Actuators
 - Thymeleaf
+- jQuery
 - Materialize
 - Wro4j
 - PostgreSQL
@@ -56,13 +55,22 @@ c) BANNED:
 - AspectJ
 - Lombok
 - PlantUML
-- Flexmark-java (Markdown)
+- Markdown (Flexmark-java)
 - JUnit5
 - Mockito
 - Code Analysis tool
 - Code Coverage tool (OpenClover)
 - Travis CI
 - Codecov
+- Docker
+
+### Config
+
+PlantUML requires a GraphViz installation for full drawing support. This is why we use a docker image. All env variables required to start the app can be found in **docker/env_sample**.
+
+Running test coverage: __mvn clean clover:setup verify clover:aggregate clover:clover__  
+Dockerizing: __mvn clean package spring-boot:repackage docker:build__  
+Running in docker: __docker run --env-file=docker/env_sample -p 8080:8080 -t develog__  
 
 ---
 
