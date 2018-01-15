@@ -178,12 +178,17 @@ input:not([type]):focus:not([readonly]) {
     background-color: #1a237e;
 }
 
+.datepicker-table td.is-selected {
+    background-color: #1a237e;
+    color: #fff;
+}
+
 .datepicker-today, .datepicker-done {
     color: #303f9f;
 }
 
-.datepicker-table td.is-today {
-    color: #303f9f;
+.datepicker-day-button:focus {
+    background-color: rgba(43, 0, 150, 0.15);
 }
 
 nav .datepicker-modal td {
@@ -192,4 +197,12 @@ nav .datepicker-modal td {
 
 .datepicker-day-button {
     -webkit-tap-highlight-color: #2196f3;
+}
+
+.datepicker-today {
+    display: none !important;
+}
+
+blockquote {
+    border-left: 5px solid #2196f3;
 }

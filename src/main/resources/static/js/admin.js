@@ -117,7 +117,7 @@ function displayOnlineEvents(events, i18n) {
             tooltips: {
                 callbacks: {
                     label: function (tooltipItem) {
-                        return  i18n.numberOnline + ': ' + tooltipItem.yLabel;
+                        return i18n.numberOnline + ': ' + tooltipItem.yLabel;
                     },
                     title: function (tooltipItem) {
                         return tooltipItem[0].xLabel;
@@ -137,7 +137,6 @@ function openEmail(userId, userName) {
     } else {
         url = '/admin/email';
     }
-    console.log("send " + url);
     $.ajax({
         url: url,
         type: 'post',
@@ -160,7 +159,9 @@ function changeUserRole(userId, newRole) {
         type: 'post',
         data: {id: userId, role: newRole},
         success: function (response) {
-            console.log(response);
+            new M.Toast({
+                html: "Operation success: " + response
+            });
         }
     });
 }

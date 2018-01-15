@@ -6,7 +6,7 @@
 
     <groupId>io.github.t3r1jj</groupId>
     <artifactId>develog</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.5</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

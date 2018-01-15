@@ -13,7 +13,10 @@
             NOTE LABEL</h4>
         <h4 class="date-type" th:unless="${#httpServletRequest.getRequestURI() == '/note'}" th:text="${note.date}">
             DATE</h4>
-        <div id="tags" class="chips chips-autocomplete"><i class="material-icons">label</i></div>
+        <div class="search-bar">
+            <i class="material-icons icon">label</i>
+            <div id="tags" class="chips chips-autocomplete"></div>
+        </div>
         <div id="editor" th:replace="fragments/editor"></div>
     </form>
     <a id="help" class="waves-effect blue darken-1 btn-large btn-floating tooltipped"
@@ -40,11 +43,9 @@
     var secondaryChipsLabel = /*[[#{tagsSecondaryLabel}]]*/ null;
     var autocompleteTags = /*[[${tags}]]*/ [];
     var tags = /*[[${note.tags}]]*/ null;
-    var fileName = (/*[[${note.date}]]*/ null);
     initChips(tags, autocompleteTags, chipsLabel, secondaryChipsLabel);
     initEditor();
     updateNote();
-    initDownloadButtons(fileName);
     $('.tap-target').featureDiscovery();
 </script>
 </body>

@@ -52,6 +52,7 @@ textarea.materialize_textarea:focus:not([readonly]) {
     -webkit-box-shadow: 0 1px 0 0 #303f9f;
     box-shadow: 0 1px 0 0 #303f9f;
 }
+
 .chips.focus {
     border-bottom: 1px solid #303f9f;
     -webkit-box-shadow: 0 1px 0 0 #303f9f;
@@ -124,4 +125,22 @@ textarea.materialize_textarea:disabled, textarea.materialize_textarea[readonly="
 
 .tap-target .tap-target-content {
     color: white;
+}
+
+.search-bar .chips .input {
+    padding-left: 30px
+}
+
+.search-bar .icon {
+    float: left;
+    margin-top: 8px;
+    margin-right: 4px;
+}
+
+.chips .chip:focus {
+    background-color: #1E88E5;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: #1E88E5;
 }
