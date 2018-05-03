@@ -2,6 +2,7 @@ package io.github.t3r1jj.develog.aspect;
 
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.model.domain.BusinessRoles;
+import io.github.t3r1jj.develog.service.MonitoringService;
 import io.github.t3r1jj.develog.service.UserService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,10 +22,12 @@ import java.util.List;
 public class AuthorizationAspect {
 
     private final UserService userService;
+    private final MonitoringService monitoringService;
 
     @Autowired
-    public AuthorizationAspect(UserService userService) {
+    public AuthorizationAspect(UserService userService, MonitoringService monitoringService) {
         this.userService = userService;
+        this.monitoringService = monitoringService;
     }
 
     @Before("@annotation(io.github.t3r1jj.develog.model.domain.BusinessRoles) || within(@io.github.t3r1jj.develog.model.domain.BusinessRoles *)")
@@ -57,8 +60,9 @@ public class AuthorizationAspect {
         for (Object arg : args) {
             if (arg instanceof Model) {
                 Model model = (Model) arg;
-                model.addAttribute("loggedUser", userService.getLoggedUser());
-                model.addAttribute("dataSize", userService.getUserDataSize());
+                User loggedUser = userService.getLoggedUser();
+                model.addAttribute("loggedUser", loggedUser);
+                model.addAttribute("dataSize", monitoringService.getUserDataSize(loggedUser));
                 return;
             }
         }

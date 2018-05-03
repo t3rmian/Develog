@@ -2,7 +2,7 @@ function initChips(tags, autocompleteTags, label, secondaryLabel) {
     var chips = [];
     var autocompleteData = {};
     for (var i = 0; i < tags.length; i++) {
-        chips.push({tag: tags[i].id.value});
+        chips.push({tag: tags[i]});
     }
     for (i = 0; i < autocompleteTags.length; i++) {
         autocompleteData[autocompleteTags[i]] = null;

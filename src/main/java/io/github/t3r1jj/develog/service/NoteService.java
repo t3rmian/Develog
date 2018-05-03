@@ -1,103 +1,89 @@
 package io.github.t3r1jj.develog.service;
 
+import io.github.t3r1jj.develog.component.MongoConversions;
 import io.github.t3r1jj.develog.model.data.Note;
-import io.github.t3r1jj.develog.model.data.Tag;
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.repository.data.NoteRepository;
-import io.github.t3r1jj.develog.repository.data.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.ws.http.HTTPException;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class NoteService {
+    private static final MongoConversions.LocalDateToObjectIdConverter dateConverter = new MongoConversions.LocalDateToObjectIdConverter();
     private final UserService userService;
     private final NoteRepository noteRepository;
-    private final TagRepository tagRepository;
 
     @Autowired
-    public NoteService(UserService userService, NoteRepository noteRepository, TagRepository tagRepository) {
+    public NoteService(UserService userService, NoteRepository noteRepository) {
         this.userService = userService;
         this.noteRepository = noteRepository;
-        this.tagRepository = tagRepository;
     }
 
-    @Transactional(readOnly = true)
+
     public Optional<Note> getNote(LocalDate date) {
         User loggedUser = userService.getLoggedUser();
-        return loggedUser.getNote(date);
+        return getNote(date, loggedUser);
     }
 
-    @Transactional
+
     public void updateNoteBody(LocalDate date, String body) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNote(date).orElseThrow(() -> new HTTPException(404));
+        Note note = getNote(date, loggedUser).orElseThrow(() -> new HTTPException(404));
         note.setBody(body);
-        updateNote(note);
+        updateNote(loggedUser, note);
     }
 
-    @Transactional
+    private void updateNote(User user, Note note) {
+        if (user.getGlobalNote().equals(note)) {
+            userService.updateUser(user);
+        } else {
+            noteRepository.save(note);
+        }
+    }
+
+
     public boolean addNoteTag(LocalDate date, String tag) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNote(date).orElseThrow(() -> new HTTPException(404));
-        if (note.addTag(new Tag(tag, loggedUser.getId()))) {
-            updateNote(note);
+        Note note = getNote(date, loggedUser).orElseThrow(() -> new HTTPException(404));
+        if (note.addTag(tag)) {
+            updateNote(loggedUser, note);
             return true;
         }
         return false;
     }
 
-    @Transactional
+
     public boolean removeNoteTag(LocalDate date, String tag) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNote(date).orElseThrow(() -> new HTTPException(404));
-        if (note.removeTag(new Tag(tag, loggedUser.getId()))) {
-            updateNote(note);
+        Note note = getNote(date, loggedUser).orElseThrow(() -> new HTTPException(404));
+        if (note.removeTag(tag)) {
+            updateNote(loggedUser, note);
             return true;
         }
         return false;
     }
 
-    private void updateNote(Note note) {
-        persistNewTags(note);
-        noteRepository.saveAndFlush(note);
-    }
-
-    private void persistNewTags(Note note) {
-        List<Tag> presentTags = tagRepository.findAllById(note.getTags().stream()
-                .map(Tag::getId)
-                .collect(Collectors.toSet())
-        );
-        tagRepository.saveAll(note.getTags().stream()
-                .filter(tag -> !presentTags.contains(tag))
-                .collect(Collectors.toSet())
-        );
-    }
-
-    @Transactional(readOnly = true)
     public List<Note> findAllByTags(List<String> values) {
         if (values.isEmpty()) {
             return Collections.emptyList();
         } else if (values.contains("*")) {
-            return userService.getLoggedUser().getAllNotes();
+            return getAllNotes(userService.getLoggedUser());
         }
         User loggedUser = userService.getLoggedUser();
-        List<Tag> tags = values.stream().map(v -> new Tag(v, loggedUser.getId())).collect(Collectors.toList());
-        return loggedUser.getAllNotes().stream()
-                .filter(n -> tagsMatch(n.getTags(), tags))
+        return getAllNotes(loggedUser).stream()
+                .filter(n -> tagsMatch(n.getTags(), values))
                 .collect(Collectors.toList());
     }
 
-    private boolean tagsMatch(Set<Tag> t1, List<Tag> t2) {
-        for (Tag t : t2) {
+    private boolean tagsMatch(Set<String> t1, List<String> t2) {
+        for (String t : t2) {
             if (!t1.contains(t)) {
                 return false;
             }
@@ -105,28 +91,62 @@ public class NoteService {
         return true;
     }
 
-    @Transactional(readOnly = true)
+
     public Optional<Note> findByDate(LocalDate date) {
         User loggedUser = userService.getLoggedUser();
-        return loggedUser.getNote(date);
+        return getNote(date, loggedUser);
     }
 
-    @Transactional
+
     public Note getNoteOrCreate(LocalDate date) {
         User loggedUser = userService.getLoggedUser();
-        Note note = loggedUser.getNoteOrCreate(date);
+        Note note = getNoteOrCreate(date, loggedUser);
         userService.updateUser(loggedUser);
         return note;
     }
 
-    @Transactional(readOnly = true)
+    public Optional<Note> getNote(@Nullable LocalDate date, User user) {
+        if (date == null) {
+            return Optional.of(user.getGlobalNote());
+        }
+        return user.getNoteDates().stream()
+                .filter(note -> note.getValue().isEqual(date))
+                .findAny().flatMap(it -> noteRepository.findById(it.getKey()));
+    }
+
+    public Note getNoteOrCreate(@Nullable LocalDate date, User user) {
+        return getNote(date, user).orElseGet(() -> {
+            Note note = Note.builder().id(dateConverter.convert(date)).build();
+            noteRepository.save(note);
+            user.addNote(note.getId());
+            return note;
+        });
+    }
+
+    public List<Note> getAllNotes(User user) {
+        ArrayList<Note> notes = getDailyNotes(user);
+        notes.add(user.getGlobalNote());
+        return notes;
+    }
+
+    public ArrayList<Note> getDailyNotes(User user) {
+        return StreamSupport.stream(noteRepository.findAllById(user.getNoteIds()).spliterator(), false)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     public List<LocalDate> getNoteDates() {
         return userService.getUserNoteDates();
     }
 
-    @Transactional(readOnly = true)
-    public List<String> getAllTags() {
-        return tagRepository.findAllTagValuesByUserId(userService.getLoggedUser().getId());
+
+    public Set<String> getAllTags() {
+        User loggedUser = userService.getLoggedUser();
+        HashSet<String> dailyTags = noteRepository.findAllProjectedTagsById(loggedUser.getNoteIds())
+                .stream()
+                .flatMap(it -> it.getTags().stream())
+                .collect(Collectors.toCollection(HashSet::new));
+        dailyTags.addAll(loggedUser.getGlobalNote().getTags());
+        return dailyTags;
     }
 
 }

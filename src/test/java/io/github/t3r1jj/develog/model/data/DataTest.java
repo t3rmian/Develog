@@ -15,14 +15,4 @@ class DataTest {
         EqualsVerifier.forClass(User.class);
     }
 
-    @Test
-    void tagEqualsContract() {
-        EqualsVerifier.forClass(Tag.class);
-    }
-
-    @Test
-    void tagIdEqualsContract() {
-        EqualsVerifier.forClass(Tag.TagId.class);
-    }
-
 }

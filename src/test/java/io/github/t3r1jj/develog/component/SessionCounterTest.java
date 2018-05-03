@@ -2,7 +2,7 @@ package io.github.t3r1jj.develog.component;
 
 import io.github.t3r1jj.develog.model.monitor.Event;
 import io.github.t3r1jj.develog.repository.monitoring.EventRepository;
-import io.github.t3r1jj.develog.service.MonitoringDao;
+import io.github.t3r1jj.develog.service.MonitoringService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -29,7 +29,7 @@ class SessionCounterTest {
     @Mock
     private HttpSession session2;
     @Mock
-    private MonitoringDao monitoringDao;
+    private MonitoringService monitoringService;
     @Mock
     private EventRepository eventRepository;
 
@@ -40,7 +40,7 @@ class SessionCounterTest {
         when(sessionEvent2.getSession()).thenReturn(session2);
         when(session.getId()).thenReturn("1");
         when(session2.getId()).thenReturn("2");
-        sessionCounter = new SessionCounter(eventRepository, monitoringDao);
+        sessionCounter = new SessionCounter(eventRepository, monitoringService);
     }
 
     @Test
@@ -69,6 +69,6 @@ class SessionCounterTest {
     void dumpToDb() {
         sessionCounter.dumpToDb();
         verify(eventRepository).save(any(Event.class));
-        verify(monitoringDao).truncateEvents(anyInt());
+        verify(monitoringService).truncateEvents(anyInt());
     }
 }

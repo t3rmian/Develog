@@ -107,9 +107,7 @@ class AdminControllerIT {
         mockMvc.perform(get("/admin/health"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$..mongo.status").value("UP"))
-                .andExpect(jsonPath("$..db.status").value("UP"))
-                .andExpect(jsonPath("$..['Mongo DB size']").isNotEmpty())
-                .andExpect(jsonPath("$..['Postgres DB size']").isNotEmpty());
+                .andExpect(jsonPath("$..['Mongo DB size']").isNotEmpty());
     }
 
     @Test
@@ -153,7 +151,7 @@ class AdminControllerIT {
         User loggedUser = userService.getLoggedUser();
         mockMvc.perform(get("/admin/email/all"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(loggedUser.getEmail()));
+                .andExpect(content().string(containsString(loggedUser.getEmail())));
     }
 
     private void initAdmin() {

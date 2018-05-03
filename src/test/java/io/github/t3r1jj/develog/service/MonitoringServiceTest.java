@@ -7,23 +7,23 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-class MonitoringDaoTest {
+class MonitoringServiceTest {
 
     @Mock
     private MongoTemplate mongoTemplate;
-    private MonitoringDao monitoringDao;
+    private MonitoringService monitoringService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        monitoringDao = new MonitoringDao(mongoTemplate);
+        monitoringService = spy(new MonitoringService(mongoTemplate));
     }
 
     @Test
     void getMongoDbSize_NoDB() {
         when(mongoTemplate.getDb()).thenThrow(new RuntimeException("No db"));
-        assertEquals(-1, monitoringDao.getMongoDbSize());
+        assertEquals(-1, monitoringService.getMongoDbSize());
     }
 }

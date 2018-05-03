@@ -12,9 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 @Configuration
 @SpringBootApplication
 @ComponentScan

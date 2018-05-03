@@ -1,7 +1,9 @@
 package io.github.t3r1jj.develog.model.data;
 
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +22,7 @@ class NoteTest {
 
     @Test
     void removeTag() {
-        Note note = Note.builder().tags(new HashSet<Tag>() {{
+        Note note = Note.builder().tags(new HashSet<String>() {{
             this.add(createTag("tag1"));
             this.add(createTag("tag2"));
         }}).build();
@@ -31,14 +33,15 @@ class NoteTest {
         assertEquals(1, note.getTags().size(), "Still one tag");
     }
 
-    private Tag createTag(String value) {
-        return new Tag(value, 123L);
+    private String createTag(String value) {
+        return value;
     }
 
     @Test
     void testHashCode() {
-        assertEquals(Note.builder().build().hashCode(), Note.builder().build().hashCode());
-        assertEquals(Note.builder().id(1L).build().hashCode(), Note.builder().id(1L).build().hashCode());
-        assertNotEquals(Note.builder().id(1L).build().hashCode(), Note.builder().id(2L).build().hashCode());
+        ObjectId id = new ObjectId();
+        assertNotEquals(Note.builder().build().hashCode(), Note.builder().build().hashCode());
+        assertEquals(Note.builder().id(id).build().hashCode(), Note.builder().id(id).build().hashCode());
+        assertNotEquals(Note.builder().id(id).build().hashCode(), Note.builder().id(new ObjectId()).build().hashCode());
     }
 }

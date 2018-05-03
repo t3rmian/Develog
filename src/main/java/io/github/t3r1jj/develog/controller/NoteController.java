@@ -58,6 +58,8 @@ public class NoteController {
     @ResponseBody
     public Boolean updateTags(@RequestParam String value, @RequestParam Action action, @PathVariable(required = false) LocalDate date) {
         if (action == ADD) {
+            System.out.println(date);
+            System.out.println(value);
             return noteService.addNoteTag(date, value);
         } else {
             return noteService.removeNoteTag(date, value);

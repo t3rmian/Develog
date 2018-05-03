@@ -50,7 +50,6 @@ Other:
 - jQuery
 - Materialize
 - Wro4j
-- PostgreSQL
 - MongoDB
 - AspectJ
 - Lombok
@@ -66,13 +65,13 @@ Other:
 
 ### Config
 
-PlantUML requires a GraphViz installation for full drawing support. This is why we use a docker image. All env variables required to start the app can be found in **docker/env_sample** (GitHub Oauth2, PostgreSQL, MongoDB).
+PlantUML requires a GraphViz installation for full drawing support. This is why we use a docker image. All env variables required to start the app can be found in **docker/env_sample** (GitHub Oauth2, MongoDB).
 
 Run test coverage: __mvn clean clover:setup verify clover:aggregate clover:clover__  
 Dockerize: __mvn clean package spring-boot:repackage docker:build__  
 Run in docker: __docker run --env-file=docker/env_sample -p 8080:8080 -t develog__  
 
-After setting PostgreSQL (postgres) and MongoDB (mongo) containers you can simply run docker/start.sh 
+After setting and MongoDB (mongo) container you can simply run docker/start.sh
 
 When hosting on Heroku without docker, an additional [GraphViz](https://elements.heroku.com/buildpacks/dsander/heroku-buildpack-graphviz#buildpack-instructions) build pack is required.
 
@@ -81,7 +80,7 @@ When hosting on Heroku without docker, an additional [GraphViz](https://elements
 ### License
 
     Develog - a web logbook for developers
-    Copyright (C) 2017 Damian Terlecki
+    Copyright (C) 2017-2018 Damian Terlecki
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

@@ -1,19 +1,24 @@
 package io.github.t3r1jj.develog.model.data;
 
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.hibernate.Hibernate;
-import org.springframework.lang.Nullable;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Getter
 @ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "users")
+@Document(collection = "users")
 public class User {
     @Id
     private Long id;
@@ -21,36 +26,13 @@ public class User {
     private String name;
     @Setter
     private String email;
-    @OneToOne(cascade = CascadeType.ALL)
     @Builder.Default
-    private Note globalNote = Note.builder().isGlobal(true).build();
-    @OneToMany(cascade = CascadeType.ALL)
+    private Note globalNote = Note.builder().build();
     @Builder.Default
-    private List<Note> notes = Collections.emptyList();
+    private List<ObjectId> noteIds = new LinkedList<>();
     @Builder.Default
     @Setter
     private Role role = Role.USER;
-
-    public Optional<Note> getNote(@Nullable LocalDate date) {
-        if (date == null) {
-            return Optional.of(globalNote);
-        }
-        return notes.stream().filter(note -> note.getDate().isEqual(date)).findAny();
-    }
-
-    public Note getNoteOrCreate(@Nullable LocalDate date) {
-        return getNote(date).orElseGet(() -> {
-            Note note = Note.builder().date(date).build();
-            notes.add(note);
-            return note;
-        });
-    }
-
-    public List<Note> getAllNotes() {
-        ArrayList<Note> notes = new ArrayList<>(this.notes);
-        notes.add(globalNote);
-        return notes;
-    }
 
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
@@ -69,6 +51,14 @@ public class User {
     public boolean infoEquals(User user) {
         return Objects.equals(this.email, user.email) &&
                 Objects.equals(this.name, user.name);
+    }
+
+    public void addNote(ObjectId id) {
+        noteIds.add(id);
+    }
+
+    public List<HashMap.Entry<ObjectId, LocalDate>> getNoteDates() {
+        return noteIds.stream().map(it -> new HashMap.SimpleImmutableEntry<>(it, Note.idDateConverter.convert(it))).collect(Collectors.toList());
     }
 
     public enum Role {

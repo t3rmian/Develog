@@ -1,10 +1,9 @@
 package io.github.t3r1jj.develog.service;
 
 import io.github.t3r1jj.develog.model.data.Note;
-import io.github.t3r1jj.develog.model.data.Tag;
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.repository.data.NoteRepository;
-import io.github.t3r1jj.develog.repository.data.TagRepository;
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -24,8 +23,6 @@ class NoteServiceTest {
     @Mock
     private UserService userService;
     @Mock
-    private TagRepository tagRepository;
-    @Mock
     private NoteRepository noteRepository;
     private NoteService noteService;
     private Note note;
@@ -34,11 +31,11 @@ class NoteServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        user = spy(User.builder().id(111L).build());
-        note = Note.builder().id(222L).build();
-        when(user.getNote(LocalDate.now())).thenReturn(Optional.of(note));
+        user = User.builder().id(111L).build();
+        noteService = spy(new NoteService(userService, noteRepository));
+        note = Note.builder().id(new ObjectId()).build();
+        when(noteService.getNote(LocalDate.now(), user)).thenReturn(Optional.of(note));
         when(userService.getLoggedUser()).thenReturn(user);
-        noteService = new NoteService(userService, noteRepository, tagRepository);
     }
 
     @Test
@@ -56,9 +53,8 @@ class NoteServiceTest {
     void addNoteTag() {
         assertTrue(noteService.addNoteTag(LocalDate.now(), "tag2"));
         assertEquals(1, note.getTags().size(), "Should contain one tag");
-        Tag tag = note.getTags().iterator().next();
-        assertEquals("tag2", tag.getId().getValue(), "Tag value should match");
-        assertEquals(user.getId(), tag.getId().getUserId(), "Tag should be associated with correct user");
+        String tag = note.getTags().iterator().next();
+        assertEquals("tag2", tag, "Tag value should match");
     }
 
     @Test
@@ -69,7 +65,7 @@ class NoteServiceTest {
 
     @Test
     void removeNoteTag() {
-        note.getTags().add(new Tag("tag3", user.getId()));
+        note.getTags().add("tag3");
         assertTrue(noteService.removeNoteTag(LocalDate.now(), "tag3"));
         assertEquals(0, note.getTags().size(), "Should not contain any tags");
     }
@@ -81,14 +77,14 @@ class NoteServiceTest {
 
     @Test
     void findAllByTags() {
-        Tag tag1 = new Tag("tag1", user.getId());
-        Note note2 = Note.builder().id(3L).build();
-        Note note3 = Note.builder().id(4L).build();
-        when(user.getAllNotes()).thenReturn(Arrays.asList(note, note2, note3));
-        note.setTags(new HashSet<Tag>() {{
+        String tag1 = "tag1";
+        Note note2 = Note.builder().id(new ObjectId()).build();
+        Note note3 = Note.builder().id(new ObjectId()).build();
+        when(noteService.getAllNotes(user)).thenReturn(Arrays.asList(note, note2, note3));
+        note.setTags(new HashSet<String>() {{
             this.add(tag1);
         }});
-        note2.setTags(new HashSet<Tag>() {{
+        note2.setTags(new HashSet<String>() {{
             this.add(tag1);
         }});
         assertTrue(noteService.findAllByTags(Collections.singletonList("tag1")).contains(note));
@@ -99,9 +95,9 @@ class NoteServiceTest {
 
     @Test
     void findAllByTags_Asterisk() {
-        Note note2 = Note.builder().id(3L).build();
-        Note note3 = Note.builder().id(4L).build();
-        when(user.getAllNotes()).thenReturn(Arrays.asList(note, note2, note3));
+        Note note2 = Note.builder().id(new ObjectId()).build();
+        Note note3 = Note.builder().id(new ObjectId()).build();
+        when(noteService.getAllNotes(user)).thenReturn(Arrays.asList(note, note2, note3));
         assertTrue(noteService.findAllByTags(Collections.singletonList("*")).contains(note));
         assertTrue(noteService.findAllByTags(Collections.singletonList("*")).contains(note2));
         assertTrue(noteService.findAllByTags(Collections.singletonList("*")).contains(note3));
@@ -121,7 +117,7 @@ class NoteServiceTest {
     void getNoteOrCreate() {
         noteService.getNoteOrCreate(LocalDate.now());
         verify(userService).updateUser(user);
-        verify(user).getNoteOrCreate(LocalDate.now());
+        verify(noteService).getNoteOrCreate(LocalDate.now(), user);
     }
 
     @Test

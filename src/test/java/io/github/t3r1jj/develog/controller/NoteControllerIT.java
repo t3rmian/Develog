@@ -2,9 +2,9 @@ package io.github.t3r1jj.develog.controller;
 
 import io.github.t3r1jj.develog.Application;
 import io.github.t3r1jj.develog.model.data.Note;
-import io.github.t3r1jj.develog.model.data.Tag;
 import io.github.t3r1jj.develog.model.data.User;
 import io.github.t3r1jj.develog.repository.data.UserRepository;
+import io.github.t3r1jj.develog.service.NoteService;
 import io.github.t3r1jj.develog.service.UserService;
 import io.github.t3r1jj.develog.utils.WithMockOAuth2User;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
@@ -43,6 +42,8 @@ class NoteControllerIT {
     @Autowired
     private UserService userService;
     @Autowired
+    private NoteService noteService;
+    @Autowired
     private UserRepository userRepository;
 
     @BeforeEach
@@ -56,14 +57,13 @@ class NoteControllerIT {
 
     @Test
     @WithMockOAuth2User
-    @Transactional
     void todayNote() throws Exception {
         userService.onAuthenticationSuccess();
         Long userId = userService.getLoggedUser().getId();
         mockMvc.perform(get("/today/1999-10-10"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/note/1999-10-10"));
-        List<Note> notes = userService.getUser(userId).get().getNotes();
+        List<Note> notes = noteService.getDailyNotes(userService.getUser(userId).get());
         LocalDate date = LocalDate.of(1999, 10, 10);
         assertTrue(notes.stream().anyMatch(n -> date.equals(n.getDate())));
     }
@@ -91,11 +91,10 @@ class NoteControllerIT {
 
     @Test
     @WithMockOAuth2User
-    @Transactional
     void openNoteByDate() throws Exception {
         userService.onAuthenticationSuccess();
         User loggedUser = userService.getLoggedUser();
-        loggedUser.getNotes().add(Note.builder().build());
+        noteService.getNoteOrCreate(LocalDate.now(), loggedUser);
         userService.updateUser(loggedUser);
         mockMvc.perform(get("/note/" + DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now())))
                 .andExpect(status().isOk())
@@ -120,11 +119,10 @@ class NoteControllerIT {
 
     @Test
     @WithMockOAuth2User
-    @Transactional
     void updateNoteByDate() throws Exception {
         userService.onAuthenticationSuccess();
         User loggedUser = userService.getLoggedUser();
-        loggedUser.getNotes().add(Note.builder().build());
+        noteService.getNoteOrCreate(LocalDate.now(), loggedUser);
         userService.updateUser(loggedUser);
         userService.onAuthenticationSuccess();
         mockMvc.perform(post("/note/" + DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now()) + "/update")
@@ -133,13 +131,12 @@ class NoteControllerIT {
                 .param("output", "b"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("a")));
-        List<Note> notes = userService.getUser(loggedUser.getId()).get().getNotes();
+        List<Note> notes = noteService.getDailyNotes(loggedUser);
         assertEquals("a", notes.get(0).getBody());
     }
 
     @Test
     @WithMockOAuth2User
-    @Transactional
     void addTags() throws Exception {
         userService.onAuthenticationSuccess();
         Long userId = userService.getLoggedUser().getId();
@@ -149,13 +146,12 @@ class NoteControllerIT {
                 .param("action", NoteController.Action.ADD.toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
-        Set<Tag> tags = userService.getUser(userId).get().getGlobalNote().getTags();
-        assertEquals("tag", tags.iterator().next().getId().getValue());
+        Set<String> tags = userService.getUser(userId).get().getGlobalNote().getTags();
+        assertEquals("tag", tags.iterator().next());
     }
 
     @Test
     @WithMockOAuth2User
-    @Transactional
     void removeTags() throws Exception {
         userService.onAuthenticationSuccess();
         mockMvc.perform(post("/note/tag")
@@ -168,11 +164,10 @@ class NoteControllerIT {
 
     @Test
     @WithMockOAuth2User
-    @Transactional
     void updateTagsByDate() throws Exception {
         userService.onAuthenticationSuccess();
         User loggedUser = userService.getLoggedUser();
-        loggedUser.getNotes().add(Note.builder().build());
+        noteService.getNoteOrCreate(LocalDate.now(), loggedUser);
         userService.updateUser(loggedUser);
 
         mockMvc.perform(post("/note/" + DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now()) + "/tag")
@@ -182,9 +177,9 @@ class NoteControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
 
-        List<Note> notes = userService.getUser(loggedUser.getId()).get().getNotes();
-        Set<Tag> tags = notes.get(0).getTags();
-        assertEquals("tag", tags.iterator().next().getId().getValue());
+        List<Note> notes = noteService.getDailyNotes(loggedUser);
+        Set<String> tags = notes.get(0).getTags();
+        assertEquals("tag", tags.iterator().next());
     }
 
     @Test

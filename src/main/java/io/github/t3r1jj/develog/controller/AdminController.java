@@ -9,7 +9,7 @@ import io.github.t3r1jj.develog.model.monitor.Error;
 import io.github.t3r1jj.develog.repository.monitoring.CallRepository;
 import io.github.t3r1jj.develog.repository.monitoring.ErrorRepository;
 import io.github.t3r1jj.develog.repository.monitoring.EventRepository;
-import io.github.t3r1jj.develog.service.MonitoringDao;
+import io.github.t3r1jj.develog.service.MonitoringService;
 import io.github.t3r1jj.develog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.HealthEndpoint;
@@ -45,7 +45,7 @@ public class AdminController {
     @Autowired
     private InfoEndpoint infoEndpoint;
     @Autowired
-    private MonitoringDao monitoringDao;
+    private MonitoringService monitoringService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -58,7 +58,7 @@ public class AdminController {
 
     @RequestMapping("admin/users")
     public ModelAndView getUsersFragment(Model model) {
-        model.addAttribute("users", userService.findAllUsersDataSize());
+        model.addAttribute("users", monitoringService.findAllUsersDataSize(userService.getAllUsers()));
         return new ModelAndView("fragments/users", model.asMap());
     }
 
@@ -114,8 +114,9 @@ public class AdminController {
     public String getHealthFragment(Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> dbDetails = new HashMap<>(healthEndpoint.health().getDetails());
-        dbDetails.put("Mongo DB size", monitoringDao.getMongoDbSize() + " MB");
-        dbDetails.put("Postgres DB size", userService.getUsersDataSize() + " MB");
+        dbDetails.put("Mongo DB size", monitoringService.getMongoDbSize() + " MB");
+        dbDetails.put("Users data size", monitoringService.getUsersDataSize() + " MB");
+        dbDetails.put("Users notes size", monitoringService.getNotesDataSize() + " MB");
         return objectMapper.writeValueAsString(Arrays.asList(
                 dbDetails,
                 traceEndpoint.traces().getTraces(),

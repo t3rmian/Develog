@@ -2,7 +2,7 @@ package io.github.t3r1jj.develog.component;
 
 import io.github.t3r1jj.develog.model.monitor.Event;
 import io.github.t3r1jj.develog.repository.monitoring.EventRepository;
-import io.github.t3r1jj.develog.service.MonitoringDao;
+import io.github.t3r1jj.develog.service.MonitoringService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -17,12 +17,12 @@ import java.util.Set;
 public class SessionCounter implements HttpSessionListener {
     private Set<String> sessions = new HashSet<>();
     private final EventRepository eventRepository;
-    private final MonitoringDao monitoringDao;
+    private final MonitoringService monitoringService;
 
     @Autowired
-    public SessionCounter(EventRepository eventRepository, MonitoringDao monitoringDao) {
+    public SessionCounter(EventRepository eventRepository, MonitoringService monitoringService) {
         this.eventRepository = eventRepository;
-        this.monitoringDao = monitoringDao;
+        this.monitoringService = monitoringService;
     }
 
     @Override
@@ -44,6 +44,6 @@ public class SessionCounter implements HttpSessionListener {
     @Scheduled(fixedRate = 5 * 60 * 1000)
     public void dumpToDb() {
         eventRepository.save(new Event(Event.Type.ONLINE, getActiveSessionNumber()));
-        monitoringDao.truncateEvents(1000);
+        monitoringService.truncateEvents(1000);
     }
 }

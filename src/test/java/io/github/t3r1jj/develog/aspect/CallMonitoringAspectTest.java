@@ -1,9 +1,8 @@
 package io.github.t3r1jj.develog.aspect;
 
 import io.github.t3r1jj.develog.Application;
-import io.github.t3r1jj.develog.component.SessionCounter;
 import io.github.t3r1jj.develog.model.monitor.Call;
-import io.github.t3r1jj.develog.service.MonitoringDao;
+import io.github.t3r1jj.develog.service.MonitoringService;
 import io.github.t3r1jj.develog.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CallMonitoringAspectTest {
 
     @Autowired
-    private MonitoringDao monitoringDao;
+    private MonitoringService monitoringService;
     @Autowired
     private CallMonitoringAspect callMonitoringAspect;
     @Autowired
@@ -38,7 +37,7 @@ class CallMonitoringAspectTest {
 
     @Test
     void invoke() {
-        monitoringDao.truncateEvents(1000);
+        monitoringService.truncateEvents(1000);
         userService.getUser(1);
         userService.getUser(2);
         userService.getUser(3);
