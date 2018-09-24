@@ -9,7 +9,7 @@ Develog is a web application inspired by James Routley's idea of [using a logboo
 ---
 
 ### Gallery [[more]](https://t3r1jj.github.io/Develog "Develog project page")
-![Main feature](https://user-images.githubusercontent.com/20327242/45973962-4140b600-c040-11e8-9979-f07530aac075.jpg)
+![Main feature](https://user-images.githubusercontent.com/20327242/45975191-d3968900-c043-11e8-875c-dcac9111e1cb.jpg)
 
 ### Features 
 a) USER:
