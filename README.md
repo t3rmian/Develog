@@ -4,8 +4,12 @@
 
 Develog is a web application inspired by James Routley's idea of [using a logbook to improve your programming](https://routley.io/tech/2017/11/23/logbook.html). The app allows users to create one private and tagged note per day. Simple Markdown together with PlantUML speeds up and facilitates the process of describing a solution to a problem.
 
+**nosql** branch has been remodeled to use MongoDB as the main database.
 
 ---
+
+### Gallery [[more]](https://t3r1jj.github.io/Develog "Develog project page")
+![Main feature](https://user-images.githubusercontent.com/20327242/45973962-4140b600-c040-11e8-9979-f07530aac075.jpg)
 
 ### Features 
 a) USER:
