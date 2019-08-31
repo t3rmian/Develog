@@ -1,5 +1,5 @@
 # Develog
-[![Build status](https://travis-ci.org/T3r1jj/Develog.svg?branch=master)](https://travis-ci.org/T3r1jj/Develog) [![codecov](https://codecov.io/gh/T3r1jj/Develog/branch/master/graph/badge.svg)](https://codecov.io/gh/T3r1jj/Develog) [![Lines of code](https://tokei.rs/b1/github/T3r1jj/Develog)](https://github.com/Aaronepower/tokei).
+[![Build status](https://travis-ci.org/t3rmian/Develog.svg?branch=master)](https://travis-ci.org/T3r1jj/Develog) [![codecov](https://codecov.io/gh/t3rmian/Develog/branch/master/graph/badge.svg)](https://codecov.io/gh/T3r1jj/Develog) [![Lines of code](https://tokei.rs/b1/github/t3rmian/Develog)](https://github.com/Aaronepower/tokei).
 
 
 Develog is a web application inspired by James Routley's idea of [using a logbook to improve your programming](https://routley.io/tech/2017/11/23/logbook.html). The app allows users to create one private and tagged note per day. Simple Markdown together with PlantUML speeds up and facilitates the process of describing a solution to a problem.
