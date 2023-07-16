@@ -15,7 +15,7 @@
         <developer-email>T3r1jj@gmail.com</developer-email>
         <developer-name>Damian Terlecki</developer-name>
 
-        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <thymeleaf.version>3.0.13.RELEASE</thymeleaf.version>
         <surefire.failsafe.version>2.19.1</surefire.failsafe.version>
         <junit-platform.version>1.0.2</junit-platform.version>
 
